@@ -1,0 +1,173 @@
+@import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box !important;
+}
+
+.signup-body {
+  min-height: 100vh;
+  font-family: "Oswald", "Raleway", sans-serif;
+  margin: 0;
+}
+
+.signup-container {
+  position: absolute;
+  width: 100%;
+  height: 97%;
+  overflow: hidden;
+}
+
+.signup-container:hover,
+.signup-container:active {
+  .signup-top,
+  .signup-bottom {
+    &:before,
+    &:after {
+      margin-left: 300px !important;
+      transform-origin: -300px 50% !important;
+      transition-delay: 0s !important;
+    }
+  }
+
+  .signup-center {
+    opacity: 1 !important;
+    transition-delay: 0.2s !important;
+  }
+}
+
+.signup-top,
+.signup-bottom {
+  &:before,
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 70vmax;
+    height: 130vmax;
+    max-width: 100%;
+    top: 50%;
+    left: 50%;
+    margin-top: -62vmax;
+    transform-origin: 0 50%;
+    transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    z-index: 10;
+    opacity: 0.65;
+    transition-delay: 0.2s;
+  }
+}
+
+.signup-top {
+  &:before {
+    transform: rotate(45deg);
+    background: #e46569;
+  }
+  &:after {
+    transform: rotate(135deg);
+    background: #ecaf81;
+  }
+}
+
+.signup-bottom {
+  &:before {
+    transform: rotate(-45deg);
+    background: #60b8d4;
+  }
+  &:after {
+    transform: rotate(-135deg);
+    background: #3745b5;
+  }
+}
+
+.signup-center {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+  transition-delay: 0s;
+  color: #333;
+  font-size: 20px;
+}
+
+.signup-error {
+  color: red;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.signup-input {
+  width: 100%;
+  padding: 15px;
+  margin: 5px;
+  border-radius: 1px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 20px;
+}
+
+.signup-btn {
+  display: block;
+  width: 100%;
+  margin: 5px;
+  font-size: 1.3rem;
+  font-weight: 900;
+  font-family: inherit;
+  padding: 15px;
+  background: #f56c71;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.signup-btn:hover,
+.signup-btn:focus {
+  background: #c25559;
+  outline: none;
+}
+
+.signup-btn:active {
+  transform: scale(0.98);
+}
+
+.signup-message {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px;
+  margin-top: 33px;
+  /* border: 1px solid #f1e0e0; */
+  /* border-radius: 4px; */
+  text-align: center;
+  font-size: 50px;
+  color: #ffffff;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  /* background-color: #e46569; */
+  z-index: 11;
+  font-family: "Oswald", sans-serif;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.signup-container:hover .signup-message {
+  opacity: 0;
+}
+
+.signup-container:not(:hover) .signup-message {
+  transition-delay: 0.5s;
+}
