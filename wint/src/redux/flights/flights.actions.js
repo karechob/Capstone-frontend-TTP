@@ -8,7 +8,7 @@ import FlightsActionTypes from "./flights.types";
 export const fetchAllFlights = (payload) => {
     console.log("FETCH ALL FLIGHTS ACTION");
     return {
-      type: FlightsActionTypes.FETCH_ALL_FLIGHTS,
+      type: FlightsActionTypes.FETCH_FLIGHTS,
       payload: payload,
     };
   };

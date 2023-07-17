@@ -8,7 +8,7 @@ export const INITIAL_ACTIVITY_STATE = {
 const activitiesReducer = (state = INITIAL_ACTIVITY_STATE, { type, payload }) => {
     console.log('ACTIVITYREDUCER IS HANDLING FETCH ALL ACTIVITY ACTION')
     switch (type) {
-        case ActivitiesActionTypes.FETCH_ALL_ACTIVITIES:
+        case ActivitiesActionTypes.FETCH_ACTIVITIES:
             console.log(state)
             return { ...state, allActivities: payload };
         case ActivitiesActionTypes.FETCH_SINGLE_ACTIVITY:
