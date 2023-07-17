@@ -7,7 +7,7 @@ function Home() {
     <div>
       <h1>Home Page</h1>
       <div class="welcome-message">
-        <h2>Welcome to Budget Wanderlust! </h2>
+        <h2>Welcome to WiseSpend! </h2>
         <body>
           <p>
             Embark on an unforgettable journey while keeping your wallet happy.
