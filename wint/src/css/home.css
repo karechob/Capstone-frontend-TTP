@@ -1,4 +1,14 @@
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap"); */
+
+/* new imported font */
+@font-face {
+  font-family: 'sans-serif-grotesk';
+  src: url('../fonts/NeueKonstantGrotesk-Book.otf') format('opentype');
+}
+
+body {
+  font-family: 'sans-serif-grotesk', sans-serif;
+}
 
 .nav-container {
   background-color: #252525;
