@@ -75,3 +75,19 @@ body {
 .nav-item-right {
   margin-left: 10px;
 }
+
+.welcome-message {
+  max-width: 800px; /* Adjust the value based on your preference */
+  margin: 0 auto; /* Centers the div horizontally */
+  text-align: center; /* Centers the content inside the div */
+  padding: 20px; /* Adds some space around the content */
+}
+
+.welcome-message h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.welcome-message p {
+  font-size: 16px;
+}
