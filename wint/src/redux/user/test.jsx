@@ -1,3 +1,0 @@
-// actions
-// reducer
-// types
