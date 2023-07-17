@@ -1,0 +1,9 @@
+const FlightsActionTypes = {
+    FETCH_FLIGHTS: "FETCH_FLIGHTS",
+    FETCH_SINGLE_FLIGHT: "FETCH_SINGLE_FLIGHT",
+    ADD_FLIGHT: "ADD_FLIGHT",
+    DELETE_FLIGHT: "DELETE_FLIGHT",
+    UPDATE_FLIGHT:" UPDATE_FLIGHT"
+}
+
+export default FlightsActionTypes;
