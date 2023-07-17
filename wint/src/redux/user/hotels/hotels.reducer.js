@@ -5,7 +5,7 @@ export const INITIAL_HOTEL_STATE = {
     singleHotel: {},
 }
 
-const hotelReducer = (state = INITIAL_HOTEL_STATE, { type, payload }) => {
+const hotelsReducer = (state = INITIAL_HOTEL_STATE, { type, payload }) => {
     console.log('HOTELREDUCER IS HANDLING FETCH ALL HOTEL ACTION')
     switch (type) {
         case HotelsActionTypes.FETCH_ALL_HOTELS:
@@ -26,4 +26,4 @@ const hotelReducer = (state = INITIAL_HOTEL_STATE, { type, payload }) => {
     }
 }
 
-export default hotelReducer;
+export default hotelsReducer;

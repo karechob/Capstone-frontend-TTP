@@ -5,3 +5,5 @@ const HotelsActionTypes = {
     DELETE_HOTEL: "DELETE_HOTEL",
     UPDATE_HOTEL:" UPDATE_HOTEL"
 }
+
+export default HotelsActionTypes;
