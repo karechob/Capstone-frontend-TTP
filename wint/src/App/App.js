@@ -5,6 +5,7 @@ import Home from "../pages/home";
 import LoginPage from "../pages/login";
 import SignupPage from "../pages/signup";
 import logo from "./logo.png";
+import UserProfile from "../components/UserProfile";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -47,6 +48,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/user" element={<UserProfile/>}/>
         </Routes>
       </div>
     </Router>
