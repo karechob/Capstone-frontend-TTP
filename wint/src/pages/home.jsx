@@ -14,7 +14,7 @@ function Home() {
         <p className="header">Welcome to Wint! </p>
         <p className="description">
           Embark on an unforgettable journey while keeping your wallet happy. At
-          Budget Wanderlust, we understand your love for travel and the
+          Wint, we understand your love for travel and the
           importance of making the most of your hard-earned money. Whether
           you're a penny-pincher, a thrifty explorer, or simply seeking
           incredible adventures without breaking the bank, you've come to the
