@@ -8,7 +8,7 @@ export const INITIAL_FLIGHT_STATE = {
 const flightsReducer = (state = INITIAL_FLIGHT_STATE, { type, payload }) => {
     console.log('FLIGHTREDUCER IS HANDLING FETCH ALL FLIGHT ACTION')
     switch (type) {
-        case FlightsActionTypes.FETCH_ALL_FLIGHTS:
+        case FlightsActionTypes.FETCH_FLIGHTS:
             console.log(state)
             return { ...state, allFlights: payload };
         case FlightsActionTypes.FETCH_SINGLE_FLIGHT:
