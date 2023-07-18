@@ -1,0 +1,49 @@
+.budget-graph-container {
+    margin: auto;
+    width: 50%;
+    height: 400px;
+    width: 400px;
+}
+
+/* body {
+    background-color: rgb(0, 0, 0);
+    color: aliceblue;
+} */
+
+.graph-budget {
+    padding-bottom: 40px;
+}
+
+.collaborators-container {
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+.collaborator-image {
+    display: inline-block;
+    margin: 100px;
+}
+.collaborator-indiv-img {
+    height: 200px;
+    width: 200px;
+    border-radius: 100%;
+
+}
+
+.remove-user-btn {
+    font-weight: bold;
+    background-color: #ffc1a0;
+    border: solid 2px whitesmoke;
+    border-radius: 100%;
+    padding: 5px;
+    height: 60px;
+    width: 60px;
+    color: black;
+    transition: .4s ease-out;
+}
+
+.remove-user-btn:hover {
+    cursor: pointer;
+    color: white;
+    background-color: black;
+}
