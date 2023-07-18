@@ -2,19 +2,22 @@ import React from "react";
 import { Chart, ArcElement } from "chart.js";
 import { Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+// import { Doughnut, Pie } from "react-chartjs-2";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const BudgetBreakdownGraph = () => {
   const data = {
-    labels: ["Label 1", "Label 2", "Label 3"],
+    labels: ["Activities", "Travel & Stay"],
     datasets: [
       {
-        label: "My First Dataset",
-        data: [30, 50, 20],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverOffset: 20,
+        label: "Assigned Budget",
+        data: [70, 50],
+        backgroundColor: ["#FF6384", "#5ed8eb"],
+        hoverBackgroundColor: ["#ff0037", "#00a1eb"],
+        hoverOffset: 4,
+        borderWidth: 3,
+        hoverBorderColor: "#DCEDC8",
       },
     ],
   };
@@ -32,10 +35,7 @@ const BudgetBreakdownGraph = () => {
   };
 
   return (
-    <div>
-      <h2>Budget Breakdown Graph</h2>
-      <Doughnut data={data} options={options} height={500} width={500} />
-    </div>
+      <Doughnut data={data} options={options} height={400} width={400} />
   );
 };
 
