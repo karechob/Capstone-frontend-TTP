@@ -62,5 +62,5 @@ function TripHistory() {
     </div>
   );
 }
-export default TripHistory;
 
+export default TripHistory;
