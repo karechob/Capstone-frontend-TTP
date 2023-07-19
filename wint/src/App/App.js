@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Home from "../pages/home";
 import LoginPage from "../pages/login";
 import SignupPage from "../pages/signup";
+import TripPage from "../pages/trip";
 import logo from "./logo.png";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
@@ -51,6 +52,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
+          <Route path="/trip" element={<TripPage />} />
           <Route path="/user" element={<UserProfile/>}/>
           <Route path="/userSettings" element={<UserSettings/>}/>
           <Route path="/trips" element={<Trips/>}/>
