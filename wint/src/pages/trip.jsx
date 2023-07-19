@@ -9,7 +9,7 @@ import imgplaceholder from "../pictures/nyc.jpg";
 //page that displays the information generated for one trip
 function trip() {
   return (
-    <div>
+    <div className="background-trip-page">
       <h1>Owner & Collaborators</h1>
       <Collaborators />
       <div className="weather-destination-container">
