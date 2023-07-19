@@ -1,7 +1,7 @@
 import React from "react";
-import defaultpic1 from "../trips/userdefault1.jpeg";
-import defaultpic2 from "../trips/userdefault2.jpeg";
-import defaultpic3 from "../trips/userdefault3.jpeg";
+import defaultpic1 from "../../pictures/userdefault1.jpeg";
+import defaultpic2 from "../../pictures/userdefault2.jpeg";
+import defaultpic3 from "../../pictures/userdefault3.jpeg";
 
 //function will be changed so it reads an array if users, the individual divs below are just placeholders
 function Collaborators() {
