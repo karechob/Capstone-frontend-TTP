@@ -1,8 +1,7 @@
 import React from "react";
 import { Chart, ArcElement } from "chart.js";
 import { Tooltip, Legend } from "chart.js";
-import { Doughnut } from "react-chartjs-2";
-// import { Doughnut, Pie } from "react-chartjs-2";
+import { Pie } from "react-chartjs-2";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
@@ -15,14 +14,17 @@ const BudgetBreakdownGraph = () => {
         data: [70, 50],
         backgroundColor: ["#FF6384", "#5ed8eb"],
         hoverBackgroundColor: ["#ff0037", "#00a1eb"],
-        hoverOffset: 4,
+        hoverOffset: 30,
         borderWidth: 3,
         hoverBorderColor: "#DCEDC8",
       },
     ],
   };
 
-  const options = {    
+  const options = {
+    layout: {
+      padding: 10,
+    },
     plugins: {
       Tooltip: {
         enabled: true,
@@ -34,9 +36,7 @@ const BudgetBreakdownGraph = () => {
     },
   };
 
-  return (
-      <Doughnut data={data} options={options} height={400} width={400} />
-  );
+  return <Pie data={data} options={options} height={400} width={400} />;
 };
 
 export default BudgetBreakdownGraph;
