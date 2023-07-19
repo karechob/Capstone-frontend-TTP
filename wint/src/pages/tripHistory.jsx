@@ -1,9 +1,10 @@
-import React from 'react'
+import React from "react";
 
-function tripHistory() {
-  return (
-    <div>tripHistory</div>
-  )
-}
+function TripHistory(){
 
-export default tripHistory
+    return(
+        <h1>Trip History</h1>
+    );
+};
+
+export default TripHistory;
