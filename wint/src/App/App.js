@@ -8,7 +8,11 @@ import logo from "./logo.png";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
 import Trips from "../pages/Trips";
+<<<<<<< Updated upstream
 import TripHistory from "../pages/TripHistory";
+=======
+import TripHistory from "../pages/tripHistory";
+>>>>>>> Stashed changes
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -54,7 +58,11 @@ function App() {
           <Route path="/user" element={<UserProfile/>}/>
           <Route path="/userSettings" element={<UserSettings/>}/>
           <Route path="/trips" element={<Trips/>}/>
+<<<<<<< Updated upstream
           <Route path="/triphistory" element={<TripHistory/>}/>
+=======
+          <Route path="/tripHistory" element={<TripHistory/>}/>
+>>>>>>> Stashed changes
         </Routes>
       </div>
     </Router>
