@@ -80,6 +80,7 @@ body {
 .weather-container:hover {
     transition: all .5s ease;
     box-shadow: 0px 0px 20px rgb(255, 0, 0);
+    background-color: rgb(238, 165, 165);
     padding: 2%;
 }
 
@@ -87,4 +88,32 @@ body {
     height: auto;
     width: 550px;
     border-radius: 50px;
+}
+.activity-img {
+    height: 300px;
+    width: 300px;
+    border-radius: 100%;
+}
+.activity-img-container {
+    flex: 1;
+    flex-basis: 10%;
+}
+.activity-info {
+    flex: 1;
+    flex-basis: 40%;
+}
+.act-list-item {
+    display: flex;
+    margin: 50px;
+    border-radius: 500px;
+    background-color: rgb(255, 181, 85);
+    padding-top: 40px;
+    padding-bottom: 40px;
+    transition: all .5s ease;
+}
+.act-list-item:hover {
+    padding: 2%;
+    transition: all .5s ease;
+    box-shadow: 0px 0px 40px rgb(255, 104, 33);
+    background-color: #ffc1a0;
 }
