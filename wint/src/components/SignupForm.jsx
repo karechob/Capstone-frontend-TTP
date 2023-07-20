@@ -96,7 +96,7 @@ function SignupForm() {
       dispatch(fetchUserThunk());
       navigate("/user");
     }
-  }, [isLoggedIn, navigate]);
+  }, [isLoggedIn, navigate, dispatch]);
 
   const isValidEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
