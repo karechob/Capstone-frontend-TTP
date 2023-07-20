@@ -1,7 +1,9 @@
 import UserActionTypes from "./user.types";
 
-export const INITIAL_USER_STATE = {
+const INITIAL_USER_STATE = {
   singleUser: {},
+  isLoggedIn: false,
+  isSignedUp: false,
 };
 
 const userReducer = (state = INITIAL_USER_STATE, { type, payload }) => {
@@ -16,16 +18,21 @@ const userReducer = (state = INITIAL_USER_STATE, { type, payload }) => {
       return { ...state, singleUser: payload };
     case UserActionTypes.SIGNUP_USER:
       console.log("Signup successful!");
-      return { ...state, singleUser: payload };
+      return {
+        ...state,
+        singleUser: payload,
+        isSignedUp: true,
+        isLoggedIn: true,
+      };
     case UserActionTypes.LOGIN_USER:
       console.log("Login successful!");
-      return { ...state, singleUser: payload };
-    case UserActionTypes.LOGIN_GOOGLE:
-      console.log("Google login successful!");
-      return { ...state, singleUser: payload };
+      return { ...state, singleUser: payload, isLoggedIn: true };
     case UserActionTypes.LOGOUT_USER:
       console.log("Logout successful!");
-      return state;
+      return { ...state, singleUser: {}, isLoggedIn: false };
+    case UserActionTypes.LOGIN_GOOGLE:
+      console.log("Google login successful!");
+      return { ...state, singleUser: payload, isLoggedIn: true };
     default:
       return state;
   }

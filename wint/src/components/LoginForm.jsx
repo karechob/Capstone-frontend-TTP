@@ -1,7 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUserThunk, loginUserThunk } from "../redux/user/user.actions";
+import { useNavigate } from "react-router-dom";
+
 import "../css/login.css";
 
 function LoginForm() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
@@ -21,7 +29,6 @@ function LoginForm() {
     e.preventDefault();
     setSubmitted(true);
 
-    // Perform validation
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const isNotEmpty = email.trim() !== "" && password.trim() !== "";
 
@@ -30,13 +37,26 @@ function LoginForm() {
       return;
     }
 
-    // Additional logic for submitting the form
     console.log(email);
     console.log(password);
+
+    const userData = {
+      email: email,
+      password: password,
+    };
+
+    dispatch(loginUserThunk(userData));
     setFormError("");
     setEmail("");
     setPassword("");
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchUserThunk());
+      navigate("/user");
+    }
+  }, [isLoggedIn, dispatch, navigate]);
 
   return (
     <div className="login-container">
