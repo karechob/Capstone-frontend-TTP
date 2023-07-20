@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Home from "../pages/home";
 import LoginPage from "../pages/login";
 import SignupPage from "../pages/signup";
-import Logout from "../components/Logout";
 import TripPage from "../pages/trip";
 import logo from "./logo.png";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
 import Trips from "../pages/Trips";
 import "./App.css";
-import TripHistory from "../pages/tripHistory";
+import { fetchUserThunk, logoutUserThunk } from "../redux/user/user.actions";
 
 function App() {
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logoutUserThunk()).then(() => {
+      navigate("/");
+    });
+  };
 
   return (
     <div className="App">
@@ -33,9 +41,10 @@ function App() {
                 </Link>
               </li>
               <li className="nav-item-right">
-                <Link to="/logout" id="logout-link">
-                  Logout
-                </Link>
+                {/* <Link to="/" id="logout-link">
+                      Logout
+                    </Link> */}
+                <button onClick={handleLogout} className="logout-button">Logout</button>
               </li>
             </>
           ) : (
@@ -57,13 +66,13 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/logout" element={<Logout />} />
+        {/* <Route path="/logout" element={<LogoutPage />} /> */}
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/trip" element={<TripPage />} />
         <Route path="/user" element={<UserProfile />} />
         <Route path="/userSettings" element={<UserSettings />} />
         <Route path="/trips" element={<Trips />} />
-        <Route path="/triphistory" element={<TripHistory />} />
+        {/* <Route path="/triphistory" element={<TripHistory/>}/> */}
       </Routes>
     </div>
   );
