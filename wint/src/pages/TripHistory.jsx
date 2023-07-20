@@ -1,5 +1,6 @@
 import React from "react";
 import "../css/tripHistory.css";
+import "../css/trip.css";
 
 function TripHistory() {
   // page for trip history of a single trip
