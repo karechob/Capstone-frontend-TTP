@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import "../css/login.css";
+//import { loginUserThunk } from "../redux/user/user.actions";
+//import { useDispatch } from "react-redux";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  //const dispatch = useDispatch();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -30,9 +33,16 @@ function LoginForm() {
       return;
     }
 
+    const userData = {
+      email: email,
+      password: password,
+    };
+
     // Additional logic for submitting the form
     console.log(email);
     console.log(password);
+    //dispatch(loginUserThunk(userData));
+
     setFormError("");
     setEmail("");
     setPassword("");

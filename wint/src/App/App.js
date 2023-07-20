@@ -9,7 +9,8 @@ import logo from "./logo.png";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
 import Trips from "../pages/Trips";
-import TripHistory from "../pages/tripHistory";
+//import { Provider } from "react-redux";
+import TripHistory from "../pages/TripHistory";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
