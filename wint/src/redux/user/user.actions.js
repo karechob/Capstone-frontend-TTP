@@ -10,14 +10,15 @@ export const fetchUser = (userData) => ({
 export const fetchUserThunk = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/users/${id}`);
+      const response = await axios.get(`http://localhost:8080/api/me/`, {
+        withCredentials: true,
+      });
       dispatch(fetchUser(response.data));
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 // Update user
 export const updateUser = (updateData) => ({
@@ -28,14 +29,13 @@ export const updateUser = (updateData) => ({
 export const updateUserThunk = (id) => {
   return async (dispatch) => {
     try {
-      const response = await axios.put(`http://localhost:8080/api/users/${id}`);
+      const response = await axios.put(`http://localhost:8080/api/me`);
       dispatch(updateUser(response.data));
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 // Signup user
 export const signupUser = (userData) => ({
@@ -46,10 +46,15 @@ export const signupUser = (userData) => ({
 export const signupUserThunk = (userData) => {
   return async (dispatch) => {
     try {
+      console.log("signupThunk is firing up");
       const response = await axios.post(
         `http://localhost:8080/auth/signup`,
-        userData
+        userData,
+        {
+          withCredentials: true,
+        }
       );
+      console.log(response.data);
       dispatch(signupUser(response.data));
     } catch (error) {
       console.error(error);
@@ -68,7 +73,10 @@ export const loginUserThunk = (userData) => {
     try {
       const response = await axios.post(
         `http://localhost:8080/auth/login`,
-        userData
+        userData,
+        {
+          withCredentials: true,
+        }
       );
       dispatch(loginUser(response.data));
     } catch (error) {
@@ -95,7 +103,6 @@ export const loginUserThunk = (userData) => {
 //   }
 // }
 
-
 // Logout user
 export const logoutUser = () => ({
   type: UserActionTypes.LOGOUT_USER,
@@ -104,11 +111,15 @@ export const logoutUser = () => ({
 export const logoutUserThunk = () => {
   return async (dispatch) => {
     try {
-        const response = await axios.post(`http://localhost:8080/auth/logout`);
-        dispatch(logoutUser());
-        console.log(response.data);
+      console.log("I am in userLogoutThunk");
+      const response = await axios.get(`http://localhost:8080/auth/logout`, {
+        withCredentials: true,
+      });
+      console.log(response);
+      dispatch(logoutUser());
+      console.log(response.data);
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-  }
+  };
 };

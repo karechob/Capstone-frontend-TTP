@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+
 import "../css/signup.css";
+import { fetchUserThunk, signupUserThunk } from "../redux/user/user.actions";
 
 function SignupForm() {
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [name, setName] = useState("");
+  const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [reEnterPassword, setReEnterPassword] = useState("");
@@ -14,6 +22,11 @@ function SignupForm() {
 
   const handleNameChange = (e) => {
     setName(e.target.value);
+    setFormError("");
+  };
+
+  const handleUserNameChange = (e) => {
+    setUserName(e.target.value);
     setFormError("");
   };
 
@@ -44,6 +57,7 @@ function SignupForm() {
       passwordError ||
       reEnterPasswordError ||
       !name ||
+      !username ||
       !email ||
       !password ||
       !reEnterPassword
@@ -55,16 +69,34 @@ function SignupForm() {
     }
 
     console.log(name);
+    console.log(username);
     console.log(email);
     console.log(password);
     console.log(reEnterPassword);
 
+    const userData = {
+      name: name,
+      username: username,
+      email: email,
+      password: password,
+    };
+
+    dispatch(signupUserThunk(userData));
+
     setName("");
+    setUserName("");
     setEmail("");
     setPassword("");
     setReEnterPassword("");
     setFormError("");
   };
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      dispatch(fetchUserThunk());
+      navigate("/user");
+    }
+  }, [isLoggedIn, navigate, dispatch]);
 
   const isValidEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -118,6 +150,15 @@ function SignupForm() {
             placeholder="Name"
             value={name}
             onChange={handleNameChange}
+            onFocus={handleFocus}
+            className="signup-input"
+            required
+          />
+          <input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={handleUserNameChange}
             onFocus={handleFocus}
             className="signup-input"
             required
