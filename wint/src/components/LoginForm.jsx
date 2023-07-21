@@ -1,10 +1,9 @@
 // LoginForm.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUserThunk, googleSignInThunk } from "../redux/user/user.actions";
+import { loginUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
-import axios from "axios";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -77,34 +76,23 @@ function LoginForm() {
       });
   };
 
-  // const handleGoogleSignIn = () => {
-  //   window.location.href = "http://localhost:8080/auth/google";
-  // };
-
-  // const handleGoogleSignIn = () => {
-  //   axios.get()
-  //   // dispatch(googleSignInThunk())
-  //   //   .then(() => {
-  //   //     resetForm();
-  //   //     navigate("/user");
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.error("Error initiating Google Sign-In:", error);
-  //   //   });
-  // };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(e);
-    }
+  const handleGoogleSignIn = () => {
+    window.location.href = "http://localhost:8080/auth/google";
+    sessionStorage.setItem("isLoggedIn", "true");
   };
+
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "Enter") {
+  //     handleSubmit(e);
+  //   }
+  // };
 
   return (
     <div
       className="login-container"
-      tabIndex="0"
-      onFocus={() => setFormError("")}
-      onKeyDown={handleKeyDown}
+      // tabIndex="0"
+      // onFocus={() => setFormError("")}
+      // onKeyDown={handleKeyDown}
     >
       <div className="login-message">LOG IN</div>
       <div className="login-body">
@@ -141,12 +129,9 @@ function LoginForm() {
             <hr />
           </div>
 
-          <a
-            className="google-login-btn"
-            href="http://localhost:8080/auth/google"
-          >
+          <button className="google-login-btn" onClick={handleGoogleSignIn}>
             {isSubmitting ? "Logging In..." : "Sign in with Google"}
-          </a>
+          </button>
         </div>
       </div>
     </div>
