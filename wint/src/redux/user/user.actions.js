@@ -10,18 +10,17 @@ export const fetchUser = (userData) => ({
 export const fetchUserThunk = () => {
   return async (dispatch, getState) => {
     const user = getState().user;
-    console.log("this is user", user)
+    // console.log("this is user", user)
     try {
       const response = await axios.get(`http://localhost:8080/auth/me/`, {
-          withCredentials: true,
-        });
-        dispatch(fetchUser(response.data || {}))
+        withCredentials: true,
+      });
+      dispatch(fetchUser(response.data || {}));
     } catch (error) {
       console.error(error);
     }
   };
 };
-
 
 // Update user
 export const updateUser = (updateData) => ({
@@ -102,7 +101,7 @@ export const googleSignInThunk = () => {
       const response = await axios.get(`http://localhost:8080/auth/google`, {
         withCredentials: true,
       });
-      console.log("this is the response ", response)
+      console.log("this is the response ", response);
       dispatch(googleSignIn(response.data));
     } catch (error) {
       console.error(error);
