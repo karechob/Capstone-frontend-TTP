@@ -1,12 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import { useSelector} from "react-redux";
 
 function UserProfile() {
-  const [UserName, setUserName] = useState("John Doe");
-  //Default value of profile picture
-  const [imgUrl, setimgUrl] = useState(
-    "https://i.pinimg.com/originals/f1/0f/f7/f10ff70a7155e5ab666bcdd1b45b726d.jpg"
-  );
+  const user = useSelector(state => state.user.singleUser);
+  console.log("This is the user's info: ", user);
 
   //Used to display a default profile picture
   //   const handleImageError = (event) => {
@@ -15,19 +11,19 @@ function UserProfile() {
   //   };
   return (
     <div>
-      <h1 style={{ display: "inline-block" }}>User Profile</h1>
+      <h1 style={{ display: "inline-block" }}>{user.name}</h1>
       <button style={{ display: "inline-block", marginLeft: "10px" }}>
         Settings
       </button>
       <div style={{ textAlign: "center" }}>
         <img
           id="myImage"
-          src={imgUrl}
-          alt="Default Image"
-          width="100"
-          height="100"
+          src= {user.image}
+          alt="user avatar"
+          width="200"
+          height="200"
         />
-        <h3>Name: {UserName}</h3>
+        <h3>Username: {user.username}</h3>
       </div>
       <button>Trips</button>
       <button>New Trip</button>

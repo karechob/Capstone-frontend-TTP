@@ -1,10 +1,9 @@
 // LoginForm.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUserThunk, googleSignInThunk } from "../redux/user/user.actions";
+import { loginUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
-import axios from "axios";
 
 function LoginForm() {
   const dispatch = useDispatch();
