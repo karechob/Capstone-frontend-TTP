@@ -8,8 +8,8 @@ import TripPage from "../pages/trip";
 import logo from "./logo.png";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
-import Trips from "../pages/Trips";
-import TripHistory from "../pages/tripHistory";
+import Trips from "../pages/trips";
+import TripHistory from "../pages/triphistory";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
