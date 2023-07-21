@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-
+import { useDispatch } from "react-redux";
 import "../css/signup.css";
-import { fetchUserThunk, signupUserThunk } from "../redux/user/user.actions";
+import { signupUserThunk } from "../redux/user/user.actions";
 
 function SignupForm() {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +18,21 @@ function SignupForm() {
   const [reEnterPasswordError, setReEnterPasswordError] = useState("");
   const [formError, setFormError] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const resetForm = () => {
+    setName("");
+    setUserName("");
+    setEmail("");
+    setPassword("");
+    setReEnterPassword("");
+    setEmailError("");
+    setPasswordError("");
+    setReEnterPasswordError("");
+    setFormError("");
+    setSubmitted(false);
+    setIsSubmitting(false);
+  };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -31,7 +45,8 @@ function SignupForm() {
   };
 
   const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+    const lowercaseEmail = e.target.value.toLowerCase();
+    setEmail(lowercaseEmail);
     setEmailError("");
     setFormError("");
   };
@@ -68,11 +83,7 @@ function SignupForm() {
       return;
     }
 
-    console.log(name);
-    console.log(username);
-    console.log(email);
-    console.log(password);
-    console.log(reEnterPassword);
+    setIsSubmitting(true);
 
     const userData = {
       name: name,
@@ -81,22 +92,26 @@ function SignupForm() {
       password: password,
     };
 
-    dispatch(signupUserThunk(userData));
-
-    setName("");
-    setUserName("");
-    setEmail("");
-    setPassword("");
-    setReEnterPassword("");
-    setFormError("");
+    dispatch(signupUserThunk(userData))
+      .then(() => {
+        resetForm();
+        navigate("/user");
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 409) {
+            setFormError("Username or email already exists.");
+          } else {
+            setFormError("Something went wrong. Please try again later.");
+          }
+        } else {
+          setFormError("Something went wrong. Please try again later.");
+        }
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      dispatch(fetchUserThunk());
-      navigate("/user");
-    }
-  }, [isLoggedIn, navigate, dispatch]);
 
   const isValidEmail = (value) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -137,14 +152,25 @@ function SignupForm() {
     setFormError("");
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit(e);
+    }
+  };
+
   return (
-    <div className="signup-container">
+    <div
+      className="signup-container"
+      tabIndex="0"
+      onFocus={() => setFormError("")}
+      onKeyDown={handleKeyDown}
+    >
       <div className="signup-message">SIGN UP</div>
       <div className="signup-body">
         <div className="signup-top"></div>
         <div className="signup-bottom"></div>
         <div className="signup-center">
-          <h2>Please Sign up</h2>
+          <h2 className="signup-header">Please Sign up</h2>
           <input
             type="text"
             placeholder="Name"
@@ -202,7 +228,7 @@ function SignupForm() {
             <p className="signup-error">{formError}</p>
           )}
           <button type="submit" className="signup-btn" onClick={handleSubmit}>
-            Sign up
+            {isSubmitting ? "Signing Up..." : "Sign up"}
           </button>
         </div>
       </div>
