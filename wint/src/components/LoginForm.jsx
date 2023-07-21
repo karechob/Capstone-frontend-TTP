@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { loginUserThunk, googleSignInThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
+import axios from "axios";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -80,16 +81,17 @@ function LoginForm() {
   //   window.location.href = "http://localhost:8080/auth/google";
   // };
 
-  const handleGoogleSignIn = () => {
-    dispatch(googleSignInThunk())
-      .then(() => {
-        resetForm();
-        navigate("/user");
-      })
-      .catch((error) => {
-        console.error("Error initiating Google Sign-In:", error);
-      });
-  };
+  // const handleGoogleSignIn = () => {
+  //   axios.get()
+  //   // dispatch(googleSignInThunk())
+  //   //   .then(() => {
+  //   //     resetForm();
+  //   //     navigate("/user");
+  //   //   })
+  //   //   .catch((error) => {
+  //   //     console.error("Error initiating Google Sign-In:", error);
+  //   //   });
+  // };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -139,13 +141,12 @@ function LoginForm() {
             <hr />
           </div>
 
-          <button
+          <a
             className="google-login-btn"
-            onClick={handleGoogleSignIn}
-            disabled={isSubmitting}
+            href="http://localhost:8080/auth/google"
           >
             {isSubmitting ? "Logging In..." : "Sign in with Google"}
-          </button>
+          </a>
         </div>
       </div>
     </div>

@@ -4,37 +4,36 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   fetchUserThunk,
   logoutUserThunk,
-  loginUser,
 } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import "./App.css";
 import AppRoutes from "./AppRoutes";
 
+//all permissions have to come from here (not inside redux)
+//no need for localstorage
+
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleLogout = () => {
     dispatch(logoutUserThunk()).then(() => {
-      localStorage.removeItem("isLoggedIn");
       navigate("/");
     });
   };
 
+  const isLoggedIn = useSelector(state => !!state.user.singleUser.email);
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (storedIsLoggedIn) {
-      dispatch(loginUser());
-      dispatch(fetchUserThunk());
-    }
-  }, [dispatch]);
+    dispatch(fetchUserThunk())
+  }, [dispatch, isLoggedIn]);
+  console.log("this is isloggedin", isLoggedIn)
+
 
   return (
     <div className="App">
-      <Navbar handleLogout={handleLogout} isLoggedIn={isLoggedIn} />
-      <AppRoutes isLoggedIn={isLoggedIn} />
+      <Navbar handleLogout={handleLogout} />
+      <AppRoutes  />
     </div>
   );
 }
