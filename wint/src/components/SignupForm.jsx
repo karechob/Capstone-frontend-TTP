@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import "../css/signup.css";
 import { signupUserThunk } from "../redux/user/user.actions";
+import "../css/signup.css";
 
 function SignupForm() {
   const dispatch = useDispatch();

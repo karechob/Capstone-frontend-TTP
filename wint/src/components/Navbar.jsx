@@ -1,10 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../css/navBar.css";
-import { useSelector } from "react-redux";
 
-const Navbar = ({ handleLogout}) => {
-  const isLoggedIn = useSelector(state => !!state.user.singleUser.email)
+const Navbar = ({ handleLogout }) => {
+  const isLoggedIn = sessionStorage.getItem("isLoggedIn");
   return (
     <nav className="nav-container">
       <ul className="nav-links">
