@@ -1,15 +1,12 @@
-// App.js
 import React, { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  fetchUserThunk,
-  logoutUserThunk,
-  loginUser,
-} from "../redux/user/user.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import "./App.css";
 import AppRoutes from "./AppRoutes";
+import { fetchUserThunk } from "../redux/user/user.actions";
+import Cookies from "js-cookie";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,18 +15,15 @@ function App() {
 
   const handleLogout = () => {
     dispatch(logoutUserThunk()).then(() => {
-      localStorage.removeItem("isLoggedIn");
       navigate("/");
     });
   };
 
   useEffect(() => {
-    const storedIsLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (storedIsLoggedIn) {
-      dispatch(loginUser());
-      dispatch(fetchUserThunk());
+    if (isLoggedIn) {
+      dispatch(fetchUserThunk()).catch(() => {});
     }
-  }, [dispatch]);
+  }, [dispatch, isLoggedIn]);
 
   return (
     <div className="App">

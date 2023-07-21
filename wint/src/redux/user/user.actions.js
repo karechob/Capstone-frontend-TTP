@@ -9,12 +9,14 @@ export const fetchUser = (userData) => ({
 
 export const fetchUserThunk = () => {
   return async (dispatch, getState) => {
+    console.log("FETCHUSERTHUNK IS FIRING UP");
     const { isLoggedIn } = getState().user;
     if (isLoggedIn) {
       try {
         const response = await axios.get(`http://localhost:8080/auth/me/`, {
           withCredentials: true,
         });
+        console.log(response.data);
         dispatch(fetchUser(response.data));
       } catch (error) {
         console.error(error);
@@ -74,6 +76,7 @@ export const loginUser = (userData) => ({
 export const loginUserThunk = (userData) => {
   return async (dispatch) => {
     try {
+      console.log("LOGIN USERTHUNK IS FIRING");
       const response = await axios.post(
         `http://localhost:8080/auth/login`,
         userData,

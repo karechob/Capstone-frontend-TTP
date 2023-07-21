@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginUserThunk, googleSignInThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
+
 import "../css/login.css";
 
 function LoginForm() {
@@ -33,7 +34,7 @@ function LoginForm() {
     setFormError("");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
     setIsSubmitting(true);
@@ -59,7 +60,7 @@ function LoginForm() {
       return;
     }
 
-    dispatch(loginUserThunk(userData))
+    await dispatch(loginUserThunk(userData))
       .then(() => {
         resetForm();
         navigate("/user");

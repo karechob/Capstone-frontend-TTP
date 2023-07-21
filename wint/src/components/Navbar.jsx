@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "../css/navBar.css";
 
 const Navbar = ({ handleLogout, isLoggedIn }) => {
+  console.log("NAV BAR IS LOGGED IN:", isLoggedIn);
   return (
     <nav className="nav-container">
       <ul className="nav-links">
