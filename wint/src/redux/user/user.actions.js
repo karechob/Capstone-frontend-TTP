@@ -9,19 +9,19 @@ export const fetchUser = (userData) => ({
 
 export const fetchUserThunk = () => {
   return async (dispatch, getState) => {
-    const { isLoggedIn } = getState().user;
-    if (isLoggedIn) {
-      try {
-        const response = await axios.get(`http://localhost:8080/auth/me/`, {
+    const user = getState().user;
+    console.log("this is user", user)
+    try {
+      const response = await axios.get(`http://localhost:8080/auth/me/`, {
           withCredentials: true,
         });
-        dispatch(fetchUser(response.data));
-      } catch (error) {
-        console.error(error);
-      }
+        dispatch(fetchUser(response.data || {}))
+    } catch (error) {
+      console.error(error);
     }
   };
 };
+
 
 // Update user
 export const updateUser = (updateData) => ({
@@ -102,6 +102,7 @@ export const googleSignInThunk = () => {
       const response = await axios.get(`http://localhost:8080/auth/google`, {
         withCredentials: true,
       });
+      console.log("this is the response ", response)
       dispatch(googleSignIn(response.data));
     } catch (error) {
       console.error(error);
@@ -119,7 +120,7 @@ export const logoutUserThunk = () => {
   return async (dispatch) => {
     try {
       console.log("I am in userLogoutThunk");
-      const response = await axios.get(`http://localhost:8080/auth/logout`, {
+      await axios.get(`http://localhost:8080/auth/logout`, {
         withCredentials: true,
       });
       dispatch(logoutUser());
