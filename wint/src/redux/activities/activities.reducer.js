@@ -6,14 +6,14 @@ export const INITIAL_ACTIVITY_STATE = {
 }
 
 const activitiesReducer = (state = INITIAL_ACTIVITY_STATE, { type, payload }) => {
-    console.log('ACTIVITYREDUCER IS HANDLING FETCH ALL ACTIVITY ACTION')
+    // console.log('ACTIVITYREDUCER IS HANDLING FETCH ALL ACTIVITY ACTION')
     switch (type) {
         case ActivitiesActionTypes.FETCH_ACTIVITIES:
-            console.log(state)
+            // console.log(state)
             return { ...state, allActivities: payload };
         case ActivitiesActionTypes.FETCH_SINGLE_ACTIVITY:
-            console.log("this is the payload for single activities")
-            console.log(payload)
+            // console.log("this is the payload for single activities")
+            // console.log(payload)
             return { ...state, singleActivity: payload };
         case ActivitiesActionTypes.DELETE_ACTIVITY:
             return { ...state, singleActivity: null };

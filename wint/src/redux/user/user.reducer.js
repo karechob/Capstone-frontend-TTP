@@ -5,29 +5,29 @@ const INITIAL_USER_STATE = {
 };
 
 const userReducer = (state = INITIAL_USER_STATE, { type, payload }) => {
-  console.log("USERREDUCER IS HANDLING FETCH ALL USER ACTIONS");
+  // console.log("USERREDUCER IS HANDLING FETCH ALL USER ACTIONS");
   switch (type) {
     case UserActionTypes.FETCH_USER:
-      console.log("Payload of single user");
-      console.log(payload);
+      // console.log("Payload of single user");
+      // console.log(payload);
       return { ...state, singleUser: payload };
     case UserActionTypes.UPDATE_USER:
-      console.log("Update successful!");
+      // console.log("Update successful!");
       return { ...state, singleUser: payload };
     case UserActionTypes.SIGNUP_USER:
-      console.log("Signup successful!");
+      // console.log("Signup successful!");
       return {
         ...state,
         singleUser: payload,
       };
     case UserActionTypes.LOGIN_USER:
-      console.log("Login successful!");
-      return { ...state, singleUser: payload};
+      // console.log("Login successful!");
+      return { ...state, singleUser: payload };
     case UserActionTypes.LOGOUT_USER:
-      console.log("Logout successful!");
+      // console.log("Logout successful!");
       return { ...state, singleUser: {} };
     case UserActionTypes.LOGIN_GOOGLE:
-      console.log("Google login successful!");
+      // console.log("Google login successful!");
       return { ...state, singleUser: payload };
     default:
       return state;

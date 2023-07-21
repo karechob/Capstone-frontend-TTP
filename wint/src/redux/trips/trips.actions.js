@@ -20,7 +20,7 @@ export const fetchTripThunk = (id) => {
         try {
             const response = await axios.get(`http://localhost:8080/api/trips/${id}`);
             dispatch(fetchTrip(response.data));
-            console.log(dispatch);
+            // console.log(dispatch);
         } catch (error) {
             console.error(error);
         }
@@ -39,7 +39,7 @@ export const addTripThunk = (tripData) => {
         try {
             const response = await axios.post("http://localhost:8080/api/trips", tripData);
             dispatch(addTrip(response.data));
-            console.log(dispatch);
+            // console.log(dispatch);
         } catch (error) {
             console.error(error);
         }
@@ -58,7 +58,7 @@ export const updateTripThunk = (updateTrip) => {
         try {
             const response = await axios.put(`http://localhost:8080/api/trips/${updateTrip.id}`, updateTrip);
             dispatch(updateTrip(response.data));
-            console.log(dispatch);
+            // console.log(dispatch);
         } catch (error) {
             console.error(error);
         }
@@ -77,7 +77,7 @@ export const deleteTripThunk = (id) => {
         try {
             const response = await axios.delete(`http://localhost:8080/api/trips/${id}`);
             dispatch(deleteTrip(response.data));
-            console.log(dispatch);
+            // console.log(dispatch);
         } catch (error) {
             console.error(error);
         }

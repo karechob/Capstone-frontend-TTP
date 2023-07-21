@@ -6,7 +6,7 @@ import FlightsActionTypes from "./flights.types";
 // need to pass our own values for parameters (all required)
 
 export const fetchAllFlights = (payload) => {
-    console.log("FETCH ALL FLIGHTS ACTION");
+    // console.log("FETCH ALL FLIGHTS ACTION");
     return {
       type: FlightsActionTypes.FETCH_FLIGHTS,
       payload: payload,
