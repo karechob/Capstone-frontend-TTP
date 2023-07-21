@@ -24,11 +24,12 @@
 .login-container {
   position: absolute;
   width: 100%;
-  height: 97%;
+  height: 97.2%;
   overflow: hidden;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #000000e5;
 }
 
 .login-container:hover,
@@ -57,7 +58,7 @@
     display: block;
     position: absolute;
     width: 100vmax;
-    height: 120vmax;
+    height: 125vmax;
     max-width: 100%;
     top: 50%;
     left: 50%;
@@ -92,6 +93,9 @@
   }
 }
 
+.login-header {
+  color: #ffffff;
+}
 .login-center {
   position: absolute;
   width: 400px;
@@ -103,14 +107,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: -50px;
   padding: 10px;
   opacity: 0;
   transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
   transition-delay: 0s;
-  color: #333;
+  color: #ffffff;
   font-size: 20px;
   z-index: 1;
-  margin-top: -80px;
 }
 
 .login-error {
@@ -120,7 +124,7 @@
 }
 
 .login-input {
-  width: 100%;
+  width: 90%;
   padding: 15px;
   margin: 5px;
   border-radius: 1px;
@@ -131,9 +135,9 @@
 
 .login-btn {
   display: block;
-  width: 100%;
+  width: 90%;
   margin: 5px;
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 900;
   padding: 15px;
   background: #17c02e;
@@ -153,6 +157,49 @@
   transform: scale(0.98);
 }
 
+.login-separator {
+  display: flex;
+  align-items: center;
+  text-align: center;
+}
+
+.login-separator hr {
+  flex: 1;
+  height: 1px;
+  width: 70px;
+  margin: 0 10px;
+  background-color: #ccc;
+}
+
+.login-separator span {
+  padding: 0 10px;
+  color: #ccc;
+}
+
+.google-login-btn {
+  display: block;
+  width: 90%;
+  margin: 5px;
+  font-size: 1.5rem;
+  font-weight: 900;
+  padding: 15px;
+  background: #0e72f5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.google-login-btn:hover,
+.google-login-btn:focus {
+  background: #0c59bd;
+  outline: none;
+}
+
+.google-login-btn:active {
+  transform: scale(0.98);
+}
+
 .login-message {
   position: absolute;
   top: 80%;
@@ -160,13 +207,9 @@
   transform: translate(-50%, -50%);
   padding: 10px;
   margin-top: 33px;
-  /* border: 1px solid #f1e0e0; */
-  /* border-radius: 4px; */
   text-align: center;
-  font-size: 70px;
+  font-size: 60px;
   color: #ffffff;
-  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-  /* background-color: #e46569; */
   z-index: 11;
   font-family: "Oswald", sans-serif;
   opacity: 1;
@@ -180,4 +223,8 @@
 
 .login-container:not(:hover) .login-message {
   transition-delay: 0.5s;
+}
+
+.login-center input.login-input:hover {
+  background-color: #eceaea;
 }
