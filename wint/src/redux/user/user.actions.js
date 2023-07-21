@@ -7,15 +7,18 @@ export const fetchUser = (userData) => ({
   payload: userData,
 });
 
-export const fetchUserThunk = (id) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/me/`, {
-        withCredentials: true,
-      });
-      dispatch(fetchUser(response.data));
-    } catch (error) {
-      console.error(error);
+export const fetchUserThunk = () => {
+  return async (dispatch, getState) => {
+    const { isLoggedIn } = getState().user;
+    if (isLoggedIn) {
+      try {
+        const response = await axios.get(`http://localhost:8080/auth/me/`, {
+          withCredentials: true,
+        });
+        dispatch(fetchUser(response.data));
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 };
@@ -54,10 +57,10 @@ export const signupUserThunk = (userData) => {
           withCredentials: true,
         }
       );
-      console.log(response.data);
       dispatch(signupUser(response.data));
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 };
@@ -81,27 +84,31 @@ export const loginUserThunk = (userData) => {
       dispatch(loginUser(response.data));
     } catch (error) {
       console.error(error);
+      throw error;
     }
   };
 };
 
-// Google login thunk is not finished
+// Login user with Google
+export const googleSignIn = (userData) => ({
+  type: UserActionTypes.LOGIN_GOOGLE,
+  payload: userData,
+});
 
-// // Login user with Google
-// export const loginGoogle = (userData) => ({
-//   type: UserActionTypes.LOGIN_GOOGLE,
-//   payload: userData,
-// });
-
-// export const loginGoogleThunk = () => {
-//   return async (dispatch) => {
-//     try {
-//       const response = await axios.post(`http://localhost:8080/auth/google`);
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   }
-// }
+export const googleSignInThunk = () => {
+  return async (dispatch) => {
+    try {
+      console.log("googleSignInThunk Is Firing Up");
+      const response = await axios.get(`http://localhost:8080/auth/google`, {
+        withCredentials: true,
+      });
+      dispatch(googleSignIn(response.data));
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  };
+};
 
 // Logout user
 export const logoutUser = () => ({
@@ -115,9 +122,7 @@ export const logoutUserThunk = () => {
       const response = await axios.get(`http://localhost:8080/auth/logout`, {
         withCredentials: true,
       });
-      console.log(response);
       dispatch(logoutUser());
-      console.log(response.data);
     } catch (error) {
       console.error(error);
     }

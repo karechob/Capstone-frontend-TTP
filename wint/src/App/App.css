@@ -6,18 +6,3 @@
   width: 80px;
   height: 60px;
 }
-
-.logout-button {
-  font-size: 20px;
-  position: relative;
-  font-family: "Oswald", sans-serif;
-  margin-top: -3px;
-  color: aliceblue;
-  background-color: #252525;
-  border: #252525;
-}
-
-.logout-button:hover {
-  color: #ffffff;
-  font-weight: 900;
-}
