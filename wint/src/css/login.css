@@ -177,7 +177,8 @@
 }
 
 .google-login-btn {
-  display: block;
+  display: flex;
+  align-items: center;
   width: 90%;
   margin: 5px;
   font-size: 1.5rem;
@@ -227,4 +228,16 @@
 
 .login-center input.login-input:hover {
   background-color: #eceaea;
+}
+
+.image-button {
+  padding: 10px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.image-button img {
+  vertical-align: middle;
+  margin-right: 8px; /* Space between the image and the button text */
 }

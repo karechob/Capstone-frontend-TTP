@@ -6,8 +6,8 @@ import SignupPage from "../pages/signup";
 import TripPage from "../pages/trip";
 import UserProfile from "../components/UserProfile";
 import UserSettings from "../components/UserSettings";
-import Trips from "../pages/trips";
-import TripHistory from "../pages/triphistory";
+import Trips from "../pages/Trips";
+import TripHistory from "../pages/TripHistory";
 
 const AppRoutes = () => {
   return (

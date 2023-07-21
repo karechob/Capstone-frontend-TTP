@@ -145,6 +145,14 @@ function LoginForm() {
             className="google-login-btn"
             href="http://localhost:8080/auth/google"
           >
+            {/* Google image logo */}
+            <img
+              className="image-button"
+              src="https://static.vecteezy.com/system/resources/previews/010/353/285/original/colourful-google-logo-on-white-background-free-vector.jpg"
+              alt="Description of Image"
+              width="50"
+              height="50"
+            />
             {isSubmitting ? "Logging In..." : "Sign in with Google"}
           </a>
         </div>
