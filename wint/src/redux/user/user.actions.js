@@ -68,6 +68,7 @@ export const signupUserThunk = (userData) => async (dispatch) => {
     );
     dispatch(signupUser(response.data));
     sessionStorage.setItem("isLoggedIn", "true");
+    dispatch(fetchUserThunk());
   } catch (error) {
     console.error(error);
     throw error;
