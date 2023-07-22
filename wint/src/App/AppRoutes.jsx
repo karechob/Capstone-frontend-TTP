@@ -4,9 +4,11 @@ import Home from "../pages/home";
 import LoginPage from "../pages/login";
 import SignupPage from "../pages/signup";
 import TripPage from "../pages/trip";
-import UserProfile from "../components/UserProfile";
-import UserSettings from "../components/UserSettings";
+import UserProfile from "../pages/userProfile";
+import UserSettings from "../pages/userSettings";
+import NewTrip from "../pages/newTrip";
 import Trips from "../pages/trips";
+import Test from "../components/test";
 import TripHistory from "../pages/triphistory";
 import ProtectedRoute from "../components/ProtectedRoute";
 
@@ -43,10 +45,26 @@ const AppRoutes = () => {
         }
       />
       <Route
+        path="/test"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Test />
+          </ProtectedRoute>
+        }
+      />
+      <Route
         path="/trip"
         element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <TripPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/new-trip"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <NewTrip />
           </ProtectedRoute>
         }
       />

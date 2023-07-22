@@ -19,6 +19,13 @@ function SignupForm() {
   const [formError, setFormError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [hasError, setHasError] = useState({
+    name: false,
+    username: false,
+    email: false,
+    password: false,
+    reEnterPassword: false,
+  });
 
   const resetForm = () => {
     setName("");
@@ -32,16 +39,25 @@ function SignupForm() {
     setFormError("");
     setSubmitted(false);
     setIsSubmitting(false);
+    setHasError({
+      name: false,
+      username: false,
+      email: false,
+      password: false,
+      reEnterPassword: false,
+    });
   };
 
   const handleNameChange = (e) => {
     setName(e.target.value);
     setFormError("");
+    setHasError((prevState) => ({ ...prevState, name: false }));
   };
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
     setFormError("");
+    setHasError((prevState) => ({ ...prevState, username: false }));
   };
 
   const handleEmailChange = (e) => {
@@ -49,18 +65,21 @@ function SignupForm() {
     setEmail(lowercaseEmail);
     setEmailError("");
     setFormError("");
+    setHasError((prevState) => ({ ...prevState, email: false }));
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setPasswordError("");
     setFormError("");
+    setHasError((prevState) => ({ ...prevState, password: false }));
   };
 
   const handleReEnterPasswordChange = (e) => {
     setReEnterPassword(e.target.value);
     setReEnterPasswordError("");
     setFormError("");
+    setHasError((prevState) => ({ ...prevState, reEnterPassword: false }));
   };
 
   const handleSubmit = (e) => {
@@ -68,18 +87,25 @@ function SignupForm() {
     setSubmitted(true);
 
     if (
-      emailError ||
-      passwordError ||
-      reEnterPasswordError ||
       !name ||
       !username ||
       !email ||
       !password ||
-      !reEnterPassword
+      !reEnterPassword ||
+      emailError ||
+      passwordError ||
+      reEnterPasswordError
     ) {
       setFormError(
         "You can't sign up. Please fill in all the required fields correctly."
       );
+      setHasError({
+        name: !name,
+        username: !username,
+        email: !email,
+        password: !password,
+        reEnterPassword: !reEnterPassword,
+      });
       return;
     }
 
@@ -107,6 +133,13 @@ function SignupForm() {
         } else {
           setFormError("Something went wrong. Please try again later.");
         }
+        setHasError({
+          name: false,
+          username: false,
+          email: false,
+          password: false,
+          reEnterPassword: false,
+        });
       })
       .finally(() => {
         setIsSubmitting(false);
@@ -129,14 +162,16 @@ function SignupForm() {
       setEmailError(
         "Invalid email format. Please enter a valid email address."
       );
+      setHasError((prevState) => ({ ...prevState, email: true }));
     }
   };
 
   const handleBlurPassword = () => {
     if (password.trim() !== "" && !isStrongPassword(password)) {
       setPasswordError(
-        "Password must contain at least one letter, one number, and one special character."
+        "Password must contain at least one uppercase, one lowercase, one number, and one special character."
       );
+      setHasError((prevState) => ({ ...prevState, password: true }));
     }
   };
 
@@ -145,11 +180,8 @@ function SignupForm() {
       setReEnterPasswordError(
         "Passwords do not match. Please re-enter the password."
       );
+      setHasError((prevState) => ({ ...prevState, reEnterPassword: true }));
     }
-  };
-
-  const handleFocus = () => {
-    setFormError("");
   };
 
   const handleKeyDown = (e) => {
@@ -159,25 +191,21 @@ function SignupForm() {
   };
 
   return (
-    <div
-      className="signup-container"
-      tabIndex="0"
-      onFocus={() => setFormError("")}
-      onKeyDown={handleKeyDown}
-    >
+    <div className="signup-container" tabIndex="0" onKeyDown={handleKeyDown}>
       <div className="signup-message">SIGN UP</div>
       <div className="signup-body">
         <div className="signup-top"></div>
         <div className="signup-bottom"></div>
         <div className="signup-center">
-          <h2 className="signup-header">Please Sign up</h2>
+          <p className="signup-header">Join WINT today</p>
           <input
             type="text"
             placeholder="Name"
             value={name}
             onChange={handleNameChange}
-            onFocus={handleFocus}
-            className="signup-input"
+            className={`signup-input ${
+              hasError.name ? "signup-input-invalid" : ""
+            }`}
             required
           />
           <input
@@ -185,8 +213,9 @@ function SignupForm() {
             placeholder="Username"
             value={username}
             onChange={handleUserNameChange}
-            onFocus={handleFocus}
-            className="signup-input"
+            className={`signup-input ${
+              hasError.username ? "signup-input-invalid" : ""
+            }`}
             required
           />
           <input
@@ -195,8 +224,9 @@ function SignupForm() {
             value={email}
             onChange={handleEmailChange}
             onBlur={handleBlurEmail}
-            onFocus={handleFocus}
-            className="signup-input"
+            className={`signup-input ${
+              hasError.email ? "signup-input-invalid" : ""
+            }`}
             required
           />
           {emailError && <p className="signup-error">{emailError}</p>}
@@ -206,8 +236,9 @@ function SignupForm() {
             value={password}
             onChange={handlePasswordChange}
             onBlur={handleBlurPassword}
-            onFocus={handleFocus}
-            className="signup-input"
+            className={`signup-input ${
+              hasError.password ? "signup-input-invalid" : ""
+            }`}
             required
           />
           {passwordError && <p className="signup-error">{passwordError}</p>}
@@ -217,8 +248,9 @@ function SignupForm() {
             value={reEnterPassword}
             onChange={handleReEnterPasswordChange}
             onBlur={handleBlurReEnterPassword}
-            onFocus={handleFocus}
-            className="signup-input"
+            className={`signup-input ${
+              hasError.reEnterPassword ? "signup-input-invalid" : ""
+            }`}
             required
           />
           {reEnterPasswordError && (

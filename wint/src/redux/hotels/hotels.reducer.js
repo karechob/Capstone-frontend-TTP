@@ -1,6 +1,6 @@
 import HotelsActionTypes from "./hotels.types";
 
-export const INITIAL_HOTEL_STATE = {
+const INITIAL_HOTEL_STATE = {
   allHotels: [],
   // singleHotel: {},
 };

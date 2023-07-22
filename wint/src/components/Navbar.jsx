@@ -32,11 +32,6 @@ const Navbar = ({ handleLogout }) => {
                 Login
               </Link>
             </li>
-            <li className="nav-item-right">
-              <Link to="/signup" id="signup-link">
-                Signup
-              </Link>
-            </li>
           </>
         )}
       </ul>

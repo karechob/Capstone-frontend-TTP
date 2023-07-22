@@ -31,7 +31,7 @@ export const fetchAllHotelsThunk = () => {
         categories_filter_ids: "class::2,class::4,free_cancellation::1",
       },
       headers: {
-        "X-RapidAPI-Key": process.env.REACT_APP_HOTEL_API_KEY,
+        "X-RapidAPI-Key": process.env.REACT_APP_X_RAPIDAPI_KEY,
         "X-RapidAPI-Host": "booking-com.p.rapidapi.com",
       },
     };
