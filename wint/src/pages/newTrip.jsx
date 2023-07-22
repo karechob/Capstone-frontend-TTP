@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions"
 import "../css/tripHistory.css";
 import "../css/trip.css";
+import NewTripForm from '../components/NewTripForm'
 
 
 function NewTrip() {
@@ -22,7 +23,8 @@ function NewTrip() {
   
     return (
       <div>
-        <h1>Hotel Trips</h1>
+        <h1>New Trip</h1>
+        <NewTripForm/>
         {showHotels ? (
           allHotels && allHotels.length > 0 ? (
             <div>
