@@ -5,10 +5,10 @@
     width: 500px;
 }
 
-/* body {
-    background-color: #000a0fe6;
+body {
+    background-color: #1a1a1a;;
     color: white;
-} */
+}
 
 .graph-budget {
     padding-bottom: 40px;
@@ -34,8 +34,8 @@
 
 .remove-user-btn {
     font-weight: bold;
-    background-color: #ffa0a0;
-    border: solid 2px #ffa0a0;
+    background-color: #ed1c5b;
+    border: solid 2px #ed1c5b;
     border-radius: 100%;
     padding: 5px;
     height: 60px;
