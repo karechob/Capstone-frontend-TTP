@@ -29,7 +29,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000e5;
+  background-color: #000000;
 }
 
 .login-container:hover,
@@ -95,7 +95,10 @@
 
 .login-header {
   color: #ffffff;
+  font-size: 35px;
+  font-weight: bold;
 }
+
 .login-center {
   position: absolute;
   width: 400px;
@@ -113,37 +116,42 @@
   transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
   transition-delay: 0s;
   color: #ffffff;
-  font-size: 20px;
+  font-size: 18px;
   z-index: 1;
 }
 
 .login-error {
   color: red;
-  font-size: 13px;
+  font-size: 11px;
   margin-top: 5px;
 }
 
 .login-input {
   width: 90%;
-  padding: 15px;
+  padding: 12px;
   margin: 5px;
-  border-radius: 1px;
-  border: 1px solid #ccc;
+  border-radius: 5px;
+  border: 3px inset #4fb496bb;
   font-family: inherit;
-  font-size: 20px;
+  font-size: 18px;
+}
+
+.login-input-invalid {
+  border: 4px inset #e41414be;
+  border-style: inset;
 }
 
 .login-btn {
   display: block;
   width: 90%;
-  margin: 5px;
-  font-size: 1.5rem;
+  margin: 10px;
+  font-size: 18px;
   font-weight: 900;
-  padding: 15px;
+  padding: 12px;
   background: #17c02e;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -165,34 +173,35 @@
 
 .login-separator hr {
   flex: 1;
-  height: 1px;
+  height: 2px;
   width: 70px;
   margin: 0 10px;
-  background-color: #ccc;
+  background-color: #ffffff;
 }
 
 .login-separator span {
   padding: 0 10px;
-  color: #ccc;
+  color: #ffffff;
+  margin-top: 2px;
 }
 
 .google-login-btn {
   display: block;
   width: 90%;
   margin: 5px;
-  font-size: 1.5rem;
+  font-size: 18px;
   font-weight: 900;
-  padding: 15px;
-  background: #0e72f5;
+  padding: 12px;
+  background: #0084ff;
   color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .google-login-btn:hover,
 .google-login-btn:focus {
-  background: #0c59bd;
+  background: #0352b9;
   outline: none;
 }
 
@@ -227,4 +236,30 @@
 
 .login-center input.login-input:hover {
   background-color: #eceaea;
+}
+
+.signup-link {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  pointer-events: none;
+}
+
+.signup-link:hover .signup-link-span {
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.signup-link .signup-link-span:focus {
+  outline: none;
+  text-decoration: none;
+}
+
+.signup-link-span {
+  color: #3ca1ff;
+  font-size: 18px;
+  pointer-events: auto;
 }
