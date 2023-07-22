@@ -50,7 +50,11 @@ export const fetchUserThunk = () => async (dispatch) => {
 export const updateUserThunk = (userData) => async (dispatch) => {
   try {
     console.log("UPDATEUSERTHUNK FIRING UP");
-    const response = await axios.put(`http://localhost:8080/api/me`, userData);
+    console.log("user data: ", userData);
+    const response = await axios.put(`http://localhost:8080/api/me`, userData, {
+      withCredentials: true,
+    });
+
     dispatch(updateUser(response.data));
   } catch (error) {
     console.error(error);
