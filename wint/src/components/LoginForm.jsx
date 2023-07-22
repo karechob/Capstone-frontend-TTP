@@ -1,10 +1,9 @@
 // LoginForm.js
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loginUserThunk, googleSignInThunk } from "../redux/user/user.actions";
+import { loginUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import "../css/login.css";
-import axios from "axios";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -14,37 +13,44 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoginSubmitting, setIsLoginSubmitting] = useState(false);
+  const [isGoogleLoginSubmitting, setIsGoogleLoginSubmitting] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const resetForm = () => {
     setEmailOrUsername("");
     setPassword("");
     setFormError("");
     setSubmitted(false);
-    setIsSubmitting(false);
+    setIsLoginSubmitting(false);
+    setIsGoogleLoginSubmitting(false);
+    setHasError(false);
   };
 
   const handleEmailOrUsernameChange = (e) => {
     setEmailOrUsername(e.target.value);
     setFormError("");
+    setHasError(false);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setFormError("");
+    setHasError(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    setIsSubmitting(true);
+    setIsLoginSubmitting(true);
 
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrUsername);
     const isNotEmpty = emailOrUsername.trim() !== "" && password.trim() !== "";
 
     if (!isNotEmpty) {
       setFormError("Please enter a valid email or username and password.");
-      setIsSubmitting(false);
+      setIsLoginSubmitting(false);
+      setHasError(true);
       return;
     }
 
@@ -56,7 +62,8 @@ function LoginForm() {
 
     if (!userData.email && !userData.username) {
       setFormError("Please enter a valid email or username.");
-      setIsSubmitting(false);
+      setIsLoginSubmitting(false);
+      setHasError(true);
       return;
     }
 
@@ -71,69 +78,65 @@ function LoginForm() {
         } else {
           setFormError("An error occurred. Please try again later.");
         }
+        setHasError(true);
       })
       .finally(() => {
-        setIsSubmitting(false);
+        setIsLoginSubmitting(false);
       });
   };
 
-  // const handleGoogleSignIn = () => {
-  //   window.location.href = "http://localhost:8080/auth/google";
-  // };
-
-  // const handleGoogleSignIn = () => {
-  //   axios.get()
-  //   // dispatch(googleSignInThunk())
-  //   //   .then(() => {
-  //   //     resetForm();
-  //   //     navigate("/user");
-  //   //   })
-  //   //   .catch((error) => {
-  //   //     console.error("Error initiating Google Sign-In:", error);
-  //   //   });
-  // };
-
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      handleSubmit(e);
-    }
+  const handleFocus = () => {
+    setFormError("");
+    setHasError(false);
   };
+
+  const handleGoogleSignIn = () => {
+    setIsGoogleLoginSubmitting(true);
+    window.location.href = "http://localhost:8080/auth/google";
+    sessionStorage.setItem("isLoggedIn", "true");
+  };
+
 
   return (
     <div
       className="login-container"
-      tabIndex="0"
-      onFocus={() => setFormError("")}
-      onKeyDown={handleKeyDown}
     >
       <div className="login-message">LOG IN</div>
       <div className="login-body">
         <div className="login-top"></div>
         <div className="login-bottom"></div>
         <div className="login-center">
-          <h2>Please Sign In</h2>
+          <p className="login-header">Sign in to WINT</p>
           <input
             type="text"
             placeholder="Email or Username"
             value={emailOrUsername}
+            onFocus={handleFocus}
             onChange={handleEmailOrUsernameChange}
-            className="login-input"
+            className={`login-input ${
+              submitted && emailOrUsername.trim() === ""
+                ? "login-input-invalid"
+                : ""
+            } ${hasError ? "login-input-error" : ""}`}
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
+            onFocus={handleFocus}
             onChange={handlePasswordChange}
-            className="login-input"
+            className={`login-input ${
+              submitted && password.trim() === "" ? "login-input-invalid" : ""
+            } ${hasError ? "login-input-error" : ""}`}
           />
           {submitted && formError && <p className="login-error">{formError}</p>}
           <button
             type="submit"
             className="login-btn"
             onClick={handleSubmit}
-            disabled={isSubmitting}
+            disabled={isLoginSubmitting}
           >
-            {isSubmitting ? "Logging In..." : "Log in"}
+            {isLoginSubmitting ? "Logging In..." : "Log in"}
           </button>
           <div className="login-separator">
             <hr />
@@ -141,12 +144,18 @@ function LoginForm() {
             <hr />
           </div>
 
-          <a
+          <button
+            type="submit"
             className="google-login-btn"
-            href="http://localhost:8080/auth/google"
+            onClick={handleGoogleSignIn}
+            disabled={isGoogleLoginSubmitting}
           >
-            {isSubmitting ? "Logging In..." : "Sign in with Google"}
-          </a>
+            {isGoogleLoginSubmitting ? "Logging In..." : "Sign in with Google"}
+          </button>
+          <div className="signup-link" onClick={() => navigate("/signup")}>
+            Don't have an account?{" "}
+            <span className="signup-link-span">Sign up</span>
+          </div>
         </div>
       </div>
     </div>
