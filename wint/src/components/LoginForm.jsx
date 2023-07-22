@@ -13,37 +13,44 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const [formError, setFormError] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoginSubmitting, setIsLoginSubmitting] = useState(false);
+  const [isGoogleLoginSubmitting, setIsGoogleLoginSubmitting] = useState(false);
+  const [hasError, setHasError] = useState(false);
 
   const resetForm = () => {
     setEmailOrUsername("");
     setPassword("");
     setFormError("");
     setSubmitted(false);
-    setIsSubmitting(false);
+    setIsLoginSubmitting(false);
+    setIsGoogleLoginSubmitting(false);
+    setHasError(false);
   };
 
   const handleEmailOrUsernameChange = (e) => {
     setEmailOrUsername(e.target.value);
     setFormError("");
+    setHasError(false);
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
     setFormError("");
+    setHasError(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setSubmitted(true);
-    setIsSubmitting(true);
+    setIsLoginSubmitting(true);
 
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailOrUsername);
     const isNotEmpty = emailOrUsername.trim() !== "" && password.trim() !== "";
 
     if (!isNotEmpty) {
       setFormError("Please enter a valid email or username and password.");
-      setIsSubmitting(false);
+      setIsLoginSubmitting(false);
+      setHasError(true);
       return;
     }
 
@@ -55,7 +62,8 @@ function LoginForm() {
 
     if (!userData.email && !userData.username) {
       setFormError("Please enter a valid email or username.");
-      setIsSubmitting(false);
+      setIsLoginSubmitting(false);
+      setHasError(true);
       return;
     }
 
@@ -70,13 +78,20 @@ function LoginForm() {
         } else {
           setFormError("An error occurred. Please try again later.");
         }
+        setHasError(true);
       })
       .finally(() => {
-        setIsSubmitting(false);
+        setIsLoginSubmitting(false);
       });
   };
 
+  const handleFocus = () => {
+    setFormError("");
+    setHasError(false);
+  };
+
   const handleGoogleSignIn = () => {
+    setIsGoogleLoginSubmitting(true);
     window.location.href = "http://localhost:8080/auth/google";
     sessionStorage.setItem("isLoggedIn", "true");
   };
@@ -99,29 +114,37 @@ function LoginForm() {
         <div className="login-top"></div>
         <div className="login-bottom"></div>
         <div className="login-center">
-          <h2>Please Sign In</h2>
+          <p className="login-header">Sign in to WINT</p>
           <input
             type="text"
             placeholder="Email or Username"
             value={emailOrUsername}
+            onFocus={handleFocus}
             onChange={handleEmailOrUsernameChange}
-            className="login-input"
+            className={`login-input ${
+              submitted && emailOrUsername.trim() === ""
+                ? "login-input-invalid"
+                : ""
+            } ${hasError ? "login-input-error" : ""}`}
           />
           <input
             type="password"
             placeholder="Password"
             value={password}
+            onFocus={handleFocus}
             onChange={handlePasswordChange}
-            className="login-input"
+            className={`login-input ${
+              submitted && password.trim() === "" ? "login-input-invalid" : ""
+            } ${hasError ? "login-input-error" : ""}`}
           />
           {submitted && formError && <p className="login-error">{formError}</p>}
           <button
             type="submit"
             className="login-btn"
             onClick={handleSubmit}
-            disabled={isSubmitting}
+            disabled={isLoginSubmitting}
           >
-            {isSubmitting ? "Logging In..." : "Log in"}
+            {isLoginSubmitting ? "Logging In..." : "Log in"}
           </button>
           <div className="login-separator">
             <hr />
@@ -129,9 +152,18 @@ function LoginForm() {
             <hr />
           </div>
 
-          <button className="google-login-btn" onClick={handleGoogleSignIn}>
-            {isSubmitting ? "Logging In..." : "Sign in with Google"}
+          <button
+            type="submit"
+            className="google-login-btn"
+            onClick={handleGoogleSignIn}
+            disabled={isGoogleLoginSubmitting}
+          >
+            {isGoogleLoginSubmitting ? "Logging In..." : "Sign in with Google"}
           </button>
+          <div className="signup-link" onClick={() => navigate("/signup")}>
+            Don't have an account?{" "}
+            <span className="signup-link-span">Sign up</span>
+          </div>
         </div>
       </div>
     </div>
