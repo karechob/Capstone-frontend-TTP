@@ -1,10 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
-
+import { fetchUserThunk } from "../redux/user/user.actions";
 function Profile() {
   const user = useSelector((state) => state.user.singleUser);
-  console.log(user);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSettingsClick = () => {
@@ -16,6 +16,10 @@ function Profile() {
   const handleNewTripClick = () => {
     navigate("/new-trip");
   };
+
+  useEffect(() => {
+    dispatch(fetchUserThunk());
+  }, [dispatch]);
 
   return (
     <div>
