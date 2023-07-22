@@ -1,9 +1,5 @@
 const HotelsActionTypes = {
-    FETCH_HOTELS: "FETCH_HOTELS",
-    FETCH_SINGLE_HOTEL: "FETCH_SINGLE_HOTEL",
-    ADD_HOTEL: "ADD_HOTEL",
-    DELETE_HOTEL: "DELETE_HOTEL",
-    UPDATE_HOTEL:" UPDATE_HOTEL"
-}
+  FETCH_HOTELS: "FETCH_HOTELS",
+};
 
 export default HotelsActionTypes;
