@@ -1,10 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import {
-  fetchUserThunk,
-  logoutUserThunk,
-  setLoginStatus,
-} from "../redux/user/user.actions";
+import { logoutUserThunk, setLoginStatus } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
 import AppRoutes from "./AppRoutes";
@@ -24,7 +20,6 @@ function App() {
     const isLoggedIn = sessionStorage.getItem("isLoggedIn");
     if (isLoggedIn === "true") {
       dispatch(setLoginStatus(true));
-      dispatch(fetchUserThunk());
     } else {
       dispatch(setLoginStatus(false));
     }
