@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import "../css/userSettings.css";
 import { updateUserThunk } from "../redux/user/user.actions";
 import { useDispatch } from "react-redux";
@@ -11,7 +11,6 @@ function Settings() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -50,12 +49,20 @@ function Settings() {
     if (isValidEmail(userData.email) && isValidPassword(password)) {
       setPassword("");
       setPasswordError("");
+
+      try {
+        dispatch(updateUserThunk(userData));
+        console.log("Updated user data:", userData);
+
+        navigate("/user");
+      } catch (error) {
+        console.error("Error updating user:", error.message);
+      }
     }
-    console.log("userData after hitting done:" ,userData);
-    dispatch(updateUserThunk(userData))
-    .then(()=>{
+    console.log("userData after hitting done:", userData);
+    dispatch(updateUserThunk(userData)).then(() => {
       navigate("/user");
-    })
+    });
   };
 
   const isValidEmail = (value) => {
@@ -112,7 +119,12 @@ function Settings() {
         />
         {passwordError && <p className="error-message">{passwordError}</p>}
         <br />
-        <button type="submit" className="settings-submit-btn" >
+
+        <button
+          type="button"
+          className="settings-submit-btn"
+          onClick={handleSubmit}
+        >
           Done
         </button>
       </form>
