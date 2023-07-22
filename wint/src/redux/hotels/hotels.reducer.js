@@ -2,17 +2,13 @@ import HotelsActionTypes from "./hotels.types";
 
 const INITIAL_HOTEL_STATE = {
   allHotels: [],
-  error: null,
+  // singleHotel: {},
 };
 
-const hotelsReducer = (state = INITIAL_HOTEL_STATE, action) => {
-  switch (action.type) {
+const hotelsReducer = (state = INITIAL_HOTEL_STATE, { type, payload }) => {
+  switch (type) {
     case HotelsActionTypes.FETCH_HOTELS:
-      return {
-        ...state,
-        allHotels: action.payload,
-        error: null,
-      };
+      return { ...state, allHotels: payload };
     default:
       return state;
   }
