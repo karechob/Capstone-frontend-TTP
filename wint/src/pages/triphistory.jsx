@@ -1,37 +1,65 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions"
+import React from "react";
 import "../css/tripHistory.css";
 import "../css/trip.css";
 
 function TripHistory() {
-  const dispatch = useDispatch();
-  const hotels = useSelector((state) => state.hotels.allHotels);
-  console.log(hotels)
-
-  useEffect(() => {
-    dispatch(fetchAllHotelsThunk());
-  }, [dispatch]);
-
+  // page for trip history of a single trip
   return (
-    <div>
-      <h1>Hotel Trips</h1>
-      { hotels ? (
-        <div>
-        {hotels.map((hotel) => (
-          <div key={hotel.hotel_id}>
-            <h3>{hotel.hotel_name}</h3>
-            <p>Address: {hotel.address}</p>
+    <div className="background-trip-page">
+      <h1>Trip History</h1>
+      <h3 className="header-trips">Trips</h3>
+      <hr></hr>
+      <div>
+        <div className="activities-list-container">
+          {/* Start of activity item */}
+          <div className="act-list-item">
+            <div className="activity-img-container">
+              <img
+                className="activity-img"
+                // src={PlaceholderActivity}
+                alt="Activity"
+              />
+            </div>
+            <div className="activity-info">
+              <h1>ActivityName</h1>
+              <h2>Budget: $$$</h2>
+              <h2>Link to place googlemaps</h2>
+              <button className="">View</button>
+            </div>
           </div>
-        ))}
+          {/* second list item */}
+          <div className="act-list-item">
+            <div className="activity-img-container">
+              <img
+                className="activity-img"
+                // src={PlaceholderActivity}
+                alt="Activity"
+              />
+            </div>
+            <div className="activity-info">
+              <h1>ActivityName</h1>
+              <h2>Budget: $$$</h2>
+              <h2>Link to place googlemaps</h2>
+            </div>
+          </div>
+          {/* third list item */}
+          <div className="act-list-item">
+            <div className="activity-img-container">
+              <img
+                className="activity-img"
+                // src={PlaceholderActivity}
+                alt="Activity"
+              />
+            </div>
+            <div className="activity-info">
+              <h1>ActivityName</h1>
+              <h2>Budget: $$$</h2>
+              <h2>Link to place googlemaps</h2>
+            </div>
+          </div>
+        </div>
       </div>
-      ) : (
-         <p>Error: couldnt load hotels</p>
-      )}
     </div>
-    // <div>
-    //   hotels
-    // </div>
   );
 }
 
