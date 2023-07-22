@@ -96,18 +96,10 @@ function LoginForm() {
     sessionStorage.setItem("isLoggedIn", "true");
   };
 
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "Enter") {
-  //     handleSubmit(e);
-  //   }
-  // };
 
   return (
     <div
       className="login-container"
-      // tabIndex="0"
-      // onFocus={() => setFormError("")}
-      // onKeyDown={handleKeyDown}
     >
       <div className="login-message">LOG IN</div>
       <div className="login-body">
