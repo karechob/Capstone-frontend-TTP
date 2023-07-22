@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import "../css/userSettings.css";
+import { updateUserThunk } from "../redux/user/user.actions";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 function Settings() {
   const user = useSelector((state) => state.user.singleUser);
@@ -8,6 +11,9 @@ function Settings() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleNameChange = (e) => {
     setUserData({ ...userData, name: e.target.value });
@@ -45,6 +51,11 @@ function Settings() {
       setPassword("");
       setPasswordError("");
     }
+    console.log("userData after hitting done:" ,userData);
+    dispatch(updateUserThunk(userData))
+    .then(()=>{
+      navigate("/user");
+    })
   };
 
   const isValidEmail = (value) => {
@@ -101,7 +112,7 @@ function Settings() {
         />
         {passwordError && <p className="error-message">{passwordError}</p>}
         <br />
-        <button type="submit" className="settings-submit-btn">
+        <button type="submit" className="settings-submit-btn" >
           Done
         </button>
       </form>
