@@ -96,11 +96,8 @@ function LoginForm() {
     sessionStorage.setItem("isLoggedIn", "true");
   };
 
-
   return (
-    <div
-      className="login-container"
-    >
+    <div className="login-container">
       <div className="login-message">LOG IN</div>
       <div className="login-body">
         <div className="login-top"></div>
