@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions"
+import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
 import "../css/tripHistory.css";
 import "../css/trip.css";
-import NewTripForm from '../components/NewTripForm'
-
+import NewTripForm from "../components/NewTripForm";
 
 function NewTrip() {
+  const dispatch = useDispatch();
+  const allHotels = useSelector((state) => state.hotels.allHotels.results);
+  const [showHotels, setShowHotels] = useState(false);
 
-    const dispatch = useDispatch();
-    const allHotels = useSelector((state) => state.hotels.allHotels.results);
-    const [showHotels, setShowHotels] = useState(false);
+  // useEffect(() => {
+  //   dispatch(fetchAllHotelsThunk());
+  // }, [dispatch]);
 
-  
-    useEffect(() => {
-      dispatch(fetchAllHotelsThunk());
-    }, [dispatch]);
+  const handleShowHotels = () => {
+    setShowHotels(true);
+  };
 
-    const handleShowHotels = () => {
-      setShowHotels(true);
-    };
-  
-    return (
-      <div>
-        <h1>New Trip</h1>
-        <NewTripForm/>
-        {showHotels ? (
+  return (
+    <div>
+      <h1>New Trip</h1>
+      <NewTripForm />
+      {/* {showHotels ? (
           allHotels && allHotels.length > 0 ? (
             <div>
               {allHotels.map((hotel) => (
@@ -40,10 +37,10 @@ function NewTrip() {
           )
         ) : (
           <button onClick={handleShowHotels}>Show Hotels</button>
-        )}
-      </div>
-    );
-  };
+        )} */}
+    </div>
+  );
+}
 
 export default NewTrip;
 
@@ -60,4 +57,3 @@ export default NewTrip;
 // }
 
 // export default newTrip;
-
