@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../css/userSettings.css";
 import { updateUserThunk } from "../redux/user/user.actions";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {

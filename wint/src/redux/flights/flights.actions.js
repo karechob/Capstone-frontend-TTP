@@ -13,40 +13,28 @@ export const fetchAllFlights = (payload) => {
 
 export const fetchAllFlightsThunk = () => {
   return async (dispatch) => {
+    const options = {
+      method: 'GET',
+      url: 'https://priceline-com-provider.p.rapidapi.com/v2/flight/roundTrip',
+      params: {
+        departure_date: '2023-12-21,2023-12-25',
+        adults: '1',
+        sid: 'iSiX639',
+        origin_airport_code: 'YWG,JFK',
+        destination_airport_code: 'JFK,YWG'
+      },
+      headers: {
+        'X-RapidAPI-Key': process.env.REACT_APP_X_FLIGHT_API_KEY,
+        'X-RapidAPI-Host': 'priceline-com-provider.p.rapidapi.com'
+      }
+    };
+    
     try {
-      const options = {
-        method: "GET",
-        url: "https://priceline-com-provider.p.rapidapi.com/v1/flights/search",
-        params: {
-          location_arrival: "NYC",
-          itinerary_type: "ONE_WAY",
-          sort_order: "PRICE",
-          class_type: "ECO",
-          location_departure: "LAX",
-          date_departure: "2023-10-18",
-          duration_max: "2051",
-          number_of_passengers: "1",
-          date_departure_return: "2023-10-19",
-          number_of_stops: "1",
-          price_min: "100",
-          price_max: "20000",
-        },
-        headers: {
-          "X-RapidAPI-Key": process.env.FLIGHT_API_KEY,
-          "X-RapidAPI-Host": process.env.FLIGHT_API_HOST,
-        },
-      };
-
-      const response = await axios(options);
-
-      dispatch({
-        type: FlightsActionTypes.FETCH_FLIGHTS,
-        payload: response.data,
-      });
+      const response = await axios.request(options);
+      console.log("this is fligths", response.data)
+      dispatch(fetchAllFlights(response.data));
     } catch (error) {
-      dispatch({
-        payload: error.message,
-      });
+      console.error(error);
     }
   };
 };
