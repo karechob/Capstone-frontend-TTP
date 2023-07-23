@@ -7,14 +7,8 @@ function Profile() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleSettingsClick = () => {
-    navigate("/userSettings");
-  };
   const handleTripsClick = () => {
     navigate("/trips");
-  };
-  const handleNewTripClick = () => {
-    navigate("/new-trip");
   };
 
   useEffect(() => {
@@ -24,12 +18,6 @@ function Profile() {
   return (
     <div>
       <h1 style={{ display: "inline-block" }}>User Profile</h1>
-      <button
-        style={{ display: "inline-block", marginLeft: "10px" }}
-        onClick={handleSettingsClick}
-      >
-        Settings
-      </button>
       <div style={{ textAlign: "center" }}>
         <img
           id="myImage"
@@ -41,7 +29,6 @@ function Profile() {
         <h3>Name: {user.name}</h3>
       </div>
       <button onClick={handleTripsClick}>Trips</button>
-      <button onClick={handleNewTripClick}>New Trip</button>
       <hr></hr>
       <p>*Other user Info*</p>
     </div>

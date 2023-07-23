@@ -1,6 +1,6 @@
 import React from "react";
 import "../css/home.css";
-import video from "../pictures/home_background2.mp4";
+import video from "../assets/videos/home_background2.mp4";
 import "../fonts/NeueKonstantGrotesk-Book.otf";
 
 function Home() {
@@ -14,11 +14,10 @@ function Home() {
         <p className="header">Welcome to Wint! </p>
         <p className="description">
           Embark on an unforgettable journey while keeping your wallet happy. At
-          Wint, we understand your love for travel and the
-          importance of making the most of your hard-earned money. Whether
-          you're a penny-pincher, a thrifty explorer, or simply seeking
-          incredible adventures without breaking the bank, you've come to the
-          right place.
+          Wint, we understand your love for travel and the importance of making
+          the most of your hard-earned money. Whether you're a penny-pincher, a
+          thrifty explorer, or simply seeking incredible adventures without
+          breaking the bank, you've come to the right place.
         </p>
       </div>
     </div>
