@@ -9,17 +9,16 @@ export const fetchAllTrips = (tripData) => ({
 
 // Still need to create Thunk to get all trips from user
 
-// Fetch a single trip
-export const fetchTrip = (tripData) => ({
-  type: TripsActionTypes.FETCH_SINGLE_TRIP,
-  payload: tripData,
-});
 
-export const fetchTripThunk = (id) => {
+export const fetchAllTripsThunk = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/trips/${id}`);
-      dispatch(fetchTrip(response.data));
+      const response = await axios.get(`http://localhost:8080/api/me/trips`, {
+        withCredentials: true,
+      });
+      // console.log("before dispatch: ", response.data);
+      dispatch(fetchAllTrips(response.data));
+      console.log("after dispatch: ", response.data);
     } catch (error) {
       console.error(error);
     }
