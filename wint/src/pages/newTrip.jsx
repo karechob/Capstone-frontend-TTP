@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
+// import React, { useEffect, useState } from "react";
 import "../fonts/NeueKonstantGrotesk-Book.otf";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
-import { fetchAllFlightsThunk } from "../redux/flights/flights.actions";
+// import { useDispatch, useSelector } from "react-redux";
+// import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
+// import { fetchAllFlightsThunk } from "../redux/flights/flights.actions";
 import NewTripForm from "../components/NewTripForm";
 import "../css/tripHistory.css";
 import "../css/trip.css";
