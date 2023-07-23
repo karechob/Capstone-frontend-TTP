@@ -9,7 +9,6 @@ export const fetchAllTrips = (tripData) => ({
 
 // Still need to create Thunk to get all trips from user
 
-
 export const fetchAllTripsThunk = () => {
   return async (dispatch) => {
     try {
@@ -34,52 +33,58 @@ export const addTrip = (tripData) => ({
 export const addTripThunk = (tripData) => {
   return async (dispatch) => {
     try {
+      console.log("ADDTRIPTHUNK IS FIRING UP");
+      console.log(tripData);
       const response = await axios.post(
-        "http://localhost:8080/api/trips",
-        tripData
+        "http://localhost:8080/api/me",
+        tripData,
+        {
+          withCredentials: true,
+        }
       );
       dispatch(addTrip(response.data));
     } catch (error) {
+      console.log("HERE", error);
       console.error(error);
     }
   };
 };
 
-// Updating a trip
-export const updateTrip = (updateData) => ({
-  type: TripsActionTypes.UPDATE_TRIP,
-  payload: updateData,
-});
+// // Updating a trip
+// export const updateTrip = (updateData) => ({
+//   type: TripsActionTypes.UPDATE_TRIP,
+//   payload: updateData,
+// });
 
-export const updateTripThunk = (updateTrip) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:8080/api/trips/${updateTrip.id}`,
-        updateTrip
-      );
-      dispatch(updateTrip(response.data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
+// export const updateTripThunk = (updateTrip) => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.put(
+//         `http://localhost:8080/api/trips/${updateTrip.id}`,
+//         updateTrip
+//       );
+//       dispatch(updateTrip(response.data));
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+// };
 
-// Deleting a trip
-export const deleteTrip = (deleteData) => ({
-  type: TripsActionTypes.DELETE_TRIP,
-  payload: deleteData,
-});
+// // Deleting a trip
+// export const deleteTrip = (deleteData) => ({
+//   type: TripsActionTypes.DELETE_TRIP,
+//   payload: deleteData,
+// });
 
-export const deleteTripThunk = (id) => {
-  return async (dispatch) => {
-    try {
-      const response = await axios.delete(
-        `http://localhost:8080/api/trips/${id}`
-      );
-      dispatch(deleteTrip(response.data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-};
+// export const deleteTripThunk = (id) => {
+//   return async (dispatch) => {
+//     try {
+//       const response = await axios.delete(
+//         `http://localhost:8080/api/trips/${id}`
+//       );
+//       dispatch(deleteTrip(response.data));
+//     } catch (error) {
+//       console.error(error);
+//     }
+//   };
+// };

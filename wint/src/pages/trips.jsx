@@ -1,26 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { Dispatch } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTripsThunk } from "../redux/trips/trips.actions";
 
 function Trips() {
- 
-  
-    const trips = useSelector((state) => state.trips.allTrips);
-    const dispatch = useDispatch();
-  
-    useEffect(() => {
-      dispatch(fetchAllTripsThunk());
-    }, [dispatch]);
-  
-    // Log the updated value of trips whenever it changes
-    useEffect(() => {
-      console.log("trips: ", trips);
-    }, [trips]);
-  
-  
+  const trips = useSelector((state) => state.trips.allTrips);
+  const dispatch = useDispatch();
+  console.log(trips);
 
-  // dispatch(fetchTripThunk(4))
+  useEffect(() => {
+    dispatch(fetchAllTripsThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    console.log("trips: ", trips);
+  }, [trips]);
+
   return (
     // page that displays the trips when clicking on trips on user
     <>
@@ -29,7 +23,6 @@ function Trips() {
       <button>Settings</button>
       <hr></hr>
       <h3>Previous Trips:</h3>
-      
     </>
   );
 }
