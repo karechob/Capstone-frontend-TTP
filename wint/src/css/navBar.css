@@ -5,10 +5,11 @@
 .nav-container {
   background-color: #000000d0;
   opacity: 1;
-  height: 60px;
+  height: 65px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: auto;
 }
 
 .nav-links {
@@ -42,14 +43,27 @@
 }
 
 .nav-links button {
-  font-size: 20px;
-  font-family: "Oswald", sans-serif;
-  color: aliceblue;
   background-color: #25252500;
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin: 0 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-links button img {
+  width: 28px;
+  height: 28px;
+}
+
+.nav-links .button-text {
+  margin-top: 5px;
+  font-family: "Oswald", sans-serif;
+  color: aliceblue;
+  font-size: 11px;
+  white-space: nowrap;
 }
 
 .nav-links button:hover {

@@ -5,11 +5,6 @@ import { fetchUserThunk } from "../redux/user/user.actions";
 function Profile() {
   const user = useSelector((state) => state.user.singleUser);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const handleTripsClick = () => {
-    navigate("/trips");
-  };
 
   useEffect(() => {
     dispatch(fetchUserThunk());
@@ -28,7 +23,6 @@ function Profile() {
         />
         <h3>Name: {user.name}</h3>
       </div>
-      <button onClick={handleTripsClick}>Trips</button>
       <hr></hr>
       <p>*Other user Info*</p>
     </div>
