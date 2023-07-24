@@ -18,9 +18,9 @@ function Trips() {
     return new Date(dateStr).toISOString().split("T")[0];
   }
 
-  const handleView = () => {
+  const handleView = (key) => {
     navigate("../trip", {
-      state: { tripData: trips },
+      state: { tripData: trips[key] },
     });
   };
 
@@ -44,7 +44,7 @@ function Trips() {
             ? trips.map((trip, index) => (
                 <tr key={index}>
                   <td>
-                    <button onClick={handleView}>View</button>
+                    <button onClick={() => handleView(index)}>View</button>
                   </td>
                   <td>{formatDate(trip.startDate)}</td>
                   <td>{trip.destination}</td>
