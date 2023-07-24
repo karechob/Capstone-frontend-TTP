@@ -38,7 +38,7 @@ export const fetchAllHotelsThunk = () => {
 
     try {
       const response = await axios.request(options);
-      console.log(response.data)
+      console.log("this is hotels", response.data)
       dispatch(fetchAllHotelsSuccess(response.data));
     } catch (error) {
       console.log(error)
