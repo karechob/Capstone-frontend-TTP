@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import "../css/userSettings.css";
-import { updateUserThunk } from "../redux/user/user.actions";
+import { fetchUserThunk, updateUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
 
 function Settings() {
   const user = useSelector((state) => state.user.singleUser);
-  const [userData, setUserData] = useState(user);
+  const [userData, setUserData] = useState({});
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(fetchUserThunk());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (user) {
+      setUserData(user);
+    }
+  }, [user]);
 
   const handleNameChange = (e) => {
     setUserData({ ...userData, name: e.target.value });
@@ -82,7 +91,7 @@ function Settings() {
 
   return (
     <div className="settings-container">
-      <h1 className="settings-heading">Edit User</h1>
+      <h1 className="settings-heading">Settings</h1>
 
       <form onSubmit={handleSubmit} className="settings-form">
         <label htmlFor="userName">User Name:</label>
@@ -114,22 +123,26 @@ function Settings() {
           value={userData.image}
           onChange={handleImageChange}
         />
-        <label htmlFor="password">Password:</label>
-        <input
-          type={showPassword ? "text" : "password"} // Toggle between "text" and "password" based on showPassword state
-          id="password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        {passwordError && <p className="error-message">{passwordError}</p>}
-        <br />
-        <input
-          type="checkbox"
-          id="showPassword"
-          checked={showPassword}
-          onChange={togglePasswordVisibility}
-        />
-        <label htmlFor="showPassword">Show password</label>
+        {user && !user.googleId && (
+          <>
+            <label htmlFor="password">Password:</label>
+            <input
+              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" based on showPassword state
+              id="password"
+              value={password}
+              onChange={handlePasswordChange}
+            />
+            {passwordError && <p className="error-message">{passwordError}</p>}
+            <br />
+            <input
+              type="checkbox"
+              id="showPassword"
+              checked={showPassword}
+              onChange={togglePasswordVisibility}
+            />
+            <label htmlFor="showPassword">Show password</label>
+          </>
+        )}
         <button
           type="button"
           className="settings-submit-btn"

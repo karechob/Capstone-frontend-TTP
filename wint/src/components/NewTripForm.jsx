@@ -38,16 +38,23 @@ function NewTripForm() {
   const [collaboratorsInput, setCollaboratorsInput] = useState("");
   const [collaborators, setCollaborators] = useState([]);
   const [collaboratorError, setCollaboratorError] = useState("");
+  const [activityError, setActivityError] = useState("");
+  const [collaboratorsDeleteStatus, setCollaboratorsDeleteStatus] =
+    useState(false);
 
   useEffect(() => {
-    if (collaborator) {
-      if (!collaborators.some((c) => c.username === collaborator.username)) {
-        setCollaborators((prevCollaborators) => [
-          ...prevCollaborators,
-          collaborator,
-        ]);
-        setCollaboratorsInput("");
-      }
+    if (
+      collaborator &&
+      !collaboratorsDeleteStatus &&
+      !collaborators.find((c) => c.username === collaborator.username)
+    ) {
+      setCollaborators((prevCollaborators) => [
+        ...prevCollaborators,
+        collaborator,
+      ]);
+      console.log("Collaborators after if", collaborators);
+
+      setCollaboratorsInput("");
     }
   }, [collaborator, collaborators]);
 
@@ -165,7 +172,7 @@ function NewTripForm() {
         collaboratorData.username = collaboratorsInput;
       }
 
-      if (collaborators.some((c) => c.username === collaboratorData.username)) {
+      if (collaborators.find((c) => c.username === collaboratorData.username)) {
         setCollaboratorError("Collaborator already exists");
         return;
       }
@@ -174,7 +181,7 @@ function NewTripForm() {
         console.error("Error fetching collaborator:", error);
         setCollaboratorError("Collaborator not found");
       });
-
+      setCollaboratorsDeleteStatus(false);
       setCollaboratorsInput("");
     } catch (error) {
       console.error("Error handling collaborator:", error);
@@ -186,10 +193,15 @@ function NewTripForm() {
       (collaborator) => collaborator.id !== collaboratorId
     );
     setCollaborators(updatedCollaborators);
+    setCollaboratorsDeleteStatus(true);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (activities.length === 0) {
+      setActivityError("At least one activity is required.");
+      return;
+    }
 
     const newTripData = {
       name,
@@ -211,28 +223,12 @@ function NewTripForm() {
         link: flightUrl,
       },
       activities: activities.filter(
-        (activity) => activity.name !== "" && activity.cost > 0
+        (activity) => activity.name.trim() !== "" && activity.cost > 0
       ),
       collaborators: collaborators,
     };
-
+    setActivityError("");
     dispatch(addTripThunk(newTripData));
-
-    // setName("");
-    // setDestination("");
-    // setOrigin("");
-    // setBudget("");
-    // setStartDate("");
-    // setEndDate("");
-    // setWeather("");
-    // setDuration(0);
-    // setHotelName("");
-    // setHotelCost("");
-    // setHotelUrl("");
-    // setFlightAirline("");
-    // setFlightCost("");
-    // setFlightUrl("");
-    // setActivities([]);
   };
 
   return (
@@ -388,6 +384,7 @@ function NewTripForm() {
         <button type="button" onClick={addActivity}>
           Add Activity
         </button>
+        {activityError && <p>{activityError}</p>}
       </div>
       <div>
         <label>Collaborators:</label>
