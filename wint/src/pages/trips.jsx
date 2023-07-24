@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTripsThunk } from "../redux/trips/trips.actions";
 import "../css/trips.css";
+import { useNavigate } from "react-router-dom";
 
 function Trips() {
   const trips = useSelector((state) => state.trips.allTrips);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchAllTripsThunk());
@@ -15,6 +17,12 @@ function Trips() {
   function formatDate(dateStr) {
     return new Date(dateStr).toISOString().split("T")[0];
   }
+
+  const handleView = () => {
+    navigate("../trip", {
+      state: { tripData: trips },
+    });
+  };
 
   return (
     <>
@@ -36,7 +44,7 @@ function Trips() {
             ? trips.map((trip, index) => (
                 <tr key={index}>
                   <td>
-                    <button>View</button>
+                    <button onClick={handleView}>View</button>
                   </td>
                   <td>{formatDate(trip.startDate)}</td>
                   <td>{trip.destination}</td>

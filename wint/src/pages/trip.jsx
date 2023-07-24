@@ -5,9 +5,16 @@ import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
+import { useLocation } from 'react-router-dom';
 
 //page that displays the information generated for one trip
-function trip() {
+function Trip() {
+  const location = useLocation();
+  const receivedData = location.state?.tripData;
+
+  console.log("received data: " ,receivedData);
+
+  
   return (
     <div className="background-trip-page">
       <h1>Owner & Collaborators</h1>
@@ -39,4 +46,4 @@ function trip() {
   );
 }
 
-export default trip;
+export default Trip;
