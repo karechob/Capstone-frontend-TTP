@@ -1,49 +1,49 @@
-// import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "../fonts/NeueKonstantGrotesk-Book.otf";
-// import { useDispatch, useSelector } from "react-redux";
-// import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
-// import { fetchAllFlightsThunk } from "../redux/flights/flights.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
+import { fetchAllFlightsThunk } from "../redux/flights/flights.actions";
 import NewTripForm from "../components/NewTripForm";
 import "../css/tripHistory.css";
 import "../css/trip.css";
 
 function NewTrip() {
-//   const dispatch = useDispatch();
-//   const allHotels = useSelector((state) => state.hotels.allHotels.results);
-//   console.log("this is allHotels", allHotels);
-//   const allFlights = useSelector((state) => state.flights.allFlights);
-//   console.log("this is allFlights", allFlights);
-//   const [showHotels, setShowHotels] = useState(false);
-  //   const [showFlights, setShowFlights] = useState(false);
+  const dispatch = useDispatch();
+  const allHotels = useSelector((state) => state.hotels.allHotels.results);
+  console.log("this is allHotels", allHotels);
+  const allFlights = useSelector((state) => state.flights.allFlights);
+  console.log("this is allFlights", allFlights);
+  const [showHotels, setShowHotels] = useState(false);
+  const [showFlights, setShowFlights] = useState(false);
 
-//   useEffect(() => {
-//     dispatch(fetchAllFlightsThunk());
-//   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAllFlightsThunk());
+  }, [dispatch]);
 
-//   const { airline_data, airport_data } =
-//     allFlights.getAirFlightRoundTrip.results.result;
+  const { airline_data, airport_data } =
+    allFlights.getAirFlightRoundTrip.results.result;
 
-//   useEffect(() => {
-//     dispatch(fetchAllHotelsThunk());
-//   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchAllHotelsThunk());
+  }, [dispatch]);
 
-//   const handleShowHotels = () => {
-//     setShowHotels(true);
-//   };
+  const handleShowHotels = () => {
+    setShowHotels(true);
+  };
 
-  //   const handleShowFlights = () => {
-  //     if (!allFlights || allFlights.length === 0) {
-  //       // Fetch flights only if not already loaded
-  //       dispatch(fetchAllFlightsThunk());
-  //     }
-  //     setShowFlights(true);
-  //   };
+    const handleShowFlights = () => {
+      if (!allFlights || allFlights.length === 0) {
+        // Fetch flights only if not already loaded
+        dispatch(fetchAllFlightsThunk());
+      }
+      setShowFlights(true);
+    };
 
   return (
     <div>
       <h1>New Trip</h1>
       <NewTripForm />
-      {/* {showHotels ? (
+      {showHotels ? (
         allHotels && allHotels.length > 0 ? (
           <div>
             {allHotels.map((hotel) => (
@@ -58,8 +58,8 @@ function NewTrip() {
         )
       ) : (
         <button onClick={handleShowHotels}>Show Hotels</button>
-      )} */}
-{/* 
+      )}
+
       <div>
         <h1>Flight Data</h1>
         
@@ -71,10 +71,10 @@ function NewTrip() {
               <pre>{JSON.stringify(airline_data[key], null, 2)}</pre>
             </div>
           ))}
-        </div> */}
+        </div>
 
    
-        {/* <div>
+        <div>
           <h2>Airport Data</h2>
           {Object.keys(airport_data).map((key) => (
             <div key={key}>
@@ -83,7 +83,7 @@ function NewTrip() {
             </div>
           ))}
         </div>
-      </div> */}
+      </div>
     </div>
   );
 }
