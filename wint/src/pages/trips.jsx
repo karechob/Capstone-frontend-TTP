@@ -7,25 +7,50 @@ function Trips() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-      dispatch(fetchAllTripsThunk());
+    dispatch(fetchAllTripsThunk());
   }, [dispatch]);
 
   const trips = useSelector((state) => state.trips.allTrips);
 
-  return (
-    <>
-      <h1>Trips</h1>
-      <hr></hr>
-      <h3>Trips:</h3>
-      {trips.length > 0 ? trips.map((trip, index) => (
-        <div className="act-list-item" key={index}>
-          <p>Trip name:</p>
-          <button type="button" >{trip.name}</button>
-        </div>
-      )) : <p>Loading...</p>}
-    </>
-  );
+  //For formatting date to show only year,month, and day
+  function formatDate(dateStr) {
+    return new Date(dateStr).toISOString().split('T')[0];
 }
 
+
+  return (
+    <>
+  <h1>Trips</h1>
+  <hr />
+
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Date</th>
+        <th>Location</th>
+        <th>Hotel</th>
+        <th>Cost</th>
+      </tr>
+    </thead>
+    <tbody>
+      {trips.length > 0 ? (
+        trips.map((trip, index) => (
+          <tr key={index}>
+            <td><button>View</button></td>
+            <td>{formatDate(trip.startDate)}</td>
+            <td>{trip.destination}</td>
+            <td>{trip.hotel.name}</td>
+            <td>${trip.budget}</td>
+          </tr>
+        ))
+      ) : null}
+    </tbody>
+  </table>
+  {trips.length === 0 && <p>Loading...</p>}
+</>
+
+  );
+}
 
 export default Trips;
