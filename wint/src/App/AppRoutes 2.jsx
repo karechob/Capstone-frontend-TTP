@@ -11,7 +11,6 @@ import Trips from "../pages/trips";
 import Test from "../components/test";
 import TripHistory from "../pages/triphistory";
 import ProtectedRoute from "../components/ProtectedRoute";
-import "../css/navBar.css";
 
 const AppRoutes = () => {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");

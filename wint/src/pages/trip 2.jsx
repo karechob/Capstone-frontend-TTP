@@ -4,7 +4,7 @@ import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
-import imgplaceholder from "../assets/images/nyc.jpg";
+import imgplaceholder from "../pictures/nyc.jpg";
 
 //page that displays the information generated for one trip
 function trip() {

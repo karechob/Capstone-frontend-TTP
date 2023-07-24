@@ -2,15 +2,12 @@ import UserActionTypes from "./user.types";
 
 const initialState = {
   singleUser: {},
-  collaborator: {},
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case UserActionTypes.FETCH_USER:
       return { ...state, singleUser: action.payload };
-    case UserActionTypes.FETCH_COLLABORATOR:
-      return { ...state, collaborator: action.payload };
     case UserActionTypes.UPDATE_USER:
     case UserActionTypes.SIGNUP_USER:
     case UserActionTypes.LOGIN_USER:

@@ -1,5 +1,5 @@
 import React from "react";
-import PlaceholderActivity from "../../pictures/little-island.jpg";
+import PlaceholderActivity from "../../assets/images/little-island.jpg";
 
 function ActivitiesList() {
   return (

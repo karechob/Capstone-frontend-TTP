@@ -10,6 +10,8 @@ function Settings() {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -33,6 +35,10 @@ function Settings() {
     setUserData({ ...userData, image: e.target.value });
   };
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
+
   const handlePasswordChange = (e) => {
     const passwordValue = e.target.value;
     setPassword(passwordValue);
@@ -48,11 +54,10 @@ function Settings() {
     if (isValidEmail(userData.email) && isValidPassword(password)) {
       setPassword("");
       setPasswordError("");
+      const updatedUserData = { ...userData, password: password };
 
       try {
-        dispatch(updateUserThunk(userData));
-        console.log("Updated user data:", userData);
-
+        dispatch(updateUserThunk(updatedUserData));
         navigate("/user");
       } catch (error) {
         console.error("Error updating user:", error.message);
@@ -111,14 +116,20 @@ function Settings() {
         />
         <label htmlFor="password">Password:</label>
         <input
-          type="password"
+          type={showPassword ? "text" : "password"} // Toggle between "text" and "password" based on showPassword state
           id="password"
           value={password}
           onChange={handlePasswordChange}
         />
         {passwordError && <p className="error-message">{passwordError}</p>}
         <br />
-
+        <input
+          type="checkbox"
+          id="showPassword"
+          checked={showPassword}
+          onChange={togglePasswordVisibility}
+        />
+        <label htmlFor="showPassword">Show password</label>
         <button
           type="button"
           className="settings-submit-btn"

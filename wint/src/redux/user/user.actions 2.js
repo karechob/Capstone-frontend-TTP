@@ -6,11 +6,6 @@ export const fetchUser = (userData) => ({
   payload: userData,
 });
 
-export const fetchCollaborator = (collaboratorData) => ({
-  type: UserActionTypes.FETCH_COLLABORATOR,
-  payload: collaboratorData,
-});
-
 export const updateUser = (updateData) => ({
   type: UserActionTypes.UPDATE_USER,
   payload: updateData,
@@ -43,7 +38,7 @@ export const setLoginStatus = (isLoggedIn) => ({
 export const fetchUserThunk = () => async (dispatch) => {
   try {
     console.log("FETCHUSERTHUNK FIRING UP");
-    const response = await axios.get(`http://localhost:8080/auth/me`, {
+    const response = await axios.get(`http://localhost:8080/auth/me/`, {
       withCredentials: true,
     });
     dispatch(fetchUser(response.data || {}));
@@ -52,26 +47,10 @@ export const fetchUserThunk = () => async (dispatch) => {
   }
 };
 
-export const fetchCollaboratorThunk =
-  (collaboratorData) => async (dispatch) => {
-    try {
-      console.log("FETCHUSERTHUNK FIRING UP");
-      const response = await axios.post(
-        `http://localhost:8080/api/me/collaborator`,
-        collaboratorData,
-        {
-          withCredentials: true,
-        }
-      );
-      dispatch(fetchCollaborator(response.data));
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
 export const updateUserThunk = (userData) => async (dispatch) => {
   try {
     console.log("UPDATEUSERTHUNK FIRING UP");
+    console.log("user data: ", userData);
     const response = await axios.put(`http://localhost:8080/api/me`, userData, {
       withCredentials: true,
     });
@@ -93,8 +72,8 @@ export const signupUserThunk = (userData) => async (dispatch) => {
     );
     dispatch(signupUser(response.data));
     sessionStorage.setItem("isLoggedIn", "true");
+    dispatch(fetchUserThunk());
   } catch (error) {
-    sessionStorage.setItem("isLoggedIn", "false");
     console.error(error);
     throw error;
   }

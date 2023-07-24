@@ -1,0 +1,12 @@
+.act-list-item {
+    display: flex;
+    margin: 50px;
+    border-radius: 500px;
+    background-color: rgb(255, 181, 85);
+    padding-top: 40px;
+    padding-bottom: 40px;
+    transition: all 0.5s ease;
+    justify-content: center;  /* horizontal centering */
+    align-items: center;      /* vertical centering */
+  }
+  
