@@ -3,28 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchAllTripsThunk } from "../redux/trips/trips.actions";
 
 function Trips() {
-  const trips = useSelector((state) => state.trips.allTrips);
   const dispatch = useDispatch();
-  console.log(trips);
 
   useEffect(() => {
-    dispatch(fetchAllTripsThunk());
+      dispatch(fetchAllTripsThunk());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log("trips: ", trips);
-  }, [trips]);
+  const trips = useSelector((state) => state.trips.allTrips);
 
   return (
-    // page that displays the trips when clicking on trips on user
     <>
       <h1>Trips</h1>
-      <h3>User Name:</h3>
-      <button>Settings</button>
       <hr></hr>
-      <h3>Previous Trips:</h3>
+      <h3>Trips:</h3>
+      {trips.length > 0 ? trips.map((trip, index) => (
+        <div key={index}>
+          <p>{trip.name}</p>
+          <p>{trip.origin}</p>
+        </div>
+      )) : <p>Loading...</p>}
     </>
   );
 }
+
 
 export default Trips;
