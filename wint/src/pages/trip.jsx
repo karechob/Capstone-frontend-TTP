@@ -5,20 +5,27 @@ import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 //page that displays the information generated for one trip
 function Trip() {
   const location = useLocation();
   const receivedData = location.state?.tripData;
 
-  console.log("received data: " ,receivedData);
+  console.log("received data: ", receivedData);
 
-  
   return (
     <div className="background-trip-page">
-      <h1>Owner & Collaborators</h1>
-      <Collaborators />
+      {/* Trip Name */}
+      <h1>{receivedData.name}</h1>
+      <h2>Owner & Collaborators</h2>
+
+      {/* Checks if there's any Collaborators */}
+      {receivedData.Collaborators > 0 ? (
+        <Collaborators />
+      ) : (
+        <p>No Collaborators...</p>
+      )}
       <div className="weather-destination-container">
         <div className="destination-img-container">
           <h1>Destination</h1>
@@ -27,7 +34,7 @@ function Trip() {
             src={imgplaceholder}
             alt="placeholder"
           />
-          <h2>NameOfDestination</h2>
+          <h2>{receivedData.destination}</h2>
         </div>
         <div className="weather-container">
           <h1>Weather</h1>
