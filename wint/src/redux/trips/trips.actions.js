@@ -1,6 +1,41 @@
 import axios from "axios";
 import TripsActionTypes from "./trips.types";
 
+export const fetchImage = (image) => ({
+  type: TripsActionTypes.FETCH_IMAGE,
+  payload: image,
+});
+
+export const fetchImageThunk = (src) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/teleport/images/${src.toLowerCase()}`
+      );
+      dispatch(fetchImage(response));
+    } catch (error) {
+      console.log("FetchImageThunk Error: " , error);
+    }
+  };
+};
+export const fetchWeather = (weather) => ({
+  type: TripsActionTypes.FETCH_WEATHER,
+  payload: weather,
+});
+
+export const fetchWeatherThunk = (destination) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/weather/getWeather/${destination}`
+      );
+      dispatch(fetchWeather(response));
+    } catch (error) {
+      console.log("fetchWeatherThunk Error: ", error);
+    }
+  };
+};
+
 // Fetch all trips, associated with logged in user
 export const fetchAllTrips = (tripData) => ({
   type: TripsActionTypes.FETCH_TRIPS,
