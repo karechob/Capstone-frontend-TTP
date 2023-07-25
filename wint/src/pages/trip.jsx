@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ActivitiesList from "../components/trips/ActivitiesList";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import Collaborators from "../components/trips/Collaborators";
@@ -6,11 +6,36 @@ import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
 import { useLocation } from "react-router-dom";
+import { useState } from "react";
+import axios from 'axios';
 
 //page that displays the information generated for one trip
 function Trip() {
   const location = useLocation();
   const receivedData = location.state?.tripData;
+
+  const [search, setSearch] = useState("");
+  const [image, setImage] = useState(null);
+
+  useEffect(() => {
+    const handleImage = () => {
+      axios
+        .get(`http://localhost:8080/api/teleport/images/${receivedData.destination.toLowerCase()}`)
+        .then((response) => {
+          if (response.data) {
+            console.log("response: " , response.data);
+            setImage(response.data.mobile);
+          } else {
+            console.log("No images found for this search.");
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error fetching data from the API", error);
+        });
+    };
+    handleImage();
+  }, receivedData );
+  
 
   console.log("received data: ", receivedData);
 
@@ -31,7 +56,7 @@ function Trip() {
           <h1>Destination</h1>
           <img
             className="destination-img"
-            src={imgplaceholder}
+            src={image}
             alt="placeholder"
           />
           <h2>{receivedData.destination}</h2>
