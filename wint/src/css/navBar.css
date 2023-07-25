@@ -5,11 +5,12 @@
 .nav-container {
   background-color: #000000d0;
   opacity: 1;
-  height: 65px;
+  height: 7vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: auto;
+  flex-grow: 1;
+  margin: 0;
 }
 
 .nav-links {
@@ -22,7 +23,7 @@
 }
 
 .nav-item {
-  margin: 0 30px;
+  margin: 0 5%;
   position: relative;
 }
 
@@ -47,15 +48,26 @@
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  margin: 0 30px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.nav-links button img {
-  width: 28px;
-  height: 28px;
+.home-nav-button img,
+.login-nav-button img {
+  width: 50%;
+  height: 50%;
+}
+
+.home-nav-button img,
+.new-trip-nav-button img,
+.profile-nav-button img,
+.trips-nav-button img,
+.settings-nav-button img,
+.logout-nav-button img {
+  width: 30%;
+  height: 30%;
 }
 
 .nav-links .button-text {
