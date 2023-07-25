@@ -5,6 +5,7 @@ const TripsActionTypes = {
     DELETE_TRIP: "DELETE_TRIP",
     UPDATE_TRIP:" UPDATE_TRIP",
     FETCH_WEATHER: "FETCH_WEATHER",
+    FETCH_IMAGE: "FETCH_IMAGE"
 }
 
 export default TripsActionTypes;
