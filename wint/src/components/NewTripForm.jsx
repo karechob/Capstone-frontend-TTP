@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTripThunk } from "../redux/trips/trips.actions";
+import CitySearch from "./CitySearch";
+
 import {
   fetchCollaboratorThunk,
   fetchUserThunk,
@@ -152,6 +154,14 @@ function NewTripForm() {
     setActivities(newActivities);
   };
 
+  const handleOriginSelect = (city) => {
+    setOrigin(city);
+  };
+
+  const handleDestinationSelect = (city) => {
+    setDestination(city);
+  };
+
   const handleCollaboratorsInputChange = (e) => {
     setCollaboratorsInput(e.target.value);
     setCollaboratorError("");
@@ -239,20 +249,20 @@ function NewTripForm() {
       </div>
       <div>
         <label>From:</label>
-        <input
-          type="text"
+        <CitySearch
           value={origin}
           onChange={handleOriginChange}
-          required
+          onCitySelect={handleOriginSelect}
+          placeholder="Enter From City"
         />
       </div>
       <div>
         <label>To:</label>
-        <input
-          type="text"
+        <CitySearch
           value={destination}
           onChange={handleDestinationChange}
-          required
+          onCitySelect={handleDestinationSelect}
+          placeholder="Enter To City"
         />
       </div>
       <div>

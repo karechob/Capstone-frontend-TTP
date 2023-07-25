@@ -125,7 +125,7 @@ function Settings() {
         />
         {user && !user.googleId && (
           <>
-            <label htmlFor="password">Password:</label>
+            <label htmlFor="password">Reset Password:</label>
             <input
               type={showPassword ? "text" : "password"} // Toggle between "text" and "password" based on showPassword state
               id="password"
