@@ -35,6 +35,10 @@ export const logoutUser = () => ({
   type: UserActionTypes.LOGOUT_USER,
 });
 
+export const deleteUser = () => ({
+  type: UserActionTypes.DELETE_USER,
+});
+
 export const setLoginStatus = (isLoggedIn) => ({
   type: UserActionTypes.SET_LOGIN_STATUS,
   payload: isLoggedIn,
@@ -125,6 +129,18 @@ export const logoutUserThunk = () => async (dispatch) => {
       withCredentials: true,
     });
     dispatch(logoutUser());
+    sessionStorage.removeItem("isLoggedIn");
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+export const deleteUserThunk = () => async (dispatch) => {
+  try {
+    await axios.delete(`http://localhost:8080/api/me/`, {
+      withCredentials: true,
+    });
+    dispatch(deleteUser());
     sessionStorage.removeItem("isLoggedIn");
   } catch (error) {
     console.error(error);

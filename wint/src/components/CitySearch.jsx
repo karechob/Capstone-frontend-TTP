@@ -1,81 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchCitiesThunk,
+  fetchCities,
+} from "../redux/citySearch/citySearch.actions";
 import "../css/citySearch.css";
 
-const CitySearch = ({ onCitySelect }) => {
+const CitySearch = ({ inputType, onCitySelect }) => {
   const [cityInput, setCityInput] = useState("");
-  const [citySuggestions, setCitySuggestions] = useState([]);
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const filteredSuggestions = useSelector((state) => state.cities.cities);
 
-  useEffect(() => {
-    if (citySuggestions.length > 0) {
-      setFilteredSuggestions(citySuggestions.slice(0, 10));
-    }
-  }, [citySuggestions]);
+  const dispatch = useDispatch();
 
   const handleCityInputChange = async (event) => {
     const value = event.target.value;
     setCityInput(value);
-
-    try {
-      const suggestions = await fetchCitySuggestions(value);
-      setCitySuggestions(suggestions);
-    } catch (error) {
-      console.error("Error fetching city suggestions:", error);
-      setCitySuggestions([]);
+    if (value.trim() !== "") {
+      try {
+        await dispatch(fetchCitiesThunk(value));
+      } catch (error) {
+        console.error("Error while fetching cities:", error);
+      }
+      setIsDropdownVisible(true);
+    } else {
+      dispatch(fetchCities([]));
+      setIsDropdownVisible(false);
     }
   };
 
   const handleCitySelection = (city) => {
     setCityInput(city);
-    setFilteredSuggestions([]);
+    setIsDropdownVisible(false);
     onCitySelect(city);
+    console.log(city);
   };
 
-  const handleFilterSuggestions = (searchText) => {
-    const filtered = citySuggestions.filter((city) =>
-      city.toLowerCase().includes(searchText.toLowerCase())
-    );
-    setFilteredSuggestions(filtered.slice(0, 10));
+  const handleInputBlur = () => {
+    setTimeout(() => {
+      setIsDropdownVisible(false);
+    }, 200);
   };
-
-  async function fetchCitySuggestions(city) {
-    try {
-      const response = await fetch(
-        `https://api.teleport.org/api/cities/?search=${encodeURIComponent(
-          city
-        )}`
-      );
-      const data = await response.json();
-
-      console.log("API Response:", data); // Add this log to see the API response
-
-      const suggestions = data._embedded["city:search-results"].map(
-        (item) => item.matching_full_name
-      );
-      return suggestions;
-    } catch (error) {
-      console.error("Error fetching city suggestions:", error);
-      return [];
-    }
-  }
 
   return (
     <div>
       <div className="search-bar">
         <input
           type="text"
-          id="cityInput"
+          id={`cityInput_${inputType}`}
           value={cityInput}
           onChange={handleCityInputChange}
-          onFocus={() => setFilteredSuggestions(citySuggestions.slice(0, 10))}
-          onBlur={() => setFilteredSuggestions([])}
-          required
+          onBlur={handleInputBlur}
+          autoComplete="off"
         />
-        {filteredSuggestions.length > 0 && (
+        {isDropdownVisible && filteredSuggestions.length > 0 && (
           <ul className="suggestions-list">
             {filteredSuggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleCitySelection(suggestion)}>
-                {suggestion}
+              <li
+                key={index}
+                onClick={() => handleCitySelection(suggestion.name)}
+              >
+                {suggestion.name}
               </li>
             ))}
           </ul>

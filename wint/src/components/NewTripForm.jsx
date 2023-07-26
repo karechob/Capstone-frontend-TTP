@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addTripThunk } from "../redux/trips/trips.actions";
-import CitySearch from "./CitySearch";
-
 import {
   fetchCollaboratorThunk,
   fetchUserThunk,
 } from "../redux/user/user.actions";
-
-function formatDate(dateString) {
-  const date = new Date(dateString);
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0");
-  const day = String(date.getDate()).padStart(2, "0");
-  return `${year}-${month}-${day}`;
-}
+import CitySearch from "./CitySearch";
+import { formatDate2 } from "./formatDate";
 
 function NewTripForm() {
   const dispatch = useDispatch();
@@ -54,11 +46,9 @@ function NewTripForm() {
         ...prevCollaborators,
         collaborator,
       ]);
-      console.log("Collaborators after if", collaborators);
-
       setCollaboratorsInput("");
     }
-  }, [collaborator, collaborators]);
+  }, [collaborator, collaborators, collaboratorsDeleteStatus]);
 
   useEffect(() => {
     dispatch(fetchUserThunk());
@@ -68,16 +58,8 @@ function NewTripForm() {
     setName(e.target.value);
   };
 
-  const handleOriginChange = (e) => {
-    setOrigin(e.target.value);
-  };
-
   const handleBudgetChange = (e) => {
     setBudget(e.target.value);
-  };
-
-  const handleDestinationChange = (e) => {
-    setDestination(e.target.value);
   };
 
   const handleStartDateChange = (e) => {
@@ -154,14 +136,6 @@ function NewTripForm() {
     setActivities(newActivities);
   };
 
-  const handleOriginSelect = (city) => {
-    setOrigin(city);
-  };
-
-  const handleDestinationSelect = (city) => {
-    setDestination(city);
-  };
-
   const handleCollaboratorsInputChange = (e) => {
     setCollaboratorsInput(e.target.value);
     setCollaboratorError("");
@@ -206,6 +180,14 @@ function NewTripForm() {
     setCollaboratorsDeleteStatus(true);
   };
 
+  const handleFromCitySelect = (selectedCity) => {
+    setOrigin(selectedCity);
+  };
+
+  const handleToCitySelect = (selectedCity) => {
+    setDestination(selectedCity);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (activities.length === 0) {
@@ -218,8 +200,8 @@ function NewTripForm() {
       origin,
       destination,
       budget,
-      startDate: formatDate(startDate),
-      endDate: formatDate(endDate),
+      startDate: formatDate2(startDate),
+      endDate: formatDate2(endDate),
       weather,
       duration,
       hotel: {
@@ -249,21 +231,12 @@ function NewTripForm() {
       </div>
       <div>
         <label>From:</label>
-        <CitySearch
-          value={origin}
-          onChange={handleOriginChange}
-          onCitySelect={handleOriginSelect}
-          placeholder="Enter From City"
-        />
+        <CitySearch inputType="from" onCitySelect={handleFromCitySelect} />
       </div>
+
       <div>
         <label>To:</label>
-        <CitySearch
-          value={destination}
-          onChange={handleDestinationChange}
-          onCitySelect={handleDestinationSelect}
-          placeholder="Enter To City"
-        />
+        <CitySearch inputType="to" onCitySelect={handleToCitySelect} />
       </div>
       <div>
         <label>Budget:</label>

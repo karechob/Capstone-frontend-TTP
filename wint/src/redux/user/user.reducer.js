@@ -18,6 +18,8 @@ const userReducer = (state = initialState, action) => {
       return { ...state, singleUser: action.payload };
     case UserActionTypes.LOGOUT_USER:
       return { ...state, singleUser: {} };
+    case UserActionTypes.DELETE_USER:
+      return { ...state, singleUser: {} };
     default:
       return state;
   }
