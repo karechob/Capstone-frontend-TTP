@@ -71,6 +71,7 @@ function Trips() {
         </tbody>
       </table>
       {trips.length === 0 && <p>Loading...</p>}
+
     </>
   );
 }

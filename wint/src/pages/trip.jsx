@@ -7,6 +7,7 @@ import "../css/trip.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
 import { useState } from "react";
 import axios from "axios";
+
 import { fetchImage, fetchImageThunk, fetchTripThunk, fetchWeatherThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -36,10 +37,12 @@ function Trip() {
 
   console.log("image data: " , image);
 
-  //Fetch Weather forecast
+
+  const [search, setSearch] = useState("");
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
-    dispatch(fetchWeatherThunk(trip.destination));
-  }, [trip]);
+
 
   console.log("received data: ", trip);
 
