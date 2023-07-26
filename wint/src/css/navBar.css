@@ -23,7 +23,7 @@
 }
 
 .nav-item {
-  margin: 0 5%;
+  margin: 0;
   position: relative;
 }
 
@@ -32,7 +32,7 @@
   position: absolute;
   bottom: -5px;
   left: 0;
-  width: 100%;
+  width: 60%;
   height: 2px;
   background-color: #fff;
   opacity: 0;
@@ -49,25 +49,15 @@
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin: 0;
+  width: 60%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.home-nav-button img,
-.login-nav-button img {
-  width: 50%;
-  height: 50%;
-}
-
-.home-nav-button img,
-.new-trip-nav-button img,
-.profile-nav-button img,
-.trips-nav-button img,
-.settings-nav-button img,
-.logout-nav-button img {
-  width: 30%;
-  height: 30%;
+.nav-links button img {
+  width: 40%;
+  height: 40%;
 }
 
 .nav-links .button-text {
@@ -76,6 +66,10 @@
   color: aliceblue;
   font-size: 11px;
   white-space: nowrap;
+}
+
+.nav-links .login-button-text {
+  margin-left: 10px;
 }
 
 .nav-links button:hover {

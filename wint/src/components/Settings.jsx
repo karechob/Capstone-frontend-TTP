@@ -6,10 +6,17 @@ import { useNavigate } from "react-router-dom";
 
 function Settings() {
   const user = useSelector((state) => state.user.singleUser);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({
+    name: "",
+    username: "",
+    email: "",
+    image: "",
+  });
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  const [nameError, setNameError] = useState("");
+  const [usernameError, setUsernameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,9 +42,6 @@ function Settings() {
   const handleEmailChange = (e) => {
     const email = e.target.value;
     setUserData({ ...userData, email });
-    setEmailError(
-      isValidEmail(email) ? "" : "Please enter a valid email address."
-    );
   };
 
   const handleImageChange = (e) => {
@@ -49,22 +53,54 @@ function Settings() {
   };
 
   const handlePasswordChange = (e) => {
-    const passwordValue = e.target.value;
-    setPassword(passwordValue);
-    setPasswordError(
-      isValidPassword(passwordValue)
-        ? ""
-        : "Password must have at least one uppercase, one lowercase, one number, and one special character."
-    );
+    setPassword(e.target.value);
+    validatePassword(e.target.value);
+  };
+
+  const validateName = () => {
+    if (!userData.name.trim()) {
+      setNameError("Name cannot be empty.");
+    } else {
+      setNameError("");
+    }
+  };
+
+  const validateUsername = () => {
+    if (!userData.username.trim()) {
+      setUsernameError("Username cannot be empty.");
+    } else {
+      setUsernameError("");
+    }
+  };
+
+  const validateEmail = () => {
+    const isValid = isValidEmail(userData.email);
+    setEmailError(isValid ? "" : "Please enter a valid email address.");
+  };
+
+  const validatePassword = () => {
+    const value = password.trim();
+    if (!value) {
+      setPasswordError("");
+    } else {
+      setPasswordError(
+        isValidPassword(value)
+          ? ""
+          : "Password must have at least one uppercase, one lowercase, one number, and one special character."
+      );
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (isValidEmail(userData.email) && isValidPassword(password)) {
-      setPassword("");
-      setPasswordError("");
-      const updatedUserData = { ...userData, password: password };
 
+    validateName();
+    validateUsername();
+    validateEmail();
+    validatePassword();
+
+    if (!nameError && !usernameError && !emailError && !passwordError) {
+      const updatedUserData = { ...userData, password };
       try {
         dispatch(updateUserThunk(updatedUserData));
         navigate("/user");
@@ -72,10 +108,6 @@ function Settings() {
         console.error("Error updating user:", error.message);
       }
     }
-    console.log("userData after hitting done:", userData);
-    dispatch(updateUserThunk(userData)).then(() => {
-      navigate("/user");
-    });
   };
 
   const isValidEmail = (value) => {
@@ -94,28 +126,36 @@ function Settings() {
       <h1 className="settings-heading">Settings</h1>
 
       <form onSubmit={handleSubmit} className="settings-form">
-        <label htmlFor="userName">User Name:</label>
+        <label htmlFor="userName">Name:</label>
         <input
           type="text"
           id="userName"
           value={userData.name}
           onChange={handleNameChange}
+          onBlur={validateName}
         />
+        {nameError && <p className="error-message">{nameError}</p>}
+
         <label htmlFor="username">Username:</label>
         <input
           type="text"
           id="username"
           value={userData.username}
           onChange={handleUsernameChange}
+          onBlur={validateUsername}
         />
+        {usernameError && <p className="error-message">{usernameError}</p>}
+
         <label htmlFor="email">Email:</label>
         <input
           type="text"
           id="email"
           value={userData.email}
           onChange={handleEmailChange}
+          onBlur={validateEmail}
         />
         {emailError && <p className="error-message">{emailError}</p>}
+
         <label htmlFor="image">Image URL:</label>
         <input
           type="text"
@@ -123,32 +163,34 @@ function Settings() {
           value={userData.image}
           onChange={handleImageChange}
         />
+
         {user && !user.googleId && (
-          <>
+          <div className="reset-password-container">
             <label htmlFor="password">Reset Password:</label>
             <input
-              type={showPassword ? "text" : "password"} // Toggle between "text" and "password" based on showPassword state
+              type={showPassword ? "text" : "password"}
               id="password"
               value={password}
               onChange={handlePasswordChange}
+              onBlur={validatePassword}
             />
             {passwordError && <p className="error-message">{passwordError}</p>}
-            <br />
-            <input
-              type="checkbox"
-              id="showPassword"
-              checked={showPassword}
-              onChange={togglePasswordVisibility}
-            />
-            <label htmlFor="showPassword">Show password</label>
-          </>
+
+            <div className="show-password-container">
+              <input
+                type="checkbox"
+                id="showPassword"
+                className="show-password-check-box"
+                checked={showPassword}
+                onChange={togglePasswordVisibility}
+              />
+              <label htmlFor="showPassword">Show password</label>
+            </div>
+          </div>
         )}
-        <button
-          type="button"
-          className="settings-submit-btn"
-          onClick={handleSubmit}
-        >
-          Done
+
+        <button type="submit" className="settings-submit-btn">
+          Save
         </button>
       </form>
     </div>
