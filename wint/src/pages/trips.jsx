@@ -28,34 +28,36 @@ function Trips() {
     <>
       <h1>Trips</h1>
       <hr />
-
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            <th>Date</th>
-            <th>Location</th>
-            <th>Hotel</th>
-            <th>Cost</th>
-          </tr>
-        </thead>
-        <tbody>
-          {trips.length > 0
-            ? trips.map((trip, index) => (
-                <tr key={index}>
-                  <td>
-                    <button onClick={() => handleView(index)}>View</button>
-                  </td>
-                  <td>{formatDate(trip.startDate)}</td>
-                  <td>{trip.destination}</td>
-                  <td>{trip.hotel.name}</td>
-                  <td>${trip.budget}</td>
-                </tr>
-              ))
-            : null}
-        </tbody>
-      </table>
-      {trips.length === 0 && <p>Loading...</p>}
+      {trips.length > 0 ? (
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              <th>Date</th>
+              <th>Location</th>
+              <th>Hotel</th>
+              <th>Cost</th>
+            </tr>
+          </thead>
+          <tbody>
+            {trips.map((trip, index) => (
+              <tr key={index}>
+                <td>
+                  <button onClick={() => handleView(index)}>View</button>
+                </td>
+                <td>{formatDate(trip.startDate)}</td>
+                <td>{trip.destination}</td>
+                <td>{trip.hotel.name}</td>
+                <td>${trip.budget}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : trips.length === 0 ? (
+        <p>No trips</p>
+      ) : (
+        <p>Loading...</p>
+      )}
     </>
   );
 }

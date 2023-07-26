@@ -8,29 +8,35 @@ import imgplaceholder from "../assets/images/nyc.jpg";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { fetchImage, fetchImageThunk, fetchWeatherThunk } from "../redux/trips/trips.actions";
-import { useDispatch, useSelector } from "react-redux";
-
 
 //page that displays the information generated for one trip
 function Trip() {
   const location = useLocation();
   const receivedData = location.state?.tripData;
-  const dispatch = useDispatch();
-  const weatherForecast = useSelector((state) => state.trips.weather.data?.days);
-  // const [search, setSearch] = useState("");
-  const image = useSelector((state) => state.trips.image.data?.mobile)
-  // console.log("image: " , image);
-  
-  //Fetches Image for destination
-  useEffect(() => {
-    dispatch(fetchImageThunk(receivedData.destination));
-  }, [receivedData]);
 
-  //Fetch Weather forecast
+  const [search, setSearch] = useState("");
+  const [image, setImage] = useState(null);
+
   useEffect(() => {
-    dispatch(fetchWeatherThunk(receivedData.destination));
-  }, [receivedData]);
+    const handleImage = () => {
+      axios
+        .get(
+          `http://localhost:8080/api/teleport/images/${receivedData.destination.toLowerCase()}`
+        )
+        .then((response) => {
+          if (response.data) {
+            console.log("response: ", response.data);
+            setImage(response.data.mobile);
+          } else {
+            console.log("No images found for this search.");
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error fetching data from the API", error);
+        });
+    };
+    handleImage();
+  }, receivedData);
 
   console.log("received data: ", receivedData);
 
