@@ -7,6 +7,7 @@ const UserActionTypes = {
   LOGOUT_USER: "LOGOUT_USER",
   LOGIN_GOOGLE: "LOGIN_GOOGLE",
   SET_LOGIN_STATUS: "SET_LOGIN_STATUS",
+  DELETE_USER: "DELETE_USER",
 };
 
 export default UserActionTypes;
