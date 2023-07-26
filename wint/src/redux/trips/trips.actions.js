@@ -14,7 +14,7 @@ export const fetchImageThunk = (src) => {
       );
       dispatch(fetchImage(response));
     } catch (error) {
-      console.log("FetchImageThunk Error: " , error);
+      console.log("FetchImageThunk Error: ", error);
     }
   };
 };
@@ -36,6 +36,24 @@ export const fetchWeatherThunk = (destination) => {
   };
 };
 
+export const fetchTrip = (tripData) => ({
+  type: TripsActionTypes.FETCH_SINGLE_TRIP,
+  payload: tripData,
+});
+
+export const fetchTripThunk = (tripId) => {
+  return async (dispatch) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/me/trip/${tripId}`, {
+        withCredentials: true,
+      });
+      dispatch(fetchTrip(response.data));
+    } catch (error) {
+      console.log("single trip thunk error: " , error);
+    }
+  };
+};
+
 // Fetch all trips, associated with logged in user
 export const fetchAllTrips = (tripData) => ({
   type: TripsActionTypes.FETCH_TRIPS,
@@ -52,7 +70,7 @@ export const fetchAllTripsThunk = () => {
       });
       // console.log("before dispatch: ", response.data);
       dispatch(fetchAllTrips(response.data));
-      console.log("after dispatch: ", response.data);
+      //console.log("after dispatch: ", response.data);
     } catch (error) {
       console.error(error);
     }

@@ -54,7 +54,7 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/trip"
+        path="/trip/:tripId"
         element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <TripPage />
