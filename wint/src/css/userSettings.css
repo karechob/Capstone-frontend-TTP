@@ -4,43 +4,111 @@
 
 .settings-heading {
   margin-bottom: 20px;
+  font-size: 32px;
+  color: #ffffff;
 }
 
 .settings-form {
-  display: flex;
-  flex-direction: column;
-  max-width: 300px;
+  max-width: 600px;
   margin: 0 auto;
+  background: linear-gradient(135deg, #ff8c00, #ff0080);
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .settings-form label {
-  margin-top: 10px;
+  display: block;
+  margin: 5px;
+  font-size: 20px;
+  text-align: left;
+  color: #ffffff;
+  font-weight: 600;
 }
 
 .settings-form input {
-  padding: 8px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px inset #4fb496bb;
+  border-radius: 5px;
   width: 100%;
+  transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.settings-form input:focus {
+  outline: none;
+  border-color: #007bff;
+  background-color: #ccc;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.801);
+}
+
+.settings-form input:hover {
+  border-color: #007bff;
+  background-color: #ccc;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
 }
 
 .settings-form .error-message {
-  color: red;
-  font-size: 14px;
-  margin: 5px 0;
+  color: rgb(255, 238, 0);
+  font-size: 10.5px;
+  margin: 0 0 30px 5px;
+  text-align: left;
 }
 
+.reset-password-container {
+  margin-top: 10px;
+}
+
+.show-password-container {
+  display: flex;
+  align-items: center;
+}
+
+.show-password-container input {
+  flex: 0;
+  margin-top: -2%;
+}
+
+.show-password-container label {
+  font-size: 12px;
+  margin-top: -4%;
+}
 .settings-submit-btn {
   background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 14px 24px;
   margin-top: 20px;
   cursor: pointer;
+  font-size: 18px;
+  width: 25%;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .settings-submit-btn:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+.settings-submit-btn::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+}
+
+.settings-submit-btn:hover::after {
+  width: 160px;
+  height: 150px;
 }
