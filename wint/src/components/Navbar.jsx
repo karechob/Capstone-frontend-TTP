@@ -113,7 +113,7 @@ const Navbar = ({ handleLogout }) => {
                   className="login-nav-button"
                 >
                   <img src={Login} width="30px" alt="Login"></img>
-                  <span className="button-text">Login</span>
+                  <span className="button-text login-button-text">Login</span>
                 </button>
               </li>
             </>

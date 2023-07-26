@@ -1,30 +1,67 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import { fetchUserThunk } from "../redux/user/user.actions";
+import { fetchUserThunk, deleteUserThunk } from "../redux/user/user.actions";
+import { useNavigate } from "react-router-dom";
+import { formatDate1 } from "./formatDate";
+import "../css/profile.css";
+
 function Profile() {
   const user = useSelector((state) => state.user.singleUser);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUserThunk());
   }, [dispatch]);
 
+  const handleDeleteProfile = () => {
+    dispatch(deleteUserThunk()).then(() => {
+      navigate("/");
+    });
+  };
+
   return (
-    <div>
-      <h1 style={{ display: "inline-block" }}>User Profile</h1>
-      <div style={{ textAlign: "center" }}>
+    <div className="container">
+      <h1 className="profile-card">User Profile</h1>
+      <div>
         <img
-          id="myImage"
+          className="profile-image"
           src={user.image}
           alt="user profile"
-          width="100"
-          height="100"
+          width="150"
+          height="150"
         />
-        <h3>Name: {user.name}</h3>
+        <div className="profile-info-box">
+          <table className="profile-info-table">
+            <tbody>
+              <tr>
+                <td className="profile-info-label">Name:</td>
+                <td>{user.name}</td>
+              </tr>
+              <tr>
+                <td className="profile-info-label">Username:</td>
+                <td>{user.username}</td>
+              </tr>
+              <tr>
+                <td className="profile-info-label">Email:</td>
+                <td>{user.email}</td>
+              </tr>
+              <tr>
+                <td className="profile-info-label">Profile created on:</td>
+                <td>{formatDate1(user.createdAt)}</td>
+              </tr>
+              <tr>
+                <td className="profile-info-label">Profile updated on:</td>
+                <td>{formatDate1(user.updatedAt)}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <hr></hr>
-      <p>*Other user Info*</p>
+      <hr />
+      <button className="delete-button" onClick={handleDeleteProfile}>
+        Delete Profile
+      </button>
     </div>
   );
 }
