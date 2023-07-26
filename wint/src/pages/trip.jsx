@@ -5,43 +5,52 @@ import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import { fetchImage, fetchImageThunk, fetchWeatherThunk } from "../redux/trips/trips.actions";
+import { fetchImage, fetchImageThunk, fetchTripThunk, fetchWeatherThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 
 //page that displays the information generated for one trip
 function Trip() {
-  const location = useLocation();
-  const receivedData = location.state?.tripData;
+  let { tripId } = useParams();
+  console.log("params: " , useParams());
+  const trip = useSelector((state) => state.trips.singleTrip);
   const dispatch = useDispatch();
   const weatherForecast = useSelector((state) => state.trips.weather.data?.days);
-  // const [search, setSearch] = useState("");
   const image = useSelector((state) => state.trips.image.data?.mobile)
-  // console.log("image: " , image);
+
+  useEffect(() => {
+    console.log("receivedData: " , trip);
+    //setTrip(receivedData);
+    dispatch(fetchTripThunk(tripId));
+  }, []);
   
+ 
+
   //Fetches Image for destination
   useEffect(() => {
-    dispatch(fetchImageThunk(receivedData.destination));
-  }, [receivedData]);
+    dispatch(fetchImageThunk(trip.destination));
+  }, [trip]);
+
+  console.log("image data: " , image);
 
   //Fetch Weather forecast
   useEffect(() => {
-    dispatch(fetchWeatherThunk(receivedData.destination));
-  }, [receivedData]);
+    dispatch(fetchWeatherThunk(trip.destination));
+  }, [trip]);
 
-  console.log("received data: ", receivedData);
+  console.log("received data: ", trip);
 
   return (
     <div className="background-trip-page">
       {/* Trip Name */}
-      <h1>{receivedData.name}</h1>
+      <h1>{trip.name}</h1>
       <h2>Owner & Collaborators</h2>
 
       {/* Checks if there's any Collaborators */}
-      {receivedData.Collaborators > 0 ? (
+      {trip.Collaborators > 0 ? (
         <Collaborators />
       ) : (
         <p>No Collaborators...</p>
@@ -50,7 +59,7 @@ function Trip() {
         <div className="destination-img-container">
           <h1>Destination</h1>
           <img className="destination-img" src={image} alt="placeholder" />
-          <h2>{receivedData.destination}</h2>
+          <h2>{trip.destination}</h2>
         </div>
         <div className="weather-container">
           <h1>Weather</h1>
