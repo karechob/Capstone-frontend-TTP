@@ -10,7 +10,6 @@ function Settings() {
     name: "",
     username: "",
     email: "",
-    image: "",
   });
   const [password, setPassword] = useState("");
   const [nameError, setNameError] = useState("");
@@ -42,10 +41,6 @@ function Settings() {
   const handleEmailChange = (e) => {
     const email = e.target.value;
     setUserData({ ...userData, email });
-  };
-
-  const handleImageChange = (e) => {
-    setUserData({ ...userData, image: e.target.value });
   };
 
   const togglePasswordVisibility = () => {
@@ -155,14 +150,6 @@ function Settings() {
           onBlur={validateEmail}
         />
         {emailError && <p className="error-message">{emailError}</p>}
-
-        <label htmlFor="image">Image URL:</label>
-        <input
-          type="text"
-          id="image"
-          value={userData.image}
-          onChange={handleImageChange}
-        />
 
         {user && !user.googleId && (
           <div className="reset-password-container">
