@@ -1,5 +1,7 @@
 const HotelsActionTypes = {
-  FETCH_HOTELS: "FETCH_HOTELS",
+  FETCH_DESTINATION: "FETCH_DESTINATION",
+  FETCH_INFORMATION: "FETCH_INFORMATION",
+  FETCH_ERROR: "FETCH_ERROR",
 };
 
 export default HotelsActionTypes;
