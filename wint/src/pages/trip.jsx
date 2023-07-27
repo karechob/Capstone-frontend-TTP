@@ -32,7 +32,7 @@ function Trip() {
   console.log("start date: ", startDate);
   console.log("end date: ", endDate);
   console.log("trip: ", trip);
-
+  console.log("weather: ", weatherForecast);
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
   }, []);
@@ -41,9 +41,12 @@ function Trip() {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
 
+  
   // useEffect(() => {
+  //   if(trip){
   //   dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
-  // }, []);
+  //   };
+  // }, [trip]);
 
   //Get the total temperature for the trip and average
   const totalTemp =
@@ -58,7 +61,7 @@ function Trip() {
       <h1>{trip.name}</h1>
       <h2>Owner & Collaborators</h2>
       <div className="collaborators-container">
-        {trip.collaborators.length > 0 ? (
+        {!!trip.collaborators ? (
           trip.collaborators.map((collaborator) => {
             return (
               <div className="collaborator-image">
@@ -95,7 +98,7 @@ function Trip() {
       </div>
       <h1>Activities</h1>
       <div className="activities-list-container">
-        {trip.activities.map((activity) => {
+        {trip.activities?.map((activity) => {
 
         return(
       <div className="act-list-item">

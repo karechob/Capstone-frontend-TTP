@@ -26,6 +26,8 @@ export const fetchWeather = (weather) => ({
 export const fetchWeatherThunk = (destination, x, y) => {
   return async (dispatch) => {
     try {
+      console.log("fetchWeatherThunk is firing up");
+      console.log("x,y destination: ", x, y);
       const response = await axios.get(
         `http://localhost:8080/api/weather/getWeather/${destination}/${x}/${y}`
       );
