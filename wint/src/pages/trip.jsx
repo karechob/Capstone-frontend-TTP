@@ -4,6 +4,7 @@ import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
+import "../css/trips.css";
 import imgplaceholder from "../assets/images/nyc.jpg";
 import { useState } from "react";
 import axios from "axios";
@@ -31,10 +32,14 @@ function Trip() {
 
   //Fetches Image for destination
   useEffect(() => {
-    dispatch(fetchImageThunk(trip.destination));
+    //dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
 
-  console.log("image data: " , image);
+  useEffect(() =>{
+    dispatch(fetchWeatherThunk(trip.destination));
+  } ,[]);
+
+  console.log("weather data: " , weatherForecast);
 
   //Fetch Weather forecast
   useEffect(() => {
@@ -65,6 +70,15 @@ function Trip() {
           <h1>Weather</h1>
           <WeatherBreakdown />
           <p>Forecast:</p>
+          {weatherForecast?.length > 0
+            ? weatherForecast.map((weatherForecast, index) => (
+                <tr key={index}>
+                  <td className="td">
+                  </td>
+                  <td className="td">{weatherForecast[index]?.temp}</td>
+                </tr>
+              ))
+            : null}
         </div>
       </div>
       <h1>Budget Breakdown</h1>
