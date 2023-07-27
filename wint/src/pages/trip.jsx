@@ -4,9 +4,6 @@ import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import Collaborators from "../components/trips/Collaborators";
 import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
-import imgplaceholder from "../assets/images/nyc.jpg";
-import { useState } from "react";
-import axios from "axios";
 
 import {
   fetchImage,
@@ -17,7 +14,6 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 
-//page that displays the information generated for one trip
 function Trip() {
   let { tripId } = useParams();
   console.log("params: ", useParams());
@@ -29,12 +25,9 @@ function Trip() {
   const image = useSelector((state) => state.trips.image.data?.mobile);
 
   useEffect(() => {
-    console.log("receivedData: ", trip);
-    //setTrip(receivedData);
     dispatch(fetchTripThunk(tripId));
   }, []);
 
-  //Fetches Image for destination
   useEffect(() => {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
@@ -44,11 +37,8 @@ function Trip() {
   // Render the JSX outside the useEffect hooks
   return (
     <div className="background-trip-page">
-      {/* Trip Name */}
       <h1>{trip.name}</h1>
       <h2>Owner & Collaborators</h2>
-
-      {/* Checks if there are any Collaborators */}
       {trip.collaborators.length > 0 ? (
         <Collaborators />
       ) : (
