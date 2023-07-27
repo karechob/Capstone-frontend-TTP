@@ -1,0 +1,9 @@
+.avatar-image {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}
+
+.avatar-element {
+    display: inline-block;
+}
