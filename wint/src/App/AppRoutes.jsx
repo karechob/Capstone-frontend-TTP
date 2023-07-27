@@ -6,6 +6,7 @@ import SignupPage from "../pages/signup";
 import TripPage from "../pages/trip";
 import UserProfile from "../pages/userProfile";
 import UserSettings from "../pages/userSettings";
+import Avatar from "../pages/avatar";
 import NewTrip from "../pages/newTrip";
 import NewTripSearch from "../pages/newTripSearch";
 import Trips from "../pages/trips";
@@ -27,6 +28,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <UserProfile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/user/avatar"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <Avatar />
           </ProtectedRoute>
         }
       />

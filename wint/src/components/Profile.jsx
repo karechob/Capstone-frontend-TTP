@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUserThunk, deleteUserThunk } from "../redux/user/user.actions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { formatDate1 } from "./formatDate";
 import "../css/profile.css";
 
@@ -24,13 +24,15 @@ function Profile() {
     <div className="container">
       <h1 className="profile-card">User Profile</h1>
       <div>
-        <img
-          className="profile-image"
-          src={user.image}
-          alt="user profile"
-          width="150"
-          height="150"
-        />
+        <Link to={`/user/avatar`} className="avatar-link">
+          <img
+            className="profile-image"
+            src={user.image}
+            alt="user profile"
+            width="150"
+            height="150"
+          />
+        </Link>
         <div className="profile-info-box">
           <table className="profile-info-table">
             <tbody>
