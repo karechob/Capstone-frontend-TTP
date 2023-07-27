@@ -1,8 +1,9 @@
-import "./Avatar.css";
+import "../css/avatar.css";
 import React from "react";
 
 const Avatar = () => {
   const avatarArray = [
+    "https://i.imgur.com/ILNEfjt.png",
     "https://i.imgur.com/TF9TEjr.png",
     "https://i.imgur.com/dpMYaXu.png",
     "https://i.imgur.com/Y412yO8.png",
@@ -20,7 +21,7 @@ const Avatar = () => {
   return avatarArray.map((avatar) => {
     return (
       <div className="avatar-element">
-        <img src={avatar} className="avatar-image" />
+        <img src={avatar} alt="user profile" className="avatar-image" />
       </div>
     );
   });
