@@ -5,6 +5,8 @@ import {
   fetchCollaboratorThunk,
   fetchUserThunk,
 } from "../redux/user/user.actions";
+import {fetchAirportsThunk} from "../redux/flights/flights.actions"
+
 import CitySearch from "./CitySearch";
 import { formatDate2 } from "./formatDate";
 
@@ -190,7 +192,8 @@ function NewTripForm() {
       latitude: selectedCity.latitude,
       longitude: selectedCity.longitude,
     });
-    console.log(cityCoordinates);
+    // console.log(cityCoordinates);
+    // dispatch(fetchAirportsThunk(selectedCity.name));
   };
 
   const handleToCitySelect = (selectedCity) => {
@@ -237,6 +240,9 @@ function NewTripForm() {
     // dispatch(addTripThunk(newTripData));
     console.log(newTripData);
   };
+
+  //origin
+  //destination
 
   return (
     <form onSubmit={handleSubmit}>
