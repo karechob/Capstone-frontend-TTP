@@ -33,17 +33,15 @@ function Trip() {
   }, [trip]);
 
   console.log("image data: ", image);
-
-  // Render the JSX outside the useEffect hooks
   return (
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
-      <h2>Owner & Collaborators</h2>
+      {/* <h2>Owner & Collaborators</h2>
       {trip.collaborators.length > 0 ? (
         <Collaborators />
       ) : (
         <p>No Collaborators...</p>
-      )}
+      )} */}
       <div className="weather-destination-container">
         <div className="destination-img-container">
           <h1>Destination</h1>
