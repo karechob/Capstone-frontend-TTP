@@ -30,10 +30,9 @@ const CitySearch = ({ inputType, onCitySelect }) => {
   };
 
   const handleCitySelection = (city) => {
-    setCityInput(city);
+    setCityInput(city.name);
     setIsDropdownVisible(false);
     onCitySelect(city);
-    console.log(city);
   };
 
   const handleInputBlur = () => {
@@ -56,10 +55,7 @@ const CitySearch = ({ inputType, onCitySelect }) => {
         {isDropdownVisible && filteredSuggestions.length > 0 && (
           <ul className="suggestions-list">
             {filteredSuggestions.map((suggestion, index) => (
-              <li
-                key={index}
-                onClick={() => handleCitySelection(suggestion.name)}
-              >
+              <li key={index} onClick={() => handleCitySelection(suggestion)}>
                 {suggestion.name}
               </li>
             ))}

@@ -35,6 +35,10 @@ function NewTripForm() {
   const [activityError, setActivityError] = useState("");
   const [collaboratorsDeleteStatus, setCollaboratorsDeleteStatus] =
     useState(false);
+  const [cityCoordinates, setCityCoordinates] = useState({
+    latitude: 0,
+    longitude: 0,
+  });
 
   useEffect(() => {
     if (
@@ -181,11 +185,21 @@ function NewTripForm() {
   };
 
   const handleFromCitySelect = (selectedCity) => {
-    setOrigin(selectedCity);
+    setOrigin(selectedCity.name);
+    setCityCoordinates({
+      latitude: selectedCity.latitude,
+      longitude: selectedCity.longitude,
+    });
+    console.log(cityCoordinates);
   };
 
   const handleToCitySelect = (selectedCity) => {
-    setDestination(selectedCity);
+    setDestination(selectedCity.name);
+    setCityCoordinates({
+      latitude: selectedCity.latitude,
+      longitude: selectedCity.longitude,
+    });
+    console.log(cityCoordinates);
   };
 
   const handleSubmit = (e) => {
