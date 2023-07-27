@@ -1,47 +1,48 @@
 import axios from "axios";
 import HotelsActionTypes from "./hotels.types";
 
-export const fetchAllHotelsSuccess = (payload) => {
+export const fetchDestination = (payload) => {
   return {
-    type: HotelsActionTypes.FETCH_HOTELS,
+    type: HotelsActionTypes.FETCH_DESTINATION,
     payload: payload,
   };
 };
 
-export const fetchAllHotelsThunk = () => {
-  return async (dispatch) => {
-    const options = {
-      method: "GET",
-      url: "https://booking-com.p.rapidapi.com/v2/hotels/search",
-      params: {
-        order_by: "popularity",
-        adults_number: "2",
-        checkin_date: "2023-09-27",
-        filter_by_currency: "AED",
-        dest_id: "-553173",
-        locale: "en-gb",
-        checkout_date: "2023-09-28",
-        units: "metric",
-        room_number: "1",
-        dest_type: "city",
-        include_adjacency: "true",
-        children_number: "2",
-        page_number: "0",
-        children_ages: "5,0",
-        categories_filter_ids: "class::2,class::4,free_cancellation::1",
-      },
-      headers: {
-        "X-RapidAPI-Key": process.env.REACT_APP_X_RAPIDAPI_KEY,
-        "X-RapidAPI-Host": "booking-com.p.rapidapi.com",
-      },
-    };
+export const fetchInformation = (payload) => {
+  return {
+    type: HotelsActionTypes.FETCH_INFORMATION,
+    payload: payload,
+  };
+};
 
+
+export const fetchDestinationThunk = (name) => async (dispatch) =>{
     try {
-      const response = await axios.request(options);
-      console.log("this is hotels", response.data)
-      dispatch(fetchAllHotelsSuccess(response.data));
+      const response = await axios.post(`http://localhost:8080/api/hotels/destination`, {name: name}, {withCredentials : true},);
+      console.log("this is destination for hotels", response.data)
+      dispatch(fetchDestination(response.data));
     } catch (error) {
       console.log(error)
     }
   };
+
+// const pricerangeformat = `price::USD${lower}-${higher}`;  
+export const fetchInformationThunk = (checkout_date, dest_id, checkin_date, categories_filter_ids) => async (dispatch) => {
+  try {
+    console.log("FETCH AIRPORT THUNK IS FIRING UP");
+    console.log("this is checkout date", checkout_date); //(2023-08-29)
+    console.log("this is dest_id", dest_id);
+    console.log("this is checkin_date", checkin_date);
+    console.log("this is categories_filter_ids", categories_filter_ids);
+    const response = await axios.post(`http://localhost:8080/api/hotels/information`, 
+    {checkout_date: checkout_date},
+    {dest_id: dest_id},
+    {checkin_date: checkin_date},
+    {categories_filter_ids: categories_filter_ids},
+    {withCredentials : true},);
+    console.log("this is response data", response.data)
+    dispatch(fetchInformation(response.data));
+  } catch (error) {
+    console.log(error);
+  }
 };
