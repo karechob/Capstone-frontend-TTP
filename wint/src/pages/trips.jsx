@@ -1,16 +1,17 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllTripsThunk } from "../redux/trips/trips.actions";
-import "../css/trips.css";
+import {
+  fetchTripThunk,
+  fetchAllTripsThunk,
+} from "../redux/trips/trips.actions";
 import { useNavigate } from "react-router-dom";
-import { fetchTripThunk } from "../redux/trips/trips.actions";
+import "../css/trips.css";
 
 function Trips() {
   const trips = useSelector((state) => state.trips.allTrips);
   const trip = useSelector((state) => state.trips);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // console.log("trip state: " , trip);
 
   useEffect(() => {
     dispatch(fetchAllTripsThunk());
@@ -18,16 +19,11 @@ function Trips() {
 
   console.log("all trips: ", trips);
 
-  // For formatting date to show only year, month, and day
   function formatDate(dateStr) {
     return new Date(dateStr).toISOString().split("T")[0];
   }
 
   const handleView = async (key) => {
-    // navigate("../trip", {
-    //   state: { tripData: trips[key] },
-    // });
-    // navigate("../trip");
     const tripId = trip.allTrips[key].id;
 
     await dispatch(fetchTripThunk(tripId));

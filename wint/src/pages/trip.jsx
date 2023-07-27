@@ -34,6 +34,7 @@ function Trip() {
 
   console.log("image data: ", image);
 
+  // Render the JSX outside the useEffect hooks
   return (
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
