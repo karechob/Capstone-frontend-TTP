@@ -39,7 +39,7 @@ function Trip() {
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
       <h2>Owner & Collaborators</h2>
-      {trip.collaborators.length > 0 ? (
+      {trip.collaborators > 0 ? (
         <Collaborators />
       ) : (
         <p>No Collaborators...</p>
