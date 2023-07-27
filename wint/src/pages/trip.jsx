@@ -6,7 +6,6 @@ import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 
 import {
-  fetchImage,
   fetchImageThunk,
   fetchTripThunk,
   fetchWeatherThunk,
@@ -23,7 +22,10 @@ function Trip() {
     (state) => state.trips.weather.data?.days
   );
   const image = useSelector((state) => state.trips.image.data?.mobile);
-
+  const startDate = trip.startDate?.split("T")[0];
+  const endDate = trip.endDate?.split("T")[0];
+  console.log("start date: ", startDate);
+  console.log("end date: ", endDate);
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
   }, []);
@@ -32,16 +34,19 @@ function Trip() {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
 
-  console.log("image data: ", image);
+
+  useEffect(() => {
+    dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
+  }, [])
+
+  console.log("weather data: ", weatherForecast);
+
+  // Render the JSX outside the useEffect hooks
   return (
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
-      {/* <h2>Owner & Collaborators</h2>
-      {trip.collaborators.length > 0 ? (
-        <Collaborators />
-      ) : (
-        <p>No Collaborators...</p>
-      )} */}
+      <h2>Owner & Collaborators</h2>
+      {trip.collaborators > 0 ? <Collaborators /> : <p>No Collaborators...</p>}
       <div className="weather-destination-container">
         <div className="destination-img-container">
           <h1>Destination</h1>
@@ -52,6 +57,11 @@ function Trip() {
           <h1>Weather</h1>
           <WeatherBreakdown />
           <p>Forecast:</p>
+          {weatherForecast?.map((day) => (
+            <div className="weather-forecast">
+              <p>{day.temp}</p>
+            </div>
+          ))}
         </div>
       </div>
       <h1>Budget Breakdown</h1>
