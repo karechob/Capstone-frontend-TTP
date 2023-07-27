@@ -20,15 +20,15 @@ function NewTripForm() {
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [weather, setWeather] = useState("");
+  // const [weather, setWeather] = useState("");
   const [duration, setDuration] = useState(0);
-  const [hotelName, setHotelName] = useState("");
-  const [hotelCost, setHotelCost] = useState("");
-  const [hotelUrl, setHotelUrl] = useState("");
-  const [flightAirline, setFlightAirline] = useState("");
-  const [flightCost, setFlightCost] = useState("");
-  const [flightUrl, setFlightUrl] = useState("");
-  const [activities, setActivities] = useState([]);
+  // const [hotelName, setHotelName] = useState("");
+  // const [hotelCost, setHotelCost] = useState("");
+  // const [hotelUrl, setHotelUrl] = useState("");
+  // const [flightAirline, setFlightAirline] = useState("");
+  // const [flightCost, setFlightCost] = useState("");
+  // const [flightUrl, setFlightUrl] = useState("");
+  // const [activities, setActivities] = useState([]);
   const [collaboratorsInput, setCollaboratorsInput] = useState("");
   const [collaborators, setCollaborators] = useState([]);
   const [collaboratorError, setCollaboratorError] = useState("");
@@ -76,9 +76,9 @@ function NewTripForm() {
     updateDuration(startDate, e.target.value);
   };
 
-  const handleWeatherChange = (e) => {
-    setWeather(e.target.value);
-  };
+  // const handleWeatherChange = (e) => {
+  //   setWeather(e.target.value);
+  // };
 
   const updateDuration = (start, end) => {
     if (start && end) {
@@ -94,51 +94,51 @@ function NewTripForm() {
     }
   };
 
-  const handleHotelNameChange = (e) => {
-    setHotelName(e.target.value);
-  };
+  // const handleHotelNameChange = (e) => {
+  //   setHotelName(e.target.value);
+  // };
 
-  const handleHotelCostChange = (e) => {
-    setHotelCost(e.target.value);
-  };
+  // const handleHotelCostChange = (e) => {
+  //   setHotelCost(e.target.value);
+  // };
 
-  const handleHotelUrlChange = (e) => {
-    setHotelUrl(e.target.value);
-  };
+  // const handleHotelUrlChange = (e) => {
+  //   setHotelUrl(e.target.value);
+  // };
 
-  const handleFlightAirlineChange = (e) => {
-    setFlightAirline(e.target.value);
-  };
+  // const handleFlightAirlineChange = (e) => {
+  //   setFlightAirline(e.target.value);
+  // };
 
-  const handleFlightCostChange = (e) => {
-    setFlightCost(e.target.value);
-  };
+  // const handleFlightCostChange = (e) => {
+  //   setFlightCost(e.target.value);
+  // };
 
-  const handleFlightUrlChange = (e) => {
-    setFlightUrl(e.target.value);
-  };
+  // const handleFlightUrlChange = (e) => {
+  //   setFlightUrl(e.target.value);
+  // };
 
-  const handleActivityNameChange = (index, e) => {
-    const newActivities = [...activities];
-    newActivities[index].name = e.target.value;
-    setActivities(newActivities);
-  };
+  // const handleActivityNameChange = (index, e) => {
+  //   const newActivities = [...activities];
+  //   newActivities[index].name = e.target.value;
+  //   setActivities(newActivities);
+  // };
 
-  const handleActivityCostChange = (index, e) => {
-    const newActivities = [...activities];
-    newActivities[index].cost = parseFloat(e.target.value);
-    setActivities(newActivities);
-  };
+  // const handleActivityCostChange = (index, e) => {
+  //   const newActivities = [...activities];
+  //   newActivities[index].cost = parseFloat(e.target.value);
+  //   setActivities(newActivities);
+  // };
 
-  const addActivity = () => {
-    setActivities([...activities, { name: "", cost: 0 }]);
-  };
+  // const addActivity = () => {
+  //   setActivities([...activities, { name: "", cost: 0 }]);
+  // };
 
-  const removeActivity = (index) => {
-    const newActivities = [...activities];
-    newActivities.splice(index, 1);
-    setActivities(newActivities);
-  };
+  // const removeActivity = (index) => {
+  //   const newActivities = [...activities];
+  //   newActivities.splice(index, 1);
+  //   setActivities(newActivities);
+  // };
 
   const handleCollaboratorsInputChange = (e) => {
     setCollaboratorsInput(e.target.value);
@@ -204,10 +204,10 @@ function NewTripForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (activities.length === 0) {
-      setActivityError("At least one activity is required.");
-      return;
-    }
+    // if (activities.length === 0) {
+    //   setActivityError("At least one activity is required.");
+    //   return;
+    // }
 
     const newTripData = {
       name,
@@ -216,25 +216,26 @@ function NewTripForm() {
       budget,
       startDate: formatDate2(startDate),
       endDate: formatDate2(endDate),
-      weather,
-      duration,
-      hotel: {
-        name: hotelName,
-        cost: parseFloat(hotelCost),
-        link: hotelUrl,
-      },
-      flight: {
-        airline: flightAirline,
-        cost: parseFloat(flightCost),
-        link: flightUrl,
-      },
-      activities: activities.filter(
-        (activity) => activity.name.trim() !== "" && activity.cost > 0
-      ),
+      // weather,
+      // duration,
+      // hotel: {
+      //   name: hotelName,
+      //   cost: parseFloat(hotelCost),
+      //   link: hotelUrl,
+      // },
+      // flight: {
+      //   airline: flightAirline,
+      //   cost: parseFloat(flightCost),
+      //   link: flightUrl,
+      // },
+      // activities: activities.filter(
+      //   (activity) => activity.name.trim() !== "" && activity.cost > 0
+      // ),
       collaborators: collaborators,
     };
-    setActivityError("");
-    dispatch(addTripThunk(newTripData));
+    // setActivityError("");
+    // dispatch(addTripThunk(newTripData));
+    console.log(newTripData);
   };
 
   return (
@@ -282,7 +283,7 @@ function NewTripForm() {
         />
       </div>
 
-      <div>
+      {/* <div>
         <label>Weather:</label>
         <select value={weather} onChange={handleWeatherChange} required>
           <option value="">Select Weather</option>
@@ -292,14 +293,14 @@ function NewTripForm() {
           <option value="windy">Windy</option>
           <option value="cloudy">Cloudy</option>
         </select>
-      </div>
+  </div> */}
 
       <div>
         <label>Duration:</label>
         <input type="text" value={duration} readOnly />
       </div>
 
-      <div>
+      {/* <div>
         <label>Hotel Name:</label>
         <input
           type="text"
@@ -382,7 +383,7 @@ function NewTripForm() {
           Add Activity
         </button>
         {activityError && <p>{activityError}</p>}
-      </div>
+      </div> */}
       <div>
         <label>Collaborators:</label>
         <input
@@ -415,7 +416,7 @@ function NewTripForm() {
         </div>
       )}
 
-      <button type="submit">Create Trip</button>
+      <button type="submit">Search</button>
     </form>
   );
 }

@@ -34,6 +34,7 @@ function Trip() {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
 
+
   useEffect(() => {
     dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
   }, [])

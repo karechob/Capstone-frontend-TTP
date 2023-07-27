@@ -7,6 +7,7 @@ import TripPage from "../pages/trip";
 import UserProfile from "../pages/userProfile";
 import UserSettings from "../pages/userSettings";
 import NewTrip from "../pages/newTrip";
+import NewTripSearch from "../pages/newTripSearch";
 import Trips from "../pages/trips";
 import Test from "../components/test";
 import TripHistory from "../pages/triphistory";
@@ -53,6 +54,7 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
       <Route
         path="/trip/:tripId"
         element={
@@ -69,6 +71,16 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/new-trip-search"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <NewTripSearch />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/userSettings"
         element={
