@@ -40,13 +40,17 @@ function Trip() {
   useEffect(() => {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
-
   
   // useEffect(() => {
   //   if(trip){
   //   dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
   //   };
   // }, [trip]);
+
+  useEffect(() => {
+    dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
+  }, [])
+
 
   //Get the total temperature for the trip and average
   const totalTemp =

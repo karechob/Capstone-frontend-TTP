@@ -26,7 +26,7 @@ const Navbar = ({ handleLogout }) => {
   };
 
   const handleNewTrip = () => {
-    navigate("/new-trip");
+    navigate("/new-trip-search");
   };
 
   const handleTrips = () => {
