@@ -1,58 +1,134 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCitiesThunk,
-  fetchCities,
-} from "../redux/citySearch/citySearch.actions";
+import React, { useState, useEffect, useRef } from "react";
 import "../css/citySearch.css";
 
-const CitySearch = ({ inputType, onCitySelect }) => {
+const CitySearch = ({ onCitySelect }) => {
   const [cityInput, setCityInput] = useState("");
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const filteredSuggestions = useSelector((state) => state.cities.cities);
+  const [citySuggestions, setCitySuggestions] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const inputRef = useRef();
+  let debounceTimeout;
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    if (citySuggestions.length > 0) {
+      setFilteredSuggestions(citySuggestions.slice(0, 5));
+    }
+  }, [citySuggestions]);
 
-  const handleCityInputChange = async (event) => {
+  useEffect(() => {
+    if (selectedCity) {
+      setCityInput(selectedCity.name);
+    } else {
+      setCityInput("");
+    }
+  }, [selectedCity]);
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
+  const handleClickOutside = (event) => {
+    if (inputRef.current && !inputRef.current.contains(event.target)) {
+      setFilteredSuggestions([]);
+    }
+  };
+
+  const handleCityInputChange = (event) => {
     const value = event.target.value;
     setCityInput(value);
-    if (value.trim() !== "") {
-      try {
-        await dispatch(fetchCitiesThunk(value));
-      } catch (error) {
-        console.error("Error while fetching cities:", error);
-      }
-      setIsDropdownVisible(true);
-    } else {
-      dispatch(fetchCities([]));
-      setIsDropdownVisible(false);
+
+    clearTimeout(debounceTimeout);
+    debounceTimeout = setTimeout(() => {
+      fetchSuggestions(value);
+    }, 100);
+  };
+
+  const fetchSuggestions = async (city) => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await fetch(
+        `https://api.teleport.org/api/cities/?search=${encodeURIComponent(
+          city
+        )}`
+      );
+      const data = await response.json();
+      const suggestions = data._embedded["city:search-results"].map((item) => {
+        if (item.matching_alternate_names && item.matching_alternate_names[0]) {
+          return {
+            name: item.matching_alternate_names[0].name,
+          };
+        }
+        return null;
+      });
+      setCitySuggestions(
+        suggestions.filter((suggestion) => suggestion !== null)
+      );
+    } catch (error) {
+      setError("Error fetching city suggestions");
+      setCitySuggestions([]);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleCitySelection = (city) => {
-    setCityInput(city.name);
-    setIsDropdownVisible(false);
-    onCitySelect(city);
+    if (city) {
+      setSelectedCity(city);
+      setFilteredSuggestions([]);
+      onCitySelect(city);
+    }
   };
 
-  const handleInputBlur = () => {
-    setTimeout(() => {
-      setIsDropdownVisible(false);
-    }, 200);
+  const handleClearInput = () => {
+    setCityInput("");
+    setCitySuggestions([]);
+    setSelectedCity(null);
+    setFilteredSuggestions([]);
+    onCitySelect(null);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      if (filteredSuggestions.length > 0) {
+        handleCitySelection(filteredSuggestions[0]);
+      }
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      if (filteredSuggestions.length > 0) {
+        const currentIndex = filteredSuggestions.findIndex(
+          (suggestion) => suggestion.name === cityInput
+        );
+        const nextIndex =
+          event.key === "ArrowDown"
+            ? (currentIndex + 1) % filteredSuggestions.length
+            : (currentIndex - 1 + filteredSuggestions.length) %
+              filteredSuggestions.length;
+        setCityInput(filteredSuggestions[nextIndex].name);
+      }
+    }
   };
 
   return (
     <div>
-      <div className="search-bar">
+      <div className="search-bar" ref={inputRef}>
         <input
           type="text"
-          id={`cityInput_${inputType}`}
+          id="cityInput"
           value={cityInput}
           onChange={handleCityInputChange}
-          onBlur={handleInputBlur}
+          onKeyDown={handleKeyDown}
           autoComplete="off"
+          required
         />
-        {isDropdownVisible && filteredSuggestions.length > 0 && (
+        {loading && <div>Loading...</div>}
+        {error && <div>{error}</div>}
+        {filteredSuggestions.length > 0 && (
           <ul className="suggestions-list">
             {filteredSuggestions.map((suggestion, index) => (
               <li key={index} onClick={() => handleCitySelection(suggestion)}>
@@ -62,6 +138,11 @@ const CitySearch = ({ inputType, onCitySelect }) => {
           </ul>
         )}
       </div>
+      {selectedCity && (
+        <button className="clear-button" onClick={handleClearInput}>
+          Clear
+        </button>
+      )}
     </div>
   );
 };

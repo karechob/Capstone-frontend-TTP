@@ -23,11 +23,13 @@ export const fetchWeather = (weather) => ({
   payload: weather,
 });
 
-export const fetchWeatherThunk = (destination) => {
+export const fetchWeatherThunk = (destination, x, y) => {
   return async (dispatch) => {
     try {
+      console.log("fetchWeatherThunk is firing up");
+      console.log("x,y destination: ", x, y);
       const response = await axios.get(
-        `http://localhost:8080/api/weather/getWeather/${destination}`
+        `http://localhost:8080/api/weather/getWeather/${destination}/${x}/${y}`
       );
       dispatch(fetchWeather(response));
     } catch (error) {
