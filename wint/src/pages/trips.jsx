@@ -7,7 +7,7 @@ import { fetchTripThunk } from "../redux/trips/trips.actions";
 
 function Trips() {
   const trips = useSelector((state) => state.trips.allTrips);
-  const trip = useSelector((state) =>state.trips);
+  const trip = useSelector((state) => state.trips);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // console.log("trip state: " , trip);
@@ -18,7 +18,7 @@ function Trips() {
 
   console.log("all trips: ", trips);
 
-  //For formatting date to show only year,month, and day
+  // For formatting date to show only year, month, and day
   function formatDate(dateStr) {
     return new Date(dateStr).toISOString().split("T")[0];
   }
@@ -27,7 +27,7 @@ function Trips() {
     // navigate("../trip", {
     //   state: { tripData: trips[key] },
     // });
-    //navigate("../trip");
+    // navigate("../trip");
     const tripId = trip.allTrips[key].id;
 
     await dispatch(fetchTripThunk(tripId));
@@ -39,11 +39,31 @@ function Trips() {
     navigate(`../trip/${id}`);
   };
 
+  if (trips.length === 0) {
+    return (
+      <>
+        <h1>Trips</h1>
+        <hr />
+        <p>No trips history</p>
+      </>
+    );
+  }
+
+  if (trips.length > 0 && !trip.allTrips.length) {
+    return (
+      <>
+        <h1>Trips</h1>
+        <hr />
+        <p>Loading...</p>
+      </>
+    );
+  }
+
   return (
     <>
       <h1>Trips</h1>
       <hr />
-      
+
       <table className="table">
         <thead>
           <tr>
@@ -55,23 +75,19 @@ function Trips() {
           </tr>
         </thead>
         <tbody>
-          {trips.length > 0
-            ? trips.map((trip, index) => (
-                <tr key={index}>
-                  <td className="td">
-                    <button onClick={() => handleView(index)}>View</button>
-                  </td>
-                  <td className="td">{formatDate(trip.startDate)}</td>
-                  <td className="td">{trip.destination}</td>
-                  <td className="td">{trip.hotel.name}</td>
-                  <td className="td">${trip.budget}</td>
-                </tr>
-              ))
-            : null}
+          {trips.map((trip, index) => (
+            <tr key={index}>
+              <td className="td">
+                <button onClick={() => handleView(index)}>View</button>
+              </td>
+              <td className="td">{formatDate(trip.startDate)}</td>
+              <td className="td">{trip.destination}</td>
+              <td className="td">{trip.hotel.name}</td>
+              <td className="td">${trip.budget}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-      {trips.length === 0 && <p>Loading...</p>}
-
     </>
   );
 }
