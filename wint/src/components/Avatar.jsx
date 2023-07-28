@@ -1,7 +1,7 @@
 import "../css/avatar.css";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { fetchUserThunk, updateUserThunk } from "../redux/user/user.actions";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Avatar = () => {
@@ -25,22 +25,9 @@ const Avatar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.user.singleUser);
-
   useEffect(() => {
     dispatch(fetchUserThunk());
   }, [dispatch]);
-
-  // useEffect(() => {
-  //   if (user) {
-  //     setAvatar(user.image);
-  //   }
-  // }, [user]);
-
-  // const handleImageChange = (event) => {
-  //   setAvatar(event.target.src);
-  //   console.log("This is the avatar after it is set: ", avatar);
-  // }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
