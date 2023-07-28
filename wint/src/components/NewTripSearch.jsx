@@ -112,7 +112,7 @@ function NewTripForm() {
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
-      await dispatch(fetchActivitiesThunk(newTripData.destination));
+      await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
