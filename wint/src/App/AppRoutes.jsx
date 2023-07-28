@@ -14,6 +14,7 @@ import Test from "../components/test";
 import TripHistory from "../pages/triphistory";
 import ProtectedRoute from "../components/ProtectedRoute";
 import "../css/navBar.css";
+import EditTrip from "../components/EditTrip";
 
 const AppRoutes = () => {
   const isLoggedIn = sessionStorage.getItem("isLoggedIn");
@@ -69,6 +70,14 @@ const AppRoutes = () => {
         element={
           <ProtectedRoute isLoggedIn={isLoggedIn}>
             <TripPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/edit-trip/:tripId"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <EditTrip />
           </ProtectedRoute>
         }
       />

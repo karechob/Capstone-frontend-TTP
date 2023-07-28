@@ -31,6 +31,17 @@ function Trips() {
     navigateToSingleTrip(tripId);
   };
 
+  const handleEdit = async (key) => { 
+    const tripId = trip.allTrips[key].id;
+    await dispatch(fetchTripThunk(tripId));
+    navigateToEditTrip(tripId);
+  };
+  
+  const navigateToEditTrip = (id) => {
+    dispatch(fetchTripThunk(id))
+    navigate(`../edit-trip/${id}`);
+  };
+
   const navigateToSingleTrip = (id) => {
     navigate(`../trip/${id}`);
   };
@@ -75,6 +86,7 @@ function Trips() {
             <tr key={index}>
               <td className="td">
                 <button onClick={() => handleView(index)}>View</button>
+                <button onClick={() => handleEdit(index)}>Edit</button>
               </td>
               <td className="td">{formatDate(trip.startDate)}</td>
               <td className="td">{trip.destination}</td>
