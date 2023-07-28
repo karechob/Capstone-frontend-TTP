@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import "../css/userSettings.css";
 import { fetchUserThunk, updateUserThunk } from "../redux/user/user.actions";
 import { useNavigate } from "react-router-dom";
-
+import "../css/userSettings.css";
 function Settings() {
   const user = useSelector((state) => state.user.singleUser);
   const [userData, setUserData] = useState({
@@ -118,9 +117,8 @@ function Settings() {
 
   return (
     <div className="settings-container">
-      <h1 className="settings-heading">Settings</h1>
-
       <form onSubmit={handleSubmit} className="settings-form">
+        <h1 class="settings-heading">SETTINGS</h1>
         <label htmlFor="userName">Name:</label>
         <input
           type="text"

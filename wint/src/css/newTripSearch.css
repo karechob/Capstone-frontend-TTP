@@ -1,0 +1,96 @@
+/* Update CSS to use class names for styling */
+
+.new-trip-form {
+  max-width: 600px;
+  margin: 5% auto;
+  padding: 20px;
+  background-color: #4b4848;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  color: #fff;
+}
+
+.new-trip-form-group {
+  margin-bottom: 15px;
+}
+
+.new-trip-form-label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.new-trip-form-input {
+  padding: 8px;
+  width: 100%;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  outline: none;
+}
+
+.new-trip-form-input::placeholder {
+  color: #999;
+}
+
+.new-trip-search-btn {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-trip-remove-collaborator-btn {
+  background-color: #e90707;
+  border: none;
+  border-radius: 5px;
+  margin-left: 2%;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-trip-remove-collaborator-btn:hover {
+  background-color: #ff5100;
+}
+
+.new-trip-search-btn:hover {
+  background-color: #0056b3;
+}
+
+.new-trip-collaborators-input-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.new-trip-collaborators-input {
+  flex: 1;
+  padding-right: 10px;
+}
+
+.new-trip-add-collaborator-btn {
+  margin-left: 5px;
+  font-size: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.new-trip-add-collaborator-btn {
+  padding: 10px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}

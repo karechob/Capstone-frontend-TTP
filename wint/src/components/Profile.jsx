@@ -25,13 +25,12 @@ function Profile() {
       <h1 className="profile-card">User Profile</h1>
       <div>
         <Link to={`/user/avatar`} className="avatar-link">
-          <img
-            className="profile-image"
-            src={user.image}
-            alt="user profile"
-            width="150"
-            height="150"
-          />
+          <div class="profile-image">
+            <img src={user.image} alt="user profile" width="150" height="150" />
+            <div class="overlay">
+              <span>Change Avatar</span>
+            </div>
+          </div>
         </Link>
         <div className="profile-info-box">
           <table className="profile-info-table">
