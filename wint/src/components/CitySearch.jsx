@@ -6,7 +6,6 @@ const CitySearch = ({ onCitySelect }) => {
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [selectedCity, setSelectedCity] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const inputRef = useRef();
   let debounceTimeout;
@@ -50,7 +49,6 @@ const CitySearch = ({ onCitySelect }) => {
 
   const fetchSuggestions = async (city) => {
     try {
-      setLoading(true);
       setError(null);
       const response = await fetch(
         `https://api.teleport.org/api/cities/?search=${encodeURIComponent(
@@ -72,8 +70,6 @@ const CitySearch = ({ onCitySelect }) => {
     } catch (error) {
       setError("Error fetching city suggestions");
       setCitySuggestions([]);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -115,34 +111,33 @@ const CitySearch = ({ onCitySelect }) => {
   };
 
   return (
-    <div>
-      <div className="search-bar" ref={inputRef}>
-        <input
-          type="text"
-          id="cityInput"
-          value={cityInput}
-          onChange={handleCityInputChange}
-          onKeyDown={handleKeyDown}
-          autoComplete="off"
-          required
-        />
-        {loading && <div>Loading...</div>}
-        {error && <div>{error}</div>}
-        {filteredSuggestions.length > 0 && (
-          <ul className="suggestions-list">
-            {filteredSuggestions.map((suggestion, index) => (
-              <li key={index} onClick={() => handleCitySelection(suggestion)}>
-                {suggestion.name}
-              </li>
-            ))}
-          </ul>
+    <div className="search-container">
+      <div className="input-container">
+        <div className="search-bar" ref={inputRef}>
+          <input
+            type="text"
+            id="cityInput"
+            value={cityInput}
+            onChange={handleCityInputChange}
+            onKeyDown={handleKeyDown}
+            autoComplete="off"
+            required
+          />
+          {error && <div>{error}</div>}
+          {filteredSuggestions.length > 0 && (
+            <ul className="suggestions-list">
+              {filteredSuggestions.map((suggestion, index) => (
+                <li key={index} onClick={() => handleCitySelection(suggestion)}>
+                  {suggestion.name}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+        {selectedCity && (
+          <button className="clear-button" onClick={handleClearInput}></button>
         )}
       </div>
-      {selectedCity && (
-        <button className="clear-button" onClick={handleClearInput}>
-          Clear
-        </button>
-      )}
     </div>
   );
 };
