@@ -1,13 +1,13 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
+//import { fetchAllHotelsThunk } from "../redux/hotels/hotels.actions";
 
 function Test() {
   const dispatch = useDispatch();
 
   const allHotels = useSelector((state) => state.hotels.allHotels.results);
   const handleTestClick = () => {
-    dispatch(fetchAllHotelsThunk());
+    //dispatch(fetchAllHotelsThunk());
   };
 
   return (
