@@ -31,6 +31,10 @@
   outline: none;
 }
 
+.new-trip-form-input:hover {
+  background-color: #007bff;
+}
+
 .new-trip-form-input::placeholder {
   color: #999;
 }

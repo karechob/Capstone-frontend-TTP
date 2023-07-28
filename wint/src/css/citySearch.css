@@ -19,6 +19,14 @@ label {
   background-color: #333;
 }
 
+#cityInput:hover {
+  background-color: #007bff;
+}
+
+.suggestions-list:hover {
+  background-color: #333;
+}
+
 .suggestions-list {
   position: relative;
   top: 100%;

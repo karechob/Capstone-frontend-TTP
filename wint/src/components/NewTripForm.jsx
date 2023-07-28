@@ -5,11 +5,8 @@ import {
   fetchCollaboratorThunk,
   fetchUserThunk,
 } from "../redux/user/user.actions";
-import {fetchAirportsThunk} from "../redux/flights/flights.actions"
-
 import CitySearch from "./CitySearch";
 import { formatDate2 } from "./formatDate";
-//import { fetchActivitiesThunk } from "../redux/activities/activities.actions";
 
 function NewTripForm() {
   const dispatch = useDispatch();
@@ -35,7 +32,7 @@ function NewTripForm() {
   const [collaboratorsInput, setCollaboratorsInput] = useState("");
   const [collaborators, setCollaborators] = useState([]);
   const [collaboratorError, setCollaboratorError] = useState("");
-  const [activityError, setActivityError] = useState("");
+  // const [activityError, setActivityError] = useState("");
   const [collaboratorsDeleteStatus, setCollaboratorsDeleteStatus] =
     useState(false);
   const [cityCoordinates, setCityCoordinates] = useState({
@@ -238,13 +235,12 @@ function NewTripForm() {
       collaborators: collaborators,
     };
     // setActivityError("");
-    
+
     // dispatch(addTripThunk(newTripData));
     //console.log(newTripData);
 
     // console.log("This is the destination being passed", newTripData.destination);
     // dispatch(fetchActivitiesThunk(newTripData.destination));
-
   };
 
   //origin
