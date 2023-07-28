@@ -7,6 +7,7 @@ import {
 } from "../redux/user/user.actions";
 import CitySearch from "./CitySearch";
 import { formatDate2 } from "./formatDate";
+import { fetchActivitiesThunk } from "../redux/activities/activities.actions";
 
 function NewTripForm() {
   const dispatch = useDispatch();
@@ -144,7 +145,11 @@ function NewTripForm() {
       endDate: formatDate2(endDate),
       collaborators: collaborators,
     };
-    console.log(newTripData);
+    //console.log(newTripData);
+
+    console.log("This is the destination being passed", newTripData.destination);
+    dispatch(fetchActivitiesThunk(newTripData.destination));
+
   };
 
   return (
