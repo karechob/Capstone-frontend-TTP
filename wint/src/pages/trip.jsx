@@ -27,9 +27,7 @@ function Trip() {
   const owner = useSelector((state) => state.user.singleUser);
   const trip = useSelector((state) => state.trips.singleTrip);
   const dispatch = useDispatch();
-  const weatherForecast = useSelector(
-    (state) => state.trips.weather.data?.days
-  );
+  const weatherForecast = useSelector((state) => state.trips.weather.data);
   const image = useSelector((state) => state.trips.image.data?.mobile);
   const startDate = trip.startDate?.split("T")[0];
   const endDate = trip.endDate?.split("T")[0];
@@ -46,26 +44,15 @@ function Trip() {
     dispatch(fetchImageThunk(trip.destination));
   }, [trip]);
 
-  // useEffect(() => {
-  //   if(trip){
-  //   dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
-  //   };
-  // }, [trip]);
-
-  // useEffect(() => {
-  //   dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
-  // }, [])
+  useEffect(() => {
+    if (trip) {
+      dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
+    }
+  }, [trip]);
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
   }, []);
-
-  //Get the total temperature for the trip and average
-  const totalTemp =
-    weatherForecast?.reduce((sum, day) => sum + day.temp, 0) || 0;
-  const averageTemp = weatherForecast?.length
-    ? totalTemp / weatherForecast.length
-    : 0;
 
   // Render the JSX outside the useEffect hooks
   return (
@@ -109,7 +96,7 @@ function Trip() {
           <h1>Weather</h1>
           <WeatherBreakdown />
           <p>Average Temperature:</p>
-          <p>{averageTemp.toFixed(2)}°C</p>
+          <p>{weatherForecast?.toFixed(2)}°C</p>
         </div>
       </div>
       <h1>Budget Breakdown</h1>
