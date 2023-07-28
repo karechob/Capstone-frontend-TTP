@@ -55,14 +55,6 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-      <Route
-        path="/test"
-        element={
-          <ProtectedRoute isLoggedIn={isLoggedIn}>
-            <Test />
-          </ProtectedRoute>
-        }
-      />
 
       <Route
         path="/trip/:tripId"

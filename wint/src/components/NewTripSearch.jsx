@@ -105,7 +105,6 @@ function NewTripForm() {
       endDate: endDate,
       hotelBudgetRange: hotelBudgetRange,
       activitiesBudgetRange: activitiesBudgetRange,
-      collaborators: collaborators,
     };
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
@@ -203,9 +202,9 @@ function NewTripForm() {
           className="new-trip-form-input"
         >
           <option value="">Select Activities Budget Range</option>
-          <option value="$">Cheap ($)</option>
-          <option value="$$">Mid-range ($$)</option>
-          <option value="$$$">Expensive ($$$)</option>
+          <option value="1">Cheap ($)</option>
+          <option value="2">Mid-range ($$)</option>
+          <option value="3">Expensive ($$$)</option>
         </select>
       </div>
 
