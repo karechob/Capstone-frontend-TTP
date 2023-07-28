@@ -1,27 +1,94 @@
 .settings-container {
-  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.settings-container::before {
+  content: "";
+  position: fixed;
+  top: -25%;
+  left: -25%;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.8)
+  );
+  animation: backgroundAnimation 10s alternate infinite;
+  animation-delay: 0s, 5s;
+}
+
+/* .settings-container::after {
+  content: "";
+  position: fixed;
+  top: 25%;
+  left: 25%;
+  width: 100%;
+  height: 100%;
+  z-index: -11;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.8)
+  );
+  animation: backgroundAnimation2 10s alternate-reverse infinite;
+  animation-delay: 2.5s, 7.5s;
+} */
+
+@keyframes backgroundAnimation {
+  0% {
+    transform: translate(-25%, -25%) rotate(0deg);
+  }
+  100% {
+    transform: translate(25%, 25%) rotate(360deg);
+  }
+}
+
+@keyframes backgroundAnimation2 {
+  0% {
+    transform: translate(25%, 25%) rotate(0deg);
+  }
+  100% {
+    transform: translate(-25%, -25%) rotate(360deg);
+  }
 }
 
 .settings-heading {
+  background: linear-gradient(135deg, #c4c1c1, #1f1e1e);
   margin-bottom: 20px;
   font-size: 32px;
+  text-align: center;
   color: #ffffff;
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .settings-form {
-  max-width: 600px;
-  margin: 0 auto;
-  background: linear-gradient(135deg, #ff8c00, #ff0080);
-  padding: 20px;
+  max-width: 700px;
+  margin: 3% auto;
+  opacity: 0.7;
+  background: linear-gradient(135deg, #aaabac, #1f201f);
+  padding: 40px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.settings-form:hover {
+  outline: none;
+  opacity: 1;
+  border-color: #007bff;
+  background-color: #f7f7f7;
+  box-shadow: inset 1px 1px 10px rgba(0, 123, 255, 0.699);
 }
 
 .settings-form label {
   display: block;
-  margin: 5px;
-  font-size: 20px;
-  text-align: left;
+  margin-bottom: 10px;
+  font-size: 18px;
   color: #ffffff;
   font-weight: 600;
 }
@@ -29,31 +96,31 @@
 .settings-form input {
   padding: 12px;
   margin-bottom: 20px;
-  border: 2px inset #4fb496bb;
+  border: 2px solid #4fb496bb;
   border-radius: 5px;
   width: 100%;
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
   font-size: 16px;
-  font-style: italic;
+  font-style: normal;
 }
 
 .settings-form input:focus {
   outline: none;
   border-color: #007bff;
-  background-color: #ccc;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.801);
+  background-color: #f7f7f7;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
 }
 
 .settings-form input:hover {
   border-color: #007bff;
-  background-color: #ccc;
-  box-shadow: 0 0 4px rgba(0, 123, 255, 0.4);
+  background-color: #f7f7f7;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
 }
 
 .settings-form .error-message {
-  color: rgb(255, 238, 0);
-  font-size: 10.5px;
-  margin: 0 0 30px 5px;
+  color: rgb(255, 230, 0);
+  font-size: 11px;
+  margin-top: -5px;
   text-align: left;
 }
 
@@ -64,27 +131,28 @@
 .show-password-container {
   display: flex;
   align-items: center;
+  margin-top: 10px;
 }
 
 .show-password-container input {
   flex: 0;
-  margin-top: -2%;
+  margin-right: 5px;
 }
 
 .show-password-container label {
-  font-size: 12px;
-  margin-top: -4%;
+  font-size: 14px;
+  margin-top: -2px;
 }
+
 .settings-submit-btn {
   background-color: #007bff;
-  color: #fff;
+  color: #ffffff;
   border: none;
   border-radius: 4px;
   padding: 14px 24px;
-  margin-top: 20px;
+  margin-top: 30px;
   cursor: pointer;
   font-size: 18px;
-  width: 25%;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -97,6 +165,7 @@
 }
 
 .settings-submit-btn::after {
+  content: "";
   position: absolute;
   top: 50%;
   left: 50%;
@@ -109,6 +178,6 @@
 }
 
 .settings-submit-btn:hover::after {
-  width: 160px;
-  height: 150px;
+  width: 40px;
+  height: 40px;
 }
