@@ -44,6 +44,20 @@ export const setLoginStatus = (isLoggedIn) => ({
   payload: isLoggedIn,
 });
 
+export const addCollaborator = (collaborator) => ({
+  type: "ADD_COLLABORATOR",
+  payload: collaborator,
+});
+
+export const removeCollaborator = (collaboratorId) => ({
+  type: UserActionTypes.REMOVE_COLLABORATOR,
+  payload: collaboratorId,
+});
+
+export const clearCollaborators = () => ({
+  type: UserActionTypes.CLEAR_COLLABORATORS,
+});
+
 export const fetchUserThunk = () => async (dispatch) => {
   try {
     console.log("FETCHUSERTHUNK FIRING UP");
