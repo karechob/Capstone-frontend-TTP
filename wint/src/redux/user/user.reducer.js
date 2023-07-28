@@ -3,6 +3,7 @@ import UserActionTypes from "./user.types";
 const initialState = {
   singleUser: {},
   collaborator: {},
+  collaborators: [],
 };
 
 const userReducer = (state = initialState, action) => {
@@ -20,6 +21,23 @@ const userReducer = (state = initialState, action) => {
       return { ...state, singleUser: {} };
     case UserActionTypes.DELETE_USER:
       return { ...state, singleUser: {} };
+    case UserActionTypes.ADD_COLLABORATOR:
+      return {
+        ...state,
+        collaborators: [...state.collaborators, action.payload],
+      };
+    case UserActionTypes.REMOVE_COLLABORATOR:
+      return {
+        ...state,
+        collaborators: state.collaborators.filter(
+          (collaborator) => collaborator.id !== action.payload
+        ),
+      };
+    case UserActionTypes.CLEAR_COLLABORATORS:
+      return {
+        ...state,
+        collaborators: [],
+      };
     default:
       return state;
   }
