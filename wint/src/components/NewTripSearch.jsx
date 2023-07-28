@@ -6,6 +6,9 @@ import { fetchActivitiesThunk } from "../redux/activities/activities.actions";
 import "../css/newTripSearch.css";
 import { fetchHotelsThunk } from "../redux/hotels/hotels.actions";
 import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
+import FlightResults from "./FlightResults";
+import HotelsResults from "./HotelsResults";
+import ActivitiesResults from "./ActivitiesResults";
 
 function NewTripForm() {
   const dispatch = useDispatch();
@@ -14,9 +17,9 @@ function NewTripForm() {
 
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [destination, setDestination] = useState(); //hotel ({''})
+  const [startDate, setStartDate] = useState(""); //flight ({''})
+  const [endDate, setEndDate] = useState(""); //activity ([])
   const [checkoutDate, setCheckoutDate] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -123,141 +126,151 @@ function NewTripForm() {
   });
 
   return (
-    <form onSubmit={handleSubmit} className="new-trip-form">
-      <div className="new-trip-form-group">
-        <label className="new-trip-form-label">Trip Name:</label>
-        <input
-          type="text"
-          value={name}
-          onChange={handleNameChange}
-          required
-          className="new-trip-form-input"
-        />
-      </div>
-      <div className="new-trip-form-group">
-        <label className="new-trip-form-label">From:</label>
-        <CitySearch inputType="from" onCitySelect={handleFromCitySelect} />
-      </div>
-      <div className="new-trip-form-group">
-        <label className="new-trip-form-label">To:</label>
-        <CitySearch inputType="to" onCitySelect={handleToCitySelect} />
-      </div>
+    <div>
+      <form onSubmit={handleSubmit} className="new-trip-form">
+        <div className="new-trip-form-group">
+          <label className="new-trip-form-label">Trip Name:</label>
+          <input
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            required
+            className="new-trip-form-input"
+          />
+        </div>
+        <div className="new-trip-form-group">
+          <label className="new-trip-form-label">From:</label>
+          <CitySearch inputType="from" onCitySelect={handleFromCitySelect} />
+        </div>
+        <div className="new-trip-form-group">
+          <label className="new-trip-form-label">To:</label>
+          <CitySearch inputType="to" onCitySelect={handleToCitySelect} />
+        </div>
 
-      <div className="new-trip-form-group">
-        <label htmlFor="startDate" className="new-trip-form-label">
-          Start Date:
-        </label>
-        <input
-          type="date"
-          id="startDate"
-          value={startDate}
-          onChange={handleStartDateChange}
-          required
-          min={todayDate}
-          className="new-trip-form-input"
-        />
-      </div>
-      <div className="new-trip-form-group">
-        <label htmlFor="endDate" className="new-trip-form-label">
-          End Date:
-        </label>
-        <input
-          type="date"
-          id="endDate"
-          value={endDate}
-          onChange={handleEndDateChange}
-          required
-          min={startDate || todayDate}
-          className="new-trip-form-input"
-        />
-      </div>
-      <div className="new-trip-form-group">
-        <label htmlFor="budgetRange" className="new-trip-form-label">
-          Hotel Budget:
-        </label>
-        <select
-          id="budgetRange"
-          value={hotelBudgetRange}
-          onChange={handleBudgetRangeChange}
-          required
-          className="new-trip-form-input"
-        >
-          <option value="">Select Budget Range</option>
-          <option value="price::USD-0-199">&lt; $200</option>
-          <option value="price::USD-200-400">$200 - $400</option>
-          <option value="price::USD-400-600">$400 - $600</option>
-          <option value="price::USD-600-800">$600 - $800</option>
-          <option value="price::USD-800-10000">&gt; $800</option>
-        </select>
-      </div>
-      <div className="new-trip-form-group">
-        <label htmlFor="activitiesBudgetRange" className="new-trip-form-label">
-          Activities Budget Range:
-        </label>
-        <select
-          id="activitiesBudgetRange"
-          value={activitiesBudgetRange}
-          onChange={handleActivitiesBudgetRangeChange}
-          required
-          className="new-trip-form-input"
-        >
-          <option value="">Select Activities Budget Range</option>
-          <option value="1">Cheap ($)</option>
-          <option value="2">Mid-range ($$)</option>
-          <option value="3">Expensive ($$$)</option>
-        </select>
-      </div>
+        <div className="new-trip-form-group">
+          <label htmlFor="startDate" className="new-trip-form-label">
+            Start Date:
+          </label>
+          <input
+            type="date"
+            id="startDate"
+            value={startDate}
+            onChange={handleStartDateChange}
+            required
+            min={todayDate}
+            className="new-trip-form-input"
+          />
+        </div>
+        <div className="new-trip-form-group">
+          <label htmlFor="endDate" className="new-trip-form-label">
+            End Date:
+          </label>
+          <input
+            type="date"
+            id="endDate"
+            value={endDate}
+            onChange={handleEndDateChange}
+            required
+            min={startDate || todayDate}
+            className="new-trip-form-input"
+          />
+        </div>
+        <div className="new-trip-form-group">
+          <label htmlFor="budgetRange" className="new-trip-form-label">
+            Hotel Budget:
+          </label>
+          <select
+            id="budgetRange"
+            value={hotelBudgetRange}
+            onChange={handleBudgetRangeChange}
+            required
+            className="new-trip-form-input"
+          >
+            <option value="">Select Budget Range</option>
+            <option value="price::USD-0-199">&lt; $200</option>
+            <option value="price::USD-200-400">$200 - $400</option>
+            <option value="price::USD-400-600">$400 - $600</option>
+            <option value="price::USD-600-800">$600 - $800</option>
+            <option value="price::USD-800-10000">&gt; $800</option>
+          </select>
+        </div>
+        <div className="new-trip-form-group">
+          <label
+            htmlFor="activitiesBudgetRange"
+            className="new-trip-form-label"
+          >
+            Activities Budget Range:
+          </label>
+          <select
+            id="activitiesBudgetRange"
+            value={activitiesBudgetRange}
+            onChange={handleActivitiesBudgetRangeChange}
+            required
+            className="new-trip-form-input"
+          >
+            <option value="">Select Activities Budget Range</option>
+            <option value="1">Cheap ($)</option>
+            <option value="2">Mid-range ($$)</option>
+            <option value="3">Expensive ($$$)</option>
+          </select>
+        </div>
 
-      <button
-        type="submit"
-        className={classNames("new-trip-search-btn", {
-          "loading-btn": loading,
-        })}
-        disabled={loading}
-      >
-        {" "}
-        {loading ? "Loading..." : "Search"}
-      </button>
-    </form>
+        <button
+          type="submit"
+          className={classNames("new-trip-search-btn", {
+            "loading-btn": loading,
+          })}
+          disabled={loading}
+        >
+          {" "}
+          {loading ? "Loading..." : "Search"}
+        </button>
+      </form>
+      <div>
+        <FlightResults />
+        <HotelsResults />
+        <ActivitiesResults />
+      </div>
+    </div>
   );
 }
 
 export default NewTripForm;
 
-{
-  /* <div className="form-group">
-        <label className="form-label">Collaborators:</label>
-        <div className="collaborators">
-          {collaborators.map((collaborator, index) => (
-            <div key={index} className="collaborator">
-              <span className="collaborator-name">{collaborator.username}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveCollaborator(collaborator.id)}
-                className="remove-collaborator-btn"
-              >
-                x
-              </button>
-            </div>
-          ))}
-        </div>
-        <div className="collaborators-input-container">
-          <input
-            type="text"
-            value={collaboratorsInput}
-            onChange={handleCollaboratorsInputChange}
-            className="collaborators-input"
-          />
-          <button
-            type="button"
-            onClick={handleAddCollaborator}
-            className="add-collaborator-btn"
-          >
-            +
-          </button>
-        </div>
-        {collaboratorError && (
-          <p className="collaborator-error">{collaboratorError}</p>
-        )}
-      </div> */
-}
+// {
+//   /* <div className="form-group">
+//         <label className="form-label">Collaborators:</label>
+//         <div className="collaborators">
+//           {collaborators.map((collaborator, index) => (
+//             <div key={index} className="collaborator">
+//               <span className="collaborator-name">{collaborator.username}</span>
+//               <button
+//                 type="button"
+//                 onClick={() => handleRemoveCollaborator(collaborator.id)}
+//                 className="remove-collaborator-btn"
+//               >
+//                 x
+//               </button>
+//             </div>
+//           ))}
+//         </div>
+//         <div className="collaborators-input-container">
+//           <input
+//             type="text"
+//             value={collaboratorsInput}
+//             onChange={handleCollaboratorsInputChange}
+//             className="collaborators-input"
+//           />
+//           <button
+//             type="button"
+//             onClick={handleAddCollaborator}
+//             className="add-collaborator-btn"
+//           >
+//             +
+//           </button>
+//         </div>
+//         {collaboratorError && (
+//           <p className="collaborator-error">{collaboratorError}</p>
+//         )}
+//       </div> */
+// }
