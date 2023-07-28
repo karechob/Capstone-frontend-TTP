@@ -12,22 +12,26 @@ label {
 
 #cityInput {
   padding: 8px;
-  width: 25%;
+  text-align: center;
+  width: 100%;
+  border-radius: 5px;
+  color: #fff;
+  background-color: #333;
 }
 
 .suggestions-list {
   position: relative;
   top: 100%;
-  background-color: #fff;
-  border: 1px solid #ccc;
+  background-color: #333;
+  border-top: 1px solid #ccc;
   padding: 0;
   margin: 0;
-  color: black;
+  color: rgb(255, 252, 252);
   font-size: 11px;
   max-height: 200px;
   overflow-y: auto;
   z-index: 1;
-  width: 25%;
+  width: 100%;
 }
 
 .suggestions-list li {
@@ -37,4 +41,21 @@ label {
 
 .suggestions-list li:hover {
   background-color: #dbdada;
+}
+
+.clear-button {
+  background-color: #e90707;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-button::after {
+  content: "✕";
+}
+
+.clear-button:hover {
+  background-color: #ff5100;
 }
