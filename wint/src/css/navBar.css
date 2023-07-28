@@ -4,6 +4,7 @@
 
 .nav-container {
   background-color: #000000d0;
+  width: 100%;
   opacity: 1;
   height: 7vh;
   display: flex;
