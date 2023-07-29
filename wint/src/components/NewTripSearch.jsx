@@ -17,14 +17,12 @@ function NewTripForm() {
 
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
-  const [destination, setDestination] = useState(); //hotel ({''})
-  const [startDate, setStartDate] = useState(""); //flight ({''})
-  const [endDate, setEndDate] = useState(""); //activity ([])
+  const [destination, setDestination] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [duration, setDuration] = useState(0);
-
-  useState(false);
   const [hotelBudgetRange, setHotelBudgetRange] = useState("");
   const [activitiesBudgetRange, setActivitiesBudgetRange] = useState("");
 
@@ -42,16 +40,12 @@ function NewTripForm() {
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
-    const startDateValue = new Date(e.target.value);
-    startDateValue.setDate(startDateValue.getDate() + 1);
-    const formattedCheckoutDate = startDateValue.toISOString().slice(0, 10);
-    setCheckoutDate(formattedCheckoutDate);
     updateDuration(e.target.value, endDate);
   };
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
-    updateDuration(e.target.value, endDate);
+    updateDuration(startDate, e.target.value);
   };
 
   const updateDuration = (start, end) => {
@@ -59,51 +53,13 @@ function NewTripForm() {
       const startDate = new Date(start);
       const endDate = new Date(end);
       const durationMilliseconds = endDate.getTime() - startDate.getTime();
-      const durationDays = Math.floor(
-        durationMilliseconds / (1000 * 60 * 60 * 24)
-      );
+      const durationDays =
+        Math.floor(durationMilliseconds / (1000 * 60 * 60 * 24)) + 1;
       setDuration(durationDays);
     } else {
       setDuration(0);
     }
   };
-
-  //   const handleCollaboratorsInputChange = (e) => {
-  //     setCollaboratorsInput(e.target.value);
-  //     setCollaboratorError("");
-  //   };
-
-  //   const handleAddCollaborator = async () => {
-  //     try {
-  //       if (!collaboratorsInput.trim()) {
-  //         setCollaboratorError("Collaborator input is empty");
-  //         return;
-  //       }
-  //       setCollaboratorError("");
-
-  //       const collaboratorData = {};
-  //       if (collaboratorsInput.includes("@")) {
-  //         collaboratorData.email = collaboratorsInput;
-  //       } else {
-  //         collaboratorData.username = collaboratorsInput;
-  //       }
-
-  //       if (collaborators.find((c) => c.username === collaboratorData.username)) {
-  //         setCollaboratorError("Collaborator already exists");
-  //         return;
-  //       }
-  //       dispatch(addCollaborator(collaboratorData));
-  //       setCollaboratorsDeleteStatus(false);
-  //       setCollaboratorsInput("");
-  //     } catch (error) {
-  //       console.error("Error handling collaborator:", error);
-  //     }
-  //   };
-
-  //   const handleRemoveCollaborator = (collaboratorId) => {
-  //     dispatch(removeCollaborator(collaboratorId));
-  //     setCollaboratorsDeleteStatus(true);
-  //   };
 
   const handleFromCitySelect = (selectedCity) => {
     setOrigin(selectedCity ? selectedCity.name : "");
@@ -127,15 +83,17 @@ function NewTripForm() {
       hotelBudgetRange: hotelBudgetRange,
       activitiesBudgetRange: activitiesBudgetRange,
     };
-    try {
-      await dispatch(fetchItinerariesThunk(newTripData));
-      await dispatch(fetchHotelsThunk(newTripData));
-      await dispatch(fetchActivitiesThunk(newTripData));
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setLoading(false);
-    }
+    console.log(newTripData);
+
+    // try {
+    //   await dispatch(fetchItinerariesThunk(newTripData));
+    //   await dispatch(fetchHotelsThunk(newTripData));
+    //   await dispatch(fetchActivitiesThunk(newTripData));
+    //   setLoading(false);
+    // } catch (error) {
+    //   console.error("Error fetching data:", error);
+    setLoading(false);
+    // }
   };
 
   const [todayDate] = useState(() => {
@@ -187,7 +145,7 @@ function NewTripForm() {
               onChange={handleStartDateChange}
               required
               min={todayDate}
-              data-placeholder="Depature Date"
+              data-placeholder="Departure Date"
               className="new-trip-form-input"
             />
           </div>
@@ -205,9 +163,6 @@ function NewTripForm() {
             />
           </div>
           <div className="new-trip-form-group">
-            {/* <label htmlFor="budgetRange" className="new-trip-form-label">
-            Hotel Budget:
-          </label> */}
             <select
               id="budgetRange"
               value={hotelBudgetRange}
@@ -224,12 +179,6 @@ function NewTripForm() {
             </select>
           </div>
           <div className="new-trip-form-group">
-            {/* <label
-            htmlFor="activitiesBudgetRange"
-            className="new-trip-form-label"
-          >
-            Activities Budget Range:
-          </label> */}
             <select
               id="activitiesBudgetRange"
               value={activitiesBudgetRange}
@@ -251,7 +200,6 @@ function NewTripForm() {
             })}
             disabled={loading}
           >
-            {" "}
             {loading ? "Loading..." : "Search"}
           </button>
         </form>
@@ -266,6 +214,43 @@ function NewTripForm() {
 }
 
 export default NewTripForm;
+
+//   const handleCollaboratorsInputChange = (e) => {
+//     setCollaboratorsInput(e.target.value);
+//     setCollaboratorError("");
+//   };
+
+//   const handleAddCollaborator = async () => {
+//     try {
+//       if (!collaboratorsInput.trim()) {
+//         setCollaboratorError("Collaborator input is empty");
+//         return;
+//       }
+//       setCollaboratorError("");
+
+//       const collaboratorData = {};
+//       if (collaboratorsInput.includes("@")) {
+//         collaboratorData.email = collaboratorsInput;
+//       } else {
+//         collaboratorData.username = collaboratorsInput;
+//       }
+
+//       if (collaborators.find((c) => c.username === collaboratorData.username)) {
+//         setCollaboratorError("Collaborator already exists");
+//         return;
+//       }
+//       dispatch(addCollaborator(collaboratorData));
+//       setCollaboratorsDeleteStatus(false);
+//       setCollaboratorsInput("");
+//     } catch (error) {
+//       console.error("Error handling collaborator:", error);
+//     }
+//   };
+
+//   const handleRemoveCollaborator = (collaboratorId) => {
+//     dispatch(removeCollaborator(collaboratorId));
+//     setCollaboratorsDeleteStatus(true);
+//   };
 
 // {
 //   /* <div className="form-group">
