@@ -148,7 +148,7 @@ function NewTripForm() {
       <div className="form-container">
         <form onSubmit={handleSubmit} className="new-trip-form">
           <div className="form-header">
-            <h1 className="header">Create a New Trip</h1>
+            <h1 className="header">CREATE A TRIP</h1>
           </div>
           <div className="new-trip-form-group">
             <label className="new-trip-form-label"></label>
