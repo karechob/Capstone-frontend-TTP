@@ -46,12 +46,15 @@ export const fetchTrip = (tripData) => ({
 export const fetchTripThunk = (tripId) => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/me/trip/${tripId}`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `http://localhost:8080/api/me/trip/${tripId}`,
+        {
+          withCredentials: true,
+        }
+      );
       dispatch(fetchTrip(response.data));
     } catch (error) {
-      console.log("single trip thunk error: " , error);
+      console.log("single trip thunk error: ", error);
     }
   };
 };
@@ -105,25 +108,29 @@ export const addTripThunk = (tripData) => {
   };
 };
 
-// // Updating a trip
-// export const updateTrip = (updateData) => ({
-//   type: TripsActionTypes.UPDATE_TRIP,
-//   payload: updateData,
-// });
+// Updating a trip
+export const updateTrip = (updateData) => ({
+  type: TripsActionTypes.UPDATE_TRIP,
+  payload: updateData,
+});
 
-// export const updateTripThunk = (updateTrip) => {
-//   return async (dispatch) => {
-//     try {
-//       const response = await axios.put(
-//         `http://localhost:8080/api/trips/${updateTrip.id}`,
-//         updateTrip
-//       );
-//       dispatch(updateTrip(response.data));
-//     } catch (error) {
-//       console.error(error);
-//     }
-//   };
-// };
+export const updateTripThunk = (updateData) => {
+  return async (dispatch) => {
+    try {
+      console.log("updateTripThunk is firing up");
+      const response = await axios.put(
+        `http://localhost:8080/api/me/trip`,
+        updateData,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(updateTrip(response.data));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 
 // // Deleting a trip
 // export const deleteTrip = (deleteData) => ({

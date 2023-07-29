@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
 
-.profile-page-container::before {
+/* .profile-page-container::before {
   content: "";
   position: fixed;
   top: -100%;
@@ -22,7 +22,7 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 
 .container {
   position: relative;

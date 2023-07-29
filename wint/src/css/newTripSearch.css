@@ -1,5 +1,5 @@
 /* Update CSS to use class names for styling */
-
+/* 
 .search-page-container::before {
   content: "";
   position: fixed;
@@ -22,7 +22,7 @@
   100% {
     transform: rotate(360deg);
   }
-}
+} */
 
 .new-trip-form::after {
   content: "";
