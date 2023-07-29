@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/citySearch.css";
 
-const CitySearch = ({ onCitySelect }) => {
+const CitySearch = ({ onCitySelect, placeholder }) => {
   const [cityInput, setCityInput] = useState("");
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -81,47 +81,20 @@ const CitySearch = ({ onCitySelect }) => {
     }
   };
 
-  const handleClearInput = () => {
-    setCityInput("");
-    setCitySuggestions([]);
-    setSelectedCity(null);
-    setFilteredSuggestions([]);
-    onCitySelect(null);
-  };
-
-  const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      if (filteredSuggestions.length > 0) {
-        handleCitySelection(filteredSuggestions[0]);
-      }
-    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
-      event.preventDefault();
-      if (filteredSuggestions.length > 0) {
-        const currentIndex = filteredSuggestions.findIndex(
-          (suggestion) => suggestion.name === cityInput
-        );
-        const nextIndex =
-          event.key === "ArrowDown"
-            ? (currentIndex + 1) % filteredSuggestions.length
-            : (currentIndex - 1 + filteredSuggestions.length) %
-              filteredSuggestions.length;
-        setCityInput(filteredSuggestions[nextIndex].name);
-      }
-    }
-  };
-
   return (
     <div className="search-container">
       <div className="input-container">
+        <label htmlFor="cityInput"></label>
         <div className="search-bar" ref={inputRef}>
           <input
             type="text"
             id="cityInput"
             value={cityInput}
             onChange={handleCityInputChange}
-            onKeyDown={handleKeyDown}
             autoComplete="off"
             required
+            placeholder={placeholder}
+            className="city-input"
           />
           {error && <div>{error}</div>}
           {filteredSuggestions.length > 0 && (
@@ -134,9 +107,6 @@ const CitySearch = ({ onCitySelect }) => {
             </ul>
           )}
         </div>
-        {selectedCity && (
-          <button className="clear-button" onClick={handleClearInput}></button>
-        )}
       </div>
     </div>
   );
