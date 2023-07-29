@@ -87,6 +87,23 @@ export const fetchCollaboratorThunk =
     }
   };
 
+export const removeCollaboratorThunk =
+  (collaboratorId, tripId) => async (dispatch) => {
+    try {
+      console.log("REMOVECOLLABORATORTHUNK FIRING UP");
+      console.log(collaboratorId, tripId);
+      await axios.delete(
+        `http://localhost:8080/api/me/trips/${tripId}/collaborators/${collaboratorId}`,
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeCollaborator(collaboratorId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 export const updateUserThunk = (userData) => async (dispatch) => {
   try {
     console.log("UPDATEUSERTHUNK FIRING UP");
