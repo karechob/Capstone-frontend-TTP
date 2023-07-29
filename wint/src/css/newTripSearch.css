@@ -1,17 +1,78 @@
 /* Update CSS to use class names for styling */
 
+.search-page-container::before {
+  content: "";
+  position: fixed;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  z-index: -10;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.8)
+  );
+
+  animation: backgroundAnimation3 8s linear infinite;
+}
+
+@keyframes backgroundAnimation3 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.new-trip-form::after {
+  content: "";
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #8a8787, #2c2a2a);
+  z-index: -1;
+  opacity: 0.7;
+}
+
 .new-trip-form {
-  max-width: 600px;
+  max-width: 700px;
   margin: 5% auto;
   padding: 20px;
   background-color: #4b4848;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   color: #fff;
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideIn 1.5s 0.5s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateY(0);
+    opacity: 0.9;
+  }
+}
+
+.form-header {
+  margin: 7%;
+  background: linear-gradient(135deg, #8a8787, #2c2a2a);
+  border-radius: 10px;
+  transform: translateY(-20px);
+  opacity: 0;
+  animation: slideIn 1.5s 0.5s forwards;
+}
+
+.header {
+  font-size: 35px;
+  font-family: Oswald;
 }
 
 .new-trip-form-group {
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 
 .new-trip-form-label {
@@ -21,35 +82,44 @@
 }
 
 .new-trip-form-input {
-  padding: 8px;
+  padding: 17px;
   width: 100%;
+  font-size: 16px;
+  font-weight: 400;
   text-align: center;
   border: none;
   border-radius: 5px;
   background-color: #333;
   color: #fff;
   outline: none;
+  transition: background-color 0.3s ease;
 }
 
 .new-trip-form-input:hover {
   background-color: #007bff;
 }
 
+.new-trip-form-input:focus {
+  background-color: #3b3c3d;
+}
+
 .new-trip-form-input::placeholder {
-  color: #999;
+  color: #fffefe;
 }
 
 .new-trip-search-btn {
-  padding: 10px 15px;
+  padding: 15px 20px;
   background-color: #007bff;
   border: none;
+  width: 30%;
   border-radius: 5px;
+  font-size: 16px;
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.new-trip-remove-collaborator-btn {
+/* .new-trip-remove-collaborator-btn {
   background-color: #e90707;
   border: none;
   border-radius: 5px;
@@ -61,13 +131,13 @@
 
 .new-trip-remove-collaborator-btn:hover {
   background-color: #ff5100;
-}
+} */
 
 .new-trip-search-btn:hover {
   background-color: #0056b3;
 }
 
-.new-trip-collaborators-input-container {
+/* .new-trip-collaborators-input-container {
   flex: 1;
   display: flex;
   align-items: center;
@@ -97,4 +167,14 @@
   color: #fff;
   cursor: pointer;
   transition: background-color 0.3s ease;
+} */
+
+input[type="date"]::before {
+  content: attr(data-placeholder);
+  width: 100%;
+}
+
+input[type="date"]:focus::before,
+input[type="date"]:valid::before {
+  display: none;
 }
