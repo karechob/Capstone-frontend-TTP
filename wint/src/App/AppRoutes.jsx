@@ -13,6 +13,7 @@ import Trips from "../pages/trips";
 import Test from "../components/test";
 import TripHistory from "../pages/triphistory";
 import ProtectedRoute from "../components/ProtectedRoute";
+import EditTrip from "../components/EditTrip";
 import "../css/navBar.css";
 
 const AppRoutes = () => {
@@ -64,6 +65,16 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
+
+      <Route
+        path="/edit-trip/:tripId"
+        element={
+          <ProtectedRoute isLoggedIn={isLoggedIn}>
+            <EditTrip />
+          </ProtectedRoute>
+        }
+      />
+
       <Route
         path="/new-trip"
         element={

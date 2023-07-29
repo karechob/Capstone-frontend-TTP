@@ -108,11 +108,11 @@ export const addTripThunk = (tripData) => {
   };
 };
 
-// // Updating a trip
-// export const updateTrip = (updateData) => ({
-//   type: TripsActionTypes.UPDATE_TRIP,
-//   payload: updateData,
-// });
+// Updating a trip
+export const updateTrip = (updateData) => ({
+  type: TripsActionTypes.UPDATE_TRIP,
+  payload: updateData,
+});
 
 export const updateTripThunk = (updateData) => {
   return async (dispatch) => {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTripThunk, updateTripThunk } from "../redux/trips/trips.actions";
 import { useNavigate, useParams } from "react-router-dom";
@@ -10,22 +10,22 @@ function EditTrip() {
   const navigate = useNavigate();
   let { tripId } = useParams();
   const trip = useSelector((state) => state.trips.singleTrip);
-  const [tripName, setTripName] = useState(trip.name);
-  const [collaborators, setCollaborators] = useState(trip.collaborators);
+  const tripNameRef = useRef(trip.name);
+  const [collaborators, setCollaborators] = useState([]);
 
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
-  }, []);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
     if (trip) {
-      setTripName(trip.name);
+      tripNameRef.current = trip.name;
       setCollaborators(trip.collaborators);
     }
   }, [trip]);
 
   const handleNameChange = (e) => {
-    setTripName(e.target.value);
+    tripNameRef.current = e.target.value;
   };
 
   const handleDelete = async (collaborator) => {
@@ -44,7 +44,7 @@ function EditTrip() {
     e.preventDefault();
     const updatedTrip = {
       id: tripId,
-      name: tripName,
+      name: tripNameRef.current,
       collaborators: collaborators,
     };
     await dispatch(updateTripThunk(updatedTrip));
@@ -60,7 +60,7 @@ function EditTrip() {
           <input
             id="tripName"
             type="text"
-            value={tripName}
+            defaultValue={tripNameRef.current}
             onChange={handleNameChange}
           />
         </label>
