@@ -17,7 +17,7 @@
     transparent,
     rgba(255, 255, 255, 0.8)
   );
-  animation: backgroundAnimation 10s alternate infinite;
+  animation: backgroundAnimation1 10s alternate infinite;
   animation-delay: 0s, 5s;
 }
 
@@ -39,7 +39,7 @@
   animation-delay: 2.5s, 7.5s;
 } */
 
-@keyframes backgroundAnimation {
+@keyframes backgroundAnimation1 {
   0% {
     transform: translate(-25%, -25%) rotate(0deg);
   }
@@ -69,12 +69,22 @@
 
 .settings-form {
   max-width: 700px;
-  margin: 3% auto;
+  margin: 5% auto;
   opacity: 0.7;
   background: linear-gradient(135deg, #aaabac, #1f201f);
   padding: 40px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  transform: translateY(-20px);
+  animation: slideIn 1s 0.5s forwards;
+}
+
+@keyframes slideIn {
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .settings-form:hover {
@@ -87,6 +97,7 @@
 
 .settings-form label {
   display: block;
+  text-align: left;
   margin-bottom: 10px;
   font-size: 18px;
   color: #ffffff;
@@ -94,14 +105,14 @@
 }
 
 .settings-form input {
-  padding: 12px;
+  padding: 20px;
   margin-bottom: 20px;
   border: 2px solid #4fb496bb;
   border-radius: 5px;
   width: 100%;
   transition: border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-  font-size: 16px;
-  font-style: normal;
+  font-size: 20px;
+  font-family: Oswald;
 }
 
 .settings-form input:focus {
@@ -150,7 +161,8 @@
   border: none;
   border-radius: 4px;
   padding: 14px 24px;
-  margin-top: 30px;
+  margin-top: 5%;
+  width: 30%;
   cursor: pointer;
   font-size: 18px;
   font-weight: bold;

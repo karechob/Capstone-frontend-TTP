@@ -1,8 +1,6 @@
 /* citySearch.css */
 .search-bar {
   position: relative;
-  display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
@@ -10,16 +8,28 @@ label {
   margin-bottom: 8px;
 }
 
-#cityInput {
-  padding: 8px;
+.city-input {
+  padding: 17px;
   text-align: center;
+  font-size: 16px;
+  font-weight: 400;
   width: 100%;
+  border: none;
   border-radius: 5px;
   color: #fff;
   background-color: #333;
+  transition: background-color 0.3s ease;
 }
 
-#cityInput:hover {
+.city-input::placeholder {
+  color: #fffefe;
+}
+
+.input-container {
+  align-items: center;
+}
+
+.city-input:hover {
   background-color: #007bff;
 }
 
@@ -28,15 +38,16 @@ label {
 }
 
 .suggestions-list {
-  position: relative;
+  border-radius: 5px;
+  position: absolute;
   top: 100%;
   background-color: #333;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #cccccc8c;
   padding: 0;
   margin: 0;
   color: rgb(255, 252, 252);
   font-size: 11px;
-  max-height: 200px;
+  max-height: 130px;
   overflow-y: auto;
   z-index: 1;
   width: 100%;
@@ -48,22 +59,5 @@ label {
 }
 
 .suggestions-list li:hover {
-  background-color: #dbdada;
-}
-
-.clear-button {
-  background-color: #e90707;
-  border: none;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.clear-button::after {
-  content: "✕";
-}
-
-.clear-button:hover {
-  background-color: #ff5100;
+  background-color: #007bff;
 }

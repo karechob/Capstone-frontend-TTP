@@ -1,5 +1,29 @@
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap");
 
+.profile-page-container::before {
+  content: "";
+  position: fixed;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  z-index: -10;
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.8)
+  );
+
+  animation: backgroundAnimation3 8s linear infinite;
+}
+
+@keyframes backgroundAnimation3 {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .container {
   position: relative;
   max-width: 800px;
@@ -12,9 +36,19 @@
   animation: fadeIn 1.5s forwards;
 }
 
+.container:hover {
+  position: relative;
+  max-width: 800px;
+  margin: 5% auto;
+  padding: 20px;
+  background-color: #a31313;
+  box-shadow: 0 0 15px rgb(255, 255, 255);
+  border-radius: 5%;
+}
+
 @keyframes fadeIn {
   to {
-    opacity: 1;
+    opacity: 0.9;
   }
 }
 
@@ -28,20 +62,7 @@
   border-radius: 5%;
   background: linear-gradient(135deg, #ff8c00, #ff0080);
   z-index: -1;
-  opacity: 0.8;
-  animation: gradientAnimation 10s infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  opacity: 0.7;
 }
 
 .profile-card {
@@ -49,7 +70,6 @@
   padding: 10px;
   background-color: #000000c5;
   border-radius: 8px;
-
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transform: translateY(-20px);
   opacity: 0;
