@@ -31,14 +31,10 @@ function Trip() {
   const image = useSelector((state) => state.trips.image.data?.mobile);
   const startDate = trip.startDate?.split("T")[0];
   const endDate = trip.endDate?.split("T")[0];
-  console.log("start date: ", startDate);
-  console.log("end date: ", endDate);
-  console.log("trip: ", trip);
-  console.log("weather: ", weatherForecast);
-  console.log("user data: ", owner);
+
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
-  }, []);
+  }, [tripId]);
 
   useEffect(() => {
     dispatch(fetchImageThunk(trip.destination));
@@ -54,7 +50,6 @@ function Trip() {
     dispatch(fetchUserThunk(trip.ownerId));
   }, []);
 
-  // Render the JSX outside the useEffect hooks
   return (
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
