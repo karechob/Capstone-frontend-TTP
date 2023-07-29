@@ -28,13 +28,16 @@ function EditTrip() {
     setTripName(e.target.value);
   };
 
-  const handleDelete = async (name) => {
-    console.log(name.id);
-    await dispatch(removeCollaboratorThunk(name.id, trip.id));
-    const newCollaborators = collaborators.filter(
-      (collaborator) => collaborator !== name
-    );
-    setCollaborators(newCollaborators);
+  const handleDelete = async (collaborator) => {
+    try {
+      await dispatch(removeCollaboratorThunk(collaborator.id));
+      const newCollaborators = collaborators.filter(
+        (c) => c.id !== collaborator.id
+      );
+      setCollaborators(newCollaborators);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleSubmit = async (e) => {
