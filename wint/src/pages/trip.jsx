@@ -36,6 +36,7 @@ function Trip() {
   console.log("trip: ", trip);
   console.log("weather: ", weatherForecast);
   console.log("user data: ", owner);
+  
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
   }, []);
