@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "../css/flightresults.css";
-import Plane from "../assets/icons/Plane.jsx";
+// import Plane from "../assets/icons/Plane.jsx";
 
 function FlightResults() {
   const flightInformation = useSelector((state) => state.flights.itineraryData);
@@ -22,7 +22,7 @@ function FlightResults() {
           Object.values(flightData).map((itinerary) => (
             <div key={itinerary.itinerary} className="flight-card">
               <h2 className="airline-name">
-                Airline: {itinerary.airline.name}
+                 {itinerary.airline.name}
               </h2>
               <img className="airline-logo" src={itinerary.airline.logo} alt={itinerary.airline.name} />
               <p className="airline-link">

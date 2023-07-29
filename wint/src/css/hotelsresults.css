@@ -1,0 +1,40 @@
+.hotels-results-title {
+    text-align: center;
+}
+
+.hotels-card {
+    background-color: rgba(134, 202, 220, 0.845);
+    margin: 20px;
+    border-radius: 20px;
+    height: 400px;
+    width: 370px;
+    display: inline-block;
+    transition: all 0.5s ease;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.hotels-card:hover {
+    transition: all 0.5s ease;
+    box-shadow: 0px 0px 40px rgb(33, 33, 255);
+    background-color: #a0adff;
+}
+
+.hotels-name {
+    text-align: center;
+    word-wrap: break-word;
+}
+
+.hotel-picture {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}
+
+.hotels-price {
+    font-weight: bold;
+    background-color: beige;
+    color: black;
+    font-size: large;
+    word-wrap: break-word;
+}

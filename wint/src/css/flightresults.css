@@ -6,7 +6,7 @@
     background-color: darkorange;
     margin: 20px;
     border-radius: 20px;
-    height: 600;
+    height: 450px;
     width: 370px;
     display: inline-block;
     transition: all 0.5s ease;
@@ -36,4 +36,10 @@
 
 input[type='radio'] { 
     transform: scale(2); 
+    transition: all 0.5s ease;
+}
+input[type='radio']:hover { 
+    cursor: pointer;
+    box-shadow: 0px 0px 20px rgb(253, 255, 252);
+    transition: all 0.5s ease;
 }
