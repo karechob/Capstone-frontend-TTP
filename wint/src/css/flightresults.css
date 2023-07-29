@@ -1,3 +1,39 @@
-.flight-results-title{
+.flight-results-title {
     text-align: center;
+}
+
+.flight-card {
+    background-color: darkorange;
+    margin: 20px;
+    border-radius: 20px;
+    height: 600;
+    width: 370px;
+    display: inline-block;
+    transition: all 0.5s ease;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.flight-card:hover {
+    transition: all 0.5s ease;
+    box-shadow: 0px 0px 40px rgb(255, 104, 33);
+    background-color: #ffc1a0;
+}
+
+.ticket-price {
+    font-weight: bold;
+    background-color: beige;
+    color: black;
+    font-size: large;
+}
+
+.airline-logo {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}
+
+
+input[type='radio'] { 
+    transform: scale(2); 
 }
