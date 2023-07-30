@@ -1,12 +1,11 @@
 import React, { useEffect } from "react";
-import ActivitiesList from "../components/trips/ActivitiesList";
+// import ActivitiesList from "../components/trips/ActivitiesList";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import Collaborators from "../components/trips/Collaborators";
 //import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import defaultpic1 from "../assets/avatars/dogGlasses.png";
 import defaultpic2 from "../assets/avatars/appleDog.png";
-import defaultpic3 from "../assets/avatars/pillowAvi.png";
 import PlaceholderActivity from "../assets/images/little-island.jpg";
 // import defaultpic2 from "../../assets/avatars/djAvi.png";
 // import defaultpic3 from "../../assets/avatars/appleDog.png";
@@ -19,7 +18,7 @@ import {
 } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchUser, fetchUserThunk } from "../redux/user/user.actions";
+import { fetchUserThunk } from "../redux/user/user.actions";
 
 function Trip() {
   let { tripId } = useParams();
@@ -34,11 +33,11 @@ function Trip() {
 
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
-  }, [tripId]);
+  }, [dispatch, tripId]);
 
   useEffect(() => {
     dispatch(fetchImageThunk(trip.destination));
-  }, [trip]);
+  }, [dispatch, trip]);
 
   // useEffect(() => {
   //   if (trip) {
@@ -48,7 +47,7 @@ function Trip() {
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
-  }, []);
+  }, [dispatch, trip.ownerId]);
 
   return (
     <div className="background-trip-page">
