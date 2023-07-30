@@ -1,17 +1,12 @@
 import { useSelector } from "react-redux";
-import React, { useState } from "react";
 import "../css/flightresults.css";
 
-function FlightResults() {
+function FlightResults({flight, setFlight}) {
   const flightInformation = useSelector((state) => state.flights.itineraryData);
   // const tripId = useSelector((state) => state.trips.singleTrip);
   // console.log("this is trip data", tripId);
   const flightData = flightInformation[0];
-  const [flight, setFlight] = useState({
-    airline: "",
-    cost: "",
-    link: "",
-  });
+ 
 
   console.log("this is flight data", flightData);
 
@@ -21,7 +16,6 @@ function FlightResults() {
         cost: selectedFlight.price,
         link: selectedFlight.airline.website,
       });
-      console.log("this is setflight", flight)
   };
 
   return (
@@ -54,14 +48,6 @@ function FlightResults() {
         ))
       ) : (
         <p>No flights available.</p>
-      )}
-      {flight.airline && (
-        <div className="selected-flight">
-          <h2>Selected Flight:</h2>
-          <p>Airline: {flight.airline}</p>
-          <p>Cost: ${flight.cost}</p>
-          <p>Link: {flight.link}</p>
-        </div>
       )}
     </div>
   );
