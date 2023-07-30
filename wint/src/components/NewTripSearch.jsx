@@ -148,21 +148,10 @@ function NewTripForm() {
         return;
       }
 
-      const response = await dispatch(fetchCollaboratorThunk(collaboratorData));
-      if (response && response.error) {
+      dispatch(fetchCollaboratorThunk(collaboratorData)).catch((error) => {
+        console.error("Error fetching collaborator:", error);
         setCollaboratorError("Collaborator not found");
-        setCollaboratorsInput("");
-
-        return;
-      }
-
-      if (!response || !response.collaborator) {
-        setCollaboratorError("Collaborator not found");
-        setCollaboratorsInput("");
-
-        return;
-      }
-
+      });
       setCollaboratorsDeleteStatus(false);
       setCollaboratorsInput("");
     } catch (error) {
@@ -240,19 +229,23 @@ function NewTripForm() {
     const adjustedFlightCost = originalFlightCost * (collaborators.length + 1);
     setFlight((prevFlight) => ({
       ...prevFlight,
-      cost: adjustedFlightCost,
+      cost: roundToTwoDecimalPlaces(adjustedFlightCost),
     }));
 
     const adjustedHotelCost =
       originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
     setHotel((prevHotel) => ({
       ...prevHotel,
-      cost: adjustedHotelCost,
+      cost: roundToTwoDecimalPlaces(adjustedHotelCost),
     }));
 
     const totalCost = adjustedFlightCost + adjustedHotelCost * duration;
     setBudget(totalCost);
   }, [collaborators, originalFlightCost, originalHotelCost, duration]);
+
+  const roundToTwoDecimalPlaces = (num) => {
+    return parseFloat(num).toFixed(2);
+  };
 
   const handleSubmission = async (e) => {
     e.preventDefault();
