@@ -1,21 +1,23 @@
 import { useSelector } from "react-redux";
 import "../css/flightresults.css";
 
-function FlightResults({flight, setFlight}) {
+function FlightResults({ setFlight, setOriginalFlightCost }) {
   const flightInformation = useSelector((state) => state.flights.itineraryData);
-  // const tripId = useSelector((state) => state.trips.singleTrip);
-  // console.log("this is trip data", tripId);
-  const flightData = flightInformation[0];
- 
-
-  console.log("this is flight data", flightData);
+  let flightData = {};
+  for (const flightObj of flightInformation) {
+    if (Object.keys(flightObj).length > 0) {
+      flightData = flightObj;
+      break;
+    }
+  }
 
   const handleSelectFlight = (selectedFlight) => {
     setFlight({
-        airline: selectedFlight.airline.name,
-        cost: selectedFlight.price,
-        link: selectedFlight.airline.website,
-      });
+      airline: selectedFlight.airline.name,
+      cost: parseFloat(selectedFlight.price),
+      link: selectedFlight.airline.website,
+    });
+    setOriginalFlightCost(parseFloat(selectedFlight.price));
   };
 
   return (
@@ -23,7 +25,7 @@ function FlightResults({flight, setFlight}) {
       <h1 className="flight-results-title">Flights Available</h1>
       {flightData ? (
         Object.values(flightData).map((itinerary) => (
-          <div key={itinerary.itinerary} className="flight-card">
+          <label key={itinerary.itinerary} className="flight-card">
             <h2 className="airline-name">{itinerary.airline.name}</h2>
             <img
               className="airline-logo"
@@ -35,7 +37,8 @@ function FlightResults({flight, setFlight}) {
             </p>
             <p className="ticket-price">Price: ${itinerary.price}</p>
             <p className="departure">
-              {itinerary.departure.airport.city}, {itinerary.departure.airport.name} ➜{" "}
+              {itinerary.departure.airport.city},{" "}
+              {itinerary.departure.airport.name} ➜{" "}
               {itinerary.arrival.airport.city}, {itinerary.arrival.airport.name}
             </p>
             <input
@@ -44,7 +47,7 @@ function FlightResults({flight, setFlight}) {
               value={itinerary.itinerary}
               onChange={() => handleSelectFlight(itinerary)}
             />
-          </div>
+          </label>
         ))
       ) : (
         <p>No flights available.</p>
