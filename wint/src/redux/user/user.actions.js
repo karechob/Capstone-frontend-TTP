@@ -61,7 +61,7 @@ export const clearCollaborators = () => ({
 export const fetchUserThunk = () => async (dispatch) => {
   try {
     console.log("FETCHUSERTHUNK FIRING UP");
-    const response = await axios.get(`http://localhost:8080/auth/me`, {
+    const response = await axios.get(`https://capstone-backend-5zeo9e8f0-karechob.vercel.app/auth/me`, {
       withCredentials: true,
     });
     dispatch(fetchUser(response.data || {}));
@@ -75,7 +75,7 @@ export const fetchCollaboratorThunk =
     try {
       console.log("FETCHUSERTHUNK FIRING UP");
       const response = await axios.post(
-        `http://localhost:8080/api/me/collaborator`,
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/collaborator`,
         collaboratorData,
         {
           withCredentials: true,
@@ -93,7 +93,7 @@ export const removeCollaboratorThunk =
       console.log("REMOVECOLLABORATORTHUNK FIRING UP");
       console.log(collaboratorId, tripId);
       await axios.delete(
-        `http://localhost:8080/api/me/trips/${tripId}/collaborators/${collaboratorId}`,
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/trips/${tripId}/collaborators/${collaboratorId}`,
         {
           withCredentials: true,
         }
@@ -107,7 +107,7 @@ export const removeCollaboratorThunk =
 export const updateUserThunk = (userData) => async (dispatch) => {
   try {
     console.log("UPDATEUSERTHUNK FIRING UP");
-    const response = await axios.put(`http://localhost:8080/api/me`, userData, {
+    const response = await axios.put(`https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me`, userData, {
       withCredentials: true,
     });
 
@@ -122,7 +122,7 @@ export const signupUserThunk = (userData) => async (dispatch) => {
     console.log("SIGNUPUSERTHUNK FIRING UP");
 
     const response = await axios.post(
-      `http://localhost:8080/auth/signup`,
+      `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/auth/signup`,
       userData,
       { withCredentials: true }
     );
@@ -140,7 +140,7 @@ export const loginUserThunk = (userData) => async (dispatch) => {
     console.log("LOGINUSERTHUNK FIRING UP");
 
     const response = await axios.post(
-      `http://localhost:8080/auth/login`,
+      `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/auth/login`,
       userData,
       { withCredentials: true }
     );
@@ -156,7 +156,7 @@ export const logoutUserThunk = () => async (dispatch) => {
   try {
     console.log("LOGOUTUSERTHUNK FIRING UP");
 
-    await axios.get(`http://localhost:8080/auth/logout`, {
+    await axios.get(`https://capstone-backend-5zeo9e8f0-karechob.vercel.app/auth/logout`, {
       withCredentials: true,
     });
     dispatch(logoutUser());
@@ -168,7 +168,7 @@ export const logoutUserThunk = () => async (dispatch) => {
 
 export const deleteUserThunk = () => async (dispatch) => {
   try {
-    await axios.delete(`http://localhost:8080/api/me/`, {
+    await axios.delete(`https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/`, {
       withCredentials: true,
     });
     dispatch(deleteUser());
