@@ -8,41 +8,41 @@ import { fetchHotelsThunk } from "../redux/hotels/hotels.actions";
 import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
-import {
-  addCollaborator,
-  removeCollaborator,
-} from "../redux/user/user.actions";
+import { fetchCollaboratorThunk } from "../redux/user/user.actions";
 
 function NewTripForm() {
   const dispatch = useDispatch();
 
-  const collaborators = useSelector((state) => state.user.collaborators);
-  const [collaborator, setCollaborator] = useState("");
+  const collaborator = useSelector(
+    (state) => state.user.collaborator.collaborator
+  );
   const [budget, setBudget] = useState("");
-  const [weather, setWeather] = useState("");
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
+
   const [collaboratorsInput, setCollaboratorsInput] = useState("");
-  const [collaboratorss, setCollaboratorss] = useState([]);
+  const [collaborators, setCollaborators] = useState([]);
   const [collaboratorError, setCollaboratorError] = useState("");
   const [collaboratorsDeleteStatus, setCollaboratorsDeleteStatus] =
     useState(false);
   const [duration, setDuration] = useState(0);
-
+  const [originalFlightCost, setOriginalFlightCost] = useState(0);
+  const [originalHotelCost, setOriginalHotelCost] = useState(0);
   const [flight, setFlight] = useState({
     airline: "",
-    cost: "",
+    cost: 0,
     link: "",
   });
 
   const [hotel, setHotel] = useState({
     name: "",
-    cost: "",
+    cost: 0,
     link: "",
   });
 
@@ -60,15 +60,22 @@ function NewTripForm() {
     if (
       collaborator &&
       !collaboratorsDeleteStatus &&
-      !collaboratorss.find((c) => c.username === collaborator.username)
+      !collaborators.find(
+        (c) =>
+          c.username === collaborator.username || c.email === collaborator.email
+      )
     ) {
-      setCollaboratorss((prevCollaborators) => [
+      setCollaborators((prevCollaborators) => [
         ...prevCollaborators,
         collaborator,
       ]);
       setCollaboratorsInput("");
     }
-  }, [collaborator, collaboratorss, collaboratorsDeleteStatus]);
+  }, [collaborator, collaborators, collaboratorsDeleteStatus]);
+
+  useEffect(() => {
+    setCollaborators([]);
+  }, []);
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -84,6 +91,7 @@ function NewTripForm() {
 
   const handleStartDateChange = (e) => {
     setStartDate(e.target.value);
+    updateDuration(e.target.value, endDate);
     const startDateValue = new Date(e.target.value);
     startDateValue.setDate(startDateValue.getDate() + 1);
     const formattedCheckoutDate = startDateValue.toISOString().slice(0, 10);
@@ -92,6 +100,21 @@ function NewTripForm() {
 
   const handleEndDateChange = (e) => {
     setEndDate(e.target.value);
+    updateDuration(startDate, e.target.value);
+  };
+
+  const updateDuration = (start, end) => {
+    if (start && end) {
+      const startDate = new Date(start);
+      const endDate = new Date(end);
+      const durationMilliseconds = endDate.getTime() - startDate.getTime();
+      const durationDays = Math.floor(
+        durationMilliseconds / (1000 * 60 * 60 * 24)
+      );
+      setDuration(durationDays);
+    } else {
+      setDuration(0);
+    }
   };
 
   const handleCollaboratorsInputChange = (e) => {
@@ -114,11 +137,21 @@ function NewTripForm() {
         collaboratorData.username = collaboratorsInput;
       }
 
-      if (collaborators.find((c) => c.username === collaboratorData.username)) {
+      if (
+        collaborators.find(
+          (c) =>
+            c.username === collaboratorData.username ||
+            c.email === collaboratorData.email
+        )
+      ) {
         setCollaboratorError("Collaborator already exists");
         return;
       }
-      dispatch(addCollaborator(collaboratorData));
+
+      dispatch(fetchCollaboratorThunk(collaboratorData)).catch((error) => {
+        console.error("Error fetching collaborator:", error);
+        setCollaboratorError("Collaborator not found");
+      });
       setCollaboratorsDeleteStatus(false);
       setCollaboratorsInput("");
     } catch (error) {
@@ -127,7 +160,10 @@ function NewTripForm() {
   };
 
   const handleRemoveCollaborator = (collaboratorId) => {
-    dispatch(removeCollaborator(collaboratorId));
+    const updatedCollaborators = collaborators.filter(
+      (collaborator) => collaborator.id !== collaboratorId
+    );
+    setCollaborators(updatedCollaborators);
     setCollaboratorsDeleteStatus(true);
   };
 
@@ -139,9 +175,25 @@ function NewTripForm() {
     setDestination(selectedCity ? selectedCity.name : "");
   };
 
+  const renderCollaborators = () => {
+    return collaborators.map((collaborator) => (
+      <div key={collaborator.id} className="collaborator">
+        <span className="collaborator-name">{collaborator.username}</span>
+        <button
+          type="button"
+          onClick={() => handleRemoveCollaborator(collaborator.id)}
+          className="remove-collaborator-btn"
+        >
+          x
+        </button>
+      </div>
+    ));
+  };
+
   const handleSubmitSearch = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setSearching(true);
     const newTripData = {
       name: name,
       origin: origin,
@@ -152,15 +204,19 @@ function NewTripForm() {
       hotelBudgetRange: hotelBudgetRange,
       activitiesBudgetRange: activitiesBudgetRange,
       collaborators: collaborators,
+      duration: duration,
     };
+    console.log(newTripData);
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
-      await dispatch(fetchActivitiesThunk(newTripData));
+      //await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
+      setSearching(false);
     } catch (error) {
       console.error("Error fetching data:", error);
       setLoading(false);
+      setSearching(false);
     }
   };
 
@@ -169,21 +225,58 @@ function NewTripForm() {
     return today.toISOString().slice(0, 10);
   });
 
+  useEffect(() => {
+    const adjustedFlightCost = originalFlightCost * (collaborators.length + 1);
+    setFlight((prevFlight) => ({
+      ...prevFlight,
+      cost: roundToTwoDecimalPlaces(adjustedFlightCost),
+    }));
+
+    const adjustedHotelCost =
+      originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+    setHotel((prevHotel) => ({
+      ...prevHotel,
+      cost: roundToTwoDecimalPlaces(adjustedHotelCost),
+    }));
+
+    const totalCost = adjustedFlightCost + adjustedHotelCost * duration;
+    setBudget(totalCost);
+  }, [collaborators, originalFlightCost, originalHotelCost, duration]);
+
+  const roundToTwoDecimalPlaces = (num) => {
+    return parseFloat(num).toFixed(2);
+  };
+
   const handleSubmission = async (e) => {
-    console.log("this is duration ", duration);
+    e.preventDefault();
+    let totalCost = parseFloat(originalFlightCost + originalHotelCost);
     if (collaborators.length > 0) {
-      flight.cost = flight.cost * (collaborators.length + 1);
+      const adjustedFlightCost =
+        originalFlightCost * (collaborators.length + 1);
+      setFlight((prevFlight) => ({
+        ...prevFlight,
+        cost: adjustedFlightCost,
+      }));
+
+      const adjustedHotelCost =
+        originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+      setHotel((prevHotel) => ({
+        ...prevHotel,
+        cost: adjustedHotelCost,
+      }));
+      totalCost = originalFlightCost * (collaborators.length + 1);
+      totalCost +=
+        originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
     }
-    // if (collaborators)
+    setBudget(totalCost);
     e.preventDefault();
     const tripData = {
-      name,
-      origin,
-      destination,
-      budget,
+      name: name,
+      origin: origin,
+      destination: destination,
+      budget: totalCost,
       startDate: startDate,
       endDate: endDate,
-      weather: weather,
       duration: duration,
       hotel: hotel,
       flight: flight,
@@ -194,7 +287,6 @@ function NewTripForm() {
 
     // dispatch(addTripThunk(newTripData));
     console.log("this is trip data", tripData);
-    console.log("this is the collaborators", collaborators);
   };
 
   return (
@@ -207,6 +299,7 @@ function NewTripForm() {
             value={name}
             onChange={handleNameChange}
             required
+            placeholder="Enter name of trip"
             className="new-trip-form-input"
           />
         </div>
@@ -221,7 +314,7 @@ function NewTripForm() {
 
         <div className="new-trip-form-group">
           <label htmlFor="startDate" className="new-trip-form-label">
-            Start Date:
+            Depart:
           </label>
           <input
             type="date"
@@ -230,12 +323,13 @@ function NewTripForm() {
             onChange={handleStartDateChange}
             required
             min={todayDate}
+            data-placeholder="Add date"
             className="new-trip-form-input"
           />
         </div>
         <div className="new-trip-form-group">
           <label htmlFor="endDate" className="new-trip-form-label">
-            End Date:
+            Return:
           </label>
           <input
             type="date"
@@ -243,6 +337,7 @@ function NewTripForm() {
             value={endDate}
             onChange={handleEndDateChange}
             required
+            data-placeholder="Add date"
             min={startDate || todayDate}
             className="new-trip-form-input"
           />
@@ -258,7 +353,7 @@ function NewTripForm() {
             required
             className="new-trip-form-input"
           >
-            <option value="">Select Budget Range</option>
+            <option value="">Select hotel budget range</option>
             <option value="price::USD-0-199">&lt; $200</option>
             <option value="price::USD-200-400">$200 - $400</option>
             <option value="price::USD-400-600">$400 - $600</option>
@@ -280,7 +375,7 @@ function NewTripForm() {
             required
             className="new-trip-form-input"
           >
-            <option value="">Select Activities Budget Range</option>
+            <option value="">Select activities budget tange</option>
             <option value="$">Cheap ($)</option>
             <option value="$$">Mid-range ($$)</option>
             <option value="$$$">Expensive ($$$)</option>
@@ -288,59 +383,56 @@ function NewTripForm() {
         </div>
 
         <div className="form-group">
-          <label className="form-label">Collaborators:</label>
-          <div className="collaborators">
-            {collaborators.map((collaborator, index) => (
-              <div key={index} className="collaborator">
-                <span className="collaborator-name">
-                  {collaborator.username}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => handleRemoveCollaborator(collaborator.id)}
-                  className="remove-collaborator-btn"
-                >
-                  x
-                </button>
-              </div>
-            ))}
-          </div>
+          <label className="new-trip-form-label">Collaborators:</label>
+          <div className="collaborators">{renderCollaborators()}</div>
           <div className="collaborators-input-container">
             <input
               type="text"
-              placeholder="username or email"
+              placeholder="Enter username or email"
               value={collaboratorsInput}
               onChange={handleCollaboratorsInputChange}
-              className="collaborators-input"
+              className="new-trip-form-input"
             />
+            {collaboratorError && (
+              <p className="collaborator-error">{collaboratorError}</p>
+            )}
             <button
               type="button"
               onClick={handleAddCollaborator}
               className="add-collaborator-btn"
             >
-              ADD
+              Add
             </button>
           </div>
-          {collaboratorError && (
-            <p className="collaborator-error">{collaboratorError}</p>
-          )}
         </div>
 
         <button
           type="submit"
           className={classNames("new-trip-search-btn", {
-            "loading-btn": loading,
+            "loading-btn": searching,
           })}
-          disabled={loading}
+          disabled={searching}
         >
           {" "}
-          {loading ? "Searching..." : "Search"}
+          {loading && searching ? "Searching..." : "Search"}
         </button>
       </form>
 
-      <FlightResults setFlight={setFlight} />
-      <HotelsResults setHotel={setHotel} />
-      <button onClick={handleSubmission}>Submit Search</button>
+      {loading ? (
+        <p></p>
+      ) : (
+        <>
+          <FlightResults
+            setFlight={setFlight}
+            setOriginalFlightCost={setOriginalFlightCost}
+          />
+          <HotelsResults
+            setHotel={setHotel}
+            setOriginalHotelCost={setOriginalHotelCost}
+          />
+          <button onClick={handleSubmission}>Submit Search</button>
+        </>
+      )}
     </div>
   );
 }

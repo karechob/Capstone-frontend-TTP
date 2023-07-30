@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../css/citySearch.css";
 
-const CitySearch = ({ onCitySelect, placeholder }) => {
+const CitySearch = ({ onCitySelect }) => {
   const [cityInput, setCityInput] = useState("");
   const [citySuggestions, setCitySuggestions] = useState([]);
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -93,7 +93,7 @@ const CitySearch = ({ onCitySelect, placeholder }) => {
             onChange={handleCityInputChange}
             autoComplete="off"
             required
-            placeholder={placeholder}
+            placeholder="Enter city"
             className="city-input"
           />
           {error && <div>{error}</div>}

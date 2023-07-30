@@ -8,10 +8,11 @@ import { removeCollaboratorThunk } from "../redux/user/user.actions";
 function EditTrip() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  let { tripId } = useParams();
+  const { tripId } = useParams();
   const trip = useSelector((state) => state.trips.singleTrip);
   const tripNameRef = useRef(trip.name);
   const [collaborators, setCollaborators] = useState([]);
+  const [isSaving, setIsSaving] = useState(false); // Track the saving process
 
   useEffect(() => {
     dispatch(fetchTripThunk(tripId));
@@ -30,7 +31,7 @@ function EditTrip() {
 
   const handleDelete = async (collaborator) => {
     try {
-      await dispatch(removeCollaboratorThunk(collaborator.id));
+      await dispatch(removeCollaboratorThunk(collaborator.id, tripId));
       const newCollaborators = collaborators.filter(
         (c) => c.id !== collaborator.id
       );
@@ -42,13 +43,17 @@ function EditTrip() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     const updatedTrip = {
       id: tripId,
       name: tripNameRef.current,
       collaborators: collaborators,
     };
     await dispatch(updateTripThunk(updatedTrip));
-    navigate(`/trip/${tripId}`);
+    const delayDuration = 1000;
+    setTimeout(() => {
+      navigate(`/trip/${tripId}`);
+    }, delayDuration);
   };
 
   return (
@@ -82,7 +87,7 @@ function EditTrip() {
           </ul>
         </div>
         <button type="submit" className="settings-submit-btn">
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </button>
       </form>
     </div>

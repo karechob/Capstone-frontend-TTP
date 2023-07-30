@@ -77,7 +77,6 @@
 
 .new-trip-form-label {
   font-weight: bold;
-  display: block;
   margin-bottom: 5px;
 }
 
@@ -91,7 +90,6 @@
   border-radius: 5px;
   background-color: #333;
   color: #fff;
-  outline: none;
   transition: background-color 0.3s ease;
 }
 
@@ -107,7 +105,62 @@
   color: #fffefe;
 }
 
+.collaborators {
+  display: flex;
+  align-items: center;
+  padding: 15px 15px;
+  margin: 0;
+}
+
+.collaborator {
+  margin: 1%;
+  padding: 10px;
+  border: 1px solid rgb(48, 41, 41);
+  border-radius: 10px;
+  background-color: #0084ffb0;
+}
+
+.collaborator:hover {
+  background-color: #007bff;
+  transform: scale(1.05);
+}
+
+.remove-collaborator-btn {
+  background-color: #ff0000;
+  border: none;
+  padding: 0px 5px;
+  margin-left: 5px;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.remove-collaborator-btn:hover {
+  background-color: #aa0e0e;
+}
+
+.collaborator-error {
+  color: #ff0000;
+  font-size: 14px;
+}
+.add-collaborator-btn {
+  margin: 1%;
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.add-collaborator-btn:hover {
+  background-color: #0056b3;
+}
+
 .new-trip-search-btn {
+  margin-top: 5%;
   padding: 15px 20px;
   background-color: #007bff;
   border: none;

@@ -16,6 +16,7 @@ function Settings() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -85,9 +86,9 @@ function Settings() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setIsSaving(true);
     validateName();
     validateUsername();
     validateEmail();
@@ -96,10 +97,13 @@ function Settings() {
     if (!nameError && !usernameError && !emailError && !passwordError) {
       const updatedUserData = { ...userData, password };
       try {
-        dispatch(updateUserThunk(updatedUserData));
-        navigate("/user");
+        await dispatch(updateUserThunk(updatedUserData));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        setIsSaving(false);
+        navigate("/user/");
       } catch (error) {
         console.error("Error updating user:", error.message);
+        setIsSaving(false);
       }
     }
   };
@@ -175,7 +179,7 @@ function Settings() {
         )}
 
         <button type="submit" className="settings-submit-btn">
-          Save
+          {isSaving ? "Saving..." : "Save"}
         </button>
       </form>
     </div>

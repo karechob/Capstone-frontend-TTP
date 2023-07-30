@@ -25,7 +25,7 @@ function Profile() {
       <div className="container">
         <h1 className="profile-card">User Profile</h1>
         <div>
-          <div class="profile-image">
+          <div className="profile-image">
             <Link to={`/user/avatar`} className="avatar-link">
               <img
                 src={user.image}
@@ -33,7 +33,7 @@ function Profile() {
                 width="150"
                 height="150"
               />
-              <div class="overlay">
+              <div className="overlay">
                 <span>Change Avatar</span>
               </div>
             </Link>
