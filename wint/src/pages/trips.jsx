@@ -71,7 +71,8 @@ function Trips() {
       <table className="table">
         <thead>
           <tr>
-            <th className="th"></th>
+            <th className="th">Options</th>
+            <th className="th">Trip</th>
             <th className="th">Date</th>
             <th className="th">Location</th>
             <th className="th">Hotel</th>
@@ -80,11 +81,27 @@ function Trips() {
         </thead>
         <tbody>
           {trips.map((trip, index) => (
-            <tr key={index}>
+            <tr
+              key={index}
+              className={`tr ${index % 2 === 0 ? "tr-even" : "tr-odd"}`}
+            >
               <td className="td">
-                <button onClick={() => handleView(index)}>View</button>
-                <button onClick={() => handleEdit(index)}>Edit</button>
+                <div className="button-container">
+                  <button
+                    className="button button-primary"
+                    onClick={() => handleView(index)}
+                  >
+                    View
+                  </button>
+                  <button
+                    className="button button-secondary"
+                    onClick={() => handleEdit(index)}
+                  >
+                    Edit
+                  </button>
+                </div>
               </td>
+              <td className="td">{trip.name}</td>
               <td className="td">{formatDate(trip.startDate)}</td>
               <td className="td">{trip.destination}</td>
               <td className="td">{trip.hotel.name}</td>

@@ -46,6 +46,7 @@ export const fetchTrip = (tripData) => ({
 export const fetchTripThunk = (tripId) => {
   return async (dispatch) => {
     try {
+      console.log("FETCHINGTRIPTHUNK FIRING UP");
       const response = await axios.get(
         `http://localhost:8080/api/me/trip/${tripId}`,
         {

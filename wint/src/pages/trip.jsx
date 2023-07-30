@@ -1,54 +1,28 @@
 import React, { useEffect } from "react";
-// import ActivitiesList from "../components/trips/ActivitiesList";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
-import Collaborators from "../components/trips/Collaborators";
-//import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import defaultpic1 from "../assets/avatars/dogGlasses.png";
 import defaultpic2 from "../assets/avatars/appleDog.png";
 import PlaceholderActivity from "../assets/images/little-island.jpg";
-// import defaultpic2 from "../../assets/avatars/djAvi.png";
-// import defaultpic3 from "../../assets/avatars/appleDog.png";
 
-import {
-  fetchImageThunk,
-  fetchTripThunk,
-  //fetchWeatherThunk,
-  fetchCollaboratorThunk,
-} from "../redux/trips/trips.actions";
+import { fetchImageThunk, fetchTripThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchUserThunk } from "../redux/user/user.actions";
 
 function Trip() {
   let { tripId } = useParams();
-  console.log("params: ", useParams());
   const owner = useSelector((state) => state.user.singleUser);
   const trip = useSelector((state) => state.trips.singleTrip);
   const dispatch = useDispatch();
-  //const weatherForecast = useSelector((state) => state.trips.weather.data);
   const image = useSelector((state) => state.trips.image.data?.mobile);
-  const startDate = trip.startDate?.split("T")[0];
-  const endDate = trip.endDate?.split("T")[0];
-
-  useEffect(() => {
-    dispatch(fetchTripThunk(tripId));
-  }, [dispatch, tripId]);
-
-  useEffect(() => {
-    dispatch(fetchImageThunk(trip.destination));
-  }, [dispatch, trip]);
-
-  // useEffect(() => {
-  //   if (trip) {
-  //     dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
-  //   }
-  // }, [trip]);
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
-  }, [dispatch, trip.ownerId]);
 
+    dispatch(fetchTripThunk(tripId));
+    dispatch(fetchImageThunk(trip.destination));
+  }, [dispatch, tripId, trip.destination, trip.ownerId]);
   return (
     <div className="background-trip-page">
       <h1>{trip.name}</h1>
@@ -86,12 +60,6 @@ function Trip() {
           <img className="destination-img" src={image} alt="placeholder" />
           <h2>{trip.destination}</h2>
         </div>
-        {/* <div className="weather-container">
-          <h1>Weather</h1>
-          <WeatherBreakdown />
-          <p>Average Temperature:</p>
-          <p>{weatherForecast?.toFixed(2)}°C</p>
-        </div> */}
       </div>
       <h1>Budget Breakdown</h1>
       <div className="budget-graph-container">
