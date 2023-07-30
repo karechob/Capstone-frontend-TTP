@@ -4,8 +4,8 @@ import "../css/flightresults.css";
 
 function FlightResults() {
   const flightInformation = useSelector((state) => state.flights.itineraryData);
-  const tripId = useSelector((state) => state.trips.singleTrip);
-  console.log("this is trip data", tripId);
+  // const tripId = useSelector((state) => state.trips.singleTrip);
+  // console.log("this is trip data", tripId);
   const flightData = flightInformation[0];
   const [flight, setFlight] = useState({
     airline: "",
@@ -21,7 +21,7 @@ function FlightResults() {
         cost: selectedFlight.price,
         link: selectedFlight.airline.website,
       });
-      console.log("this is setflight", setFlight)
+      console.log("this is setflight", flight)
   };
 
   return (
@@ -45,6 +45,7 @@ function FlightResults() {
               {itinerary.arrival.airport.city}, {itinerary.arrival.airport.name}
             </p>
             <input
+              name="flightSelection"
               type="radio"
               value={itinerary.itinerary}
               onChange={() => handleSelectFlight(itinerary)}
