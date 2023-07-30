@@ -1,3 +1,5 @@
+/* --- Weather Component to revisit at a later time ---
+
 import React from 'react'
 import Autumnsvg from '../../weather-svgs/Autumnsvg.jsx'
 import Cloudysvg from '../../weather-svgs/Cloudysvg.jsx'
@@ -30,3 +32,4 @@ function WeatherBreakdown() {
 }
 
 export default WeatherBreakdown
+*/

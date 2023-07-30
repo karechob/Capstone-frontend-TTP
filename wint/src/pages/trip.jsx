@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 // import ActivitiesList from "../components/trips/ActivitiesList";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
-import WeatherBreakdown from "../components/trips/WeatherBreakdown";
+import Collaborators from "../components/trips/Collaborators";
+//import WeatherBreakdown from "../components/trips/WeatherBreakdown";
 import "../css/trip.css";
 import defaultpic1 from "../assets/avatars/dogGlasses.png";
 import defaultpic2 from "../assets/avatars/appleDog.png";
@@ -12,8 +13,8 @@ import PlaceholderActivity from "../assets/images/little-island.jpg";
 import {
   fetchImageThunk,
   fetchTripThunk,
-  fetchWeatherThunk,
-  // fetchCollaboratorThunk,
+  //fetchWeatherThunk,
+  fetchCollaboratorThunk,
 } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -25,7 +26,7 @@ function Trip() {
   const owner = useSelector((state) => state.user.singleUser);
   const trip = useSelector((state) => state.trips.singleTrip);
   const dispatch = useDispatch();
-  const weatherForecast = useSelector((state) => state.trips.weather.data);
+  //const weatherForecast = useSelector((state) => state.trips.weather.data);
   const image = useSelector((state) => state.trips.image.data?.mobile);
   const startDate = trip.startDate?.split("T")[0];
   const endDate = trip.endDate?.split("T")[0];
@@ -38,11 +39,11 @@ function Trip() {
     dispatch(fetchImageThunk(trip.destination));
   }, [dispatch, trip]);
 
-  useEffect(() => {
-    if (trip) {
-      dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
-    }
-  }, [dispatch, trip, endDate, startDate]);
+  // useEffect(() => {
+  //   if (trip) {
+  //     dispatch(fetchWeatherThunk(trip.destination, startDate, endDate));
+  //   }
+  // }, [trip]);
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
@@ -85,12 +86,12 @@ function Trip() {
           <img className="destination-img" src={image} alt="placeholder" />
           <h2>{trip.destination}</h2>
         </div>
-        <div className="weather-container">
+        {/* <div className="weather-container">
           <h1>Weather</h1>
           <WeatherBreakdown />
           <p>Average Temperature:</p>
           <p>{weatherForecast?.toFixed(2)}°C</p>
-        </div>
+        </div> */}
       </div>
       <h1>Budget Breakdown</h1>
       <div className="budget-graph-container">
