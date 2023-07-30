@@ -12,7 +12,7 @@ function HotelsResults({ setHotel, setOriginalHotelCost }) {
       break;
     }
   }
-  // Function to round a number to two decimal places
+
   const roundToTwoDecimalPlaces = (num) => {
     return parseFloat(num).toFixed(2);
   };
