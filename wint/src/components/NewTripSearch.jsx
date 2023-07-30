@@ -8,14 +8,16 @@ import { fetchHotelsThunk } from "../redux/hotels/hotels.actions";
 import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
-import { duration } from "moment";
-import { addCollaborator, removeCollaborator } from "../redux/user/user.actions";
+import {
+  addCollaborator,
+  removeCollaborator,
+} from "../redux/user/user.actions";
 
 function NewTripForm() {
   const dispatch = useDispatch();
 
   const collaborators = useSelector((state) => state.user.collaborators);
-  const [collaborator, setCollaborator] = useState("")
+  const [collaborator, setCollaborator] = useState("");
   const [budget, setBudget] = useState("");
   const [weather, setWeather] = useState("");
   const [name, setName] = useState("");
@@ -92,42 +94,42 @@ function NewTripForm() {
     setEndDate(e.target.value);
   };
 
-    const handleCollaboratorsInputChange = (e) => {
-      setCollaboratorsInput(e.target.value);
-      setCollaboratorError("");
-    };
+  const handleCollaboratorsInputChange = (e) => {
+    setCollaboratorsInput(e.target.value);
+    setCollaboratorError("");
+  };
 
-    const handleAddCollaborator = async () => {
-      try {
-        if (!collaboratorsInput.trim()) {
-          setCollaboratorError("Collaborator input is empty");
-          return;
-        }
-        setCollaboratorError("");
-
-        const collaboratorData = {};
-        if (collaboratorsInput.includes("@")) {
-          collaboratorData.email = collaboratorsInput;
-        } else {
-          collaboratorData.username = collaboratorsInput;
-        }
-
-        if (collaborators.find((c) => c.username === collaboratorData.username)) {
-          setCollaboratorError("Collaborator already exists");
-          return;
-        }
-        dispatch(addCollaborator(collaboratorData));
-        setCollaboratorsDeleteStatus(false);
-        setCollaboratorsInput("");
-      } catch (error) {
-        console.error("Error handling collaborator:", error);
+  const handleAddCollaborator = async () => {
+    try {
+      if (!collaboratorsInput.trim()) {
+        setCollaboratorError("Collaborator input is empty");
+        return;
       }
-    };
+      setCollaboratorError("");
 
-    const handleRemoveCollaborator = (collaboratorId) => {
-      dispatch(removeCollaborator(collaboratorId));
-      setCollaboratorsDeleteStatus(true);
-    };
+      const collaboratorData = {};
+      if (collaboratorsInput.includes("@")) {
+        collaboratorData.email = collaboratorsInput;
+      } else {
+        collaboratorData.username = collaboratorsInput;
+      }
+
+      if (collaborators.find((c) => c.username === collaboratorData.username)) {
+        setCollaboratorError("Collaborator already exists");
+        return;
+      }
+      dispatch(addCollaborator(collaboratorData));
+      setCollaboratorsDeleteStatus(false);
+      setCollaboratorsInput("");
+    } catch (error) {
+      console.error("Error handling collaborator:", error);
+    }
+  };
+
+  const handleRemoveCollaborator = (collaboratorId) => {
+    dispatch(removeCollaborator(collaboratorId));
+    setCollaboratorsDeleteStatus(true);
+  };
 
   const handleFromCitySelect = (selectedCity) => {
     setOrigin(selectedCity ? selectedCity.name : "");
@@ -168,7 +170,7 @@ function NewTripForm() {
   });
 
   const handleSubmission = async (e) => {
-    console.log("this is duration ",duration)
+    console.log("this is duration ", duration);
     if (collaborators.length > 0) {
       flight.cost = flight.cost * (collaborators.length + 1);
     }
@@ -192,9 +194,8 @@ function NewTripForm() {
 
     // dispatch(addTripThunk(newTripData));
     console.log("this is trip data", tripData);
-    console.log("this is the collaborators", collaborators)
+    console.log("this is the collaborators", collaborators);
   };
-
 
   return (
     <div>
