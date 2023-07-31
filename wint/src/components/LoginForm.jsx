@@ -92,7 +92,7 @@ function LoginForm() {
 
   const handleGoogleSignIn = () => {
     setIsGoogleLoginSubmitting(true);
-    window.location.href = "http://localhost:8080/auth/google";
+    window.location.href = "https://capstone-backend-5zeo9e8f0-karechob.vercel.app/auth/google";
     sessionStorage.setItem("isLoggedIn", "true");
   };
 

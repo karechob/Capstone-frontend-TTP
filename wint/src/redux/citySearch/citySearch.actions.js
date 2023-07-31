@@ -11,7 +11,7 @@ export const fetchCities = (cities) => {
 export const fetchCitiesThunk = (cityName, inputType) => async (dispatch) => {
   try {
     const response = await axios.post(
-      `http://localhost:8080/api/citySearch`,
+      `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/citySearch`,
       { name: cityName, type: inputType },
       {
         withCredentials: true,
