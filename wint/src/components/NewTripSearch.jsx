@@ -8,15 +8,19 @@ import { fetchHotelsThunk } from "../redux/hotels/hotels.actions";
 import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
+import ActivitiesResults from "./ActivitiesResults";
 import { fetchCollaboratorThunk } from "../redux/user/user.actions";
+import { addTripThunk, fetchAllTripsThunk } from "../redux/trips/trips.actions";
+import { useNavigate } from "react-router-dom";
 
 function NewTripForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const collaborator = useSelector(
     (state) => state.user.collaborator.collaborator
   );
-  const [budget, setBudget] = useState("");
+  const [budget, setBudget] = useState(0);
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -46,13 +50,9 @@ function NewTripForm() {
     link: "",
   });
 
-  const [activity, setActivity] = useState({
-    name: "",
-    cost: "",
-    imageURL: "",
-  });
+  const [activities, setActivities] = useState([]);
+  const [activitiesCostSum, setActivitiesCostSum] = useState(0);
 
-  useState(false);
   const [hotelBudgetRange, setHotelBudgetRange] = useState("");
   const [activitiesBudgetRange, setActivitiesBudgetRange] = useState("");
 
@@ -210,7 +210,7 @@ function NewTripForm() {
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
-      //await dispatch(fetchActivitiesThunk(newTripData));
+      await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
       setSearching(false);
     } catch (error) {
@@ -268,6 +268,9 @@ function NewTripForm() {
       totalCost +=
         originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
     }
+
+    totalCost += activitiesCostSum;
+
     setBudget(totalCost);
     e.preventDefault();
     const tripData = {
@@ -280,13 +283,18 @@ function NewTripForm() {
       duration: duration,
       hotel: hotel,
       flight: flight,
-      // activities: activities,
+      activities: activities,
       collaborators: collaborators,
     };
-    // setActivityError("");
 
-    // dispatch(addTripThunk(newTripData));
-    console.log("this is trip data", tripData);
+    console.log(budget);
+    try {
+      dispatch(addTripThunk(tripData));
+      dispatch(fetchAllTripsThunk());
+      navigate("/trips");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -429,6 +437,11 @@ function NewTripForm() {
           <HotelsResults
             setHotel={setHotel}
             setOriginalHotelCost={setOriginalHotelCost}
+          />
+          <ActivitiesResults
+            setActivities={setActivities}
+            activitiesCostSum={activitiesCostSum}
+            setActivitiesCostSum={setActivitiesCostSum}
           />
           <button onClick={handleSubmission}>Submit Search</button>
         </>

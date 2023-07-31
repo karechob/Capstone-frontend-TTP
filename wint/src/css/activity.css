@@ -1,51 +1,47 @@
-.flight-results-title {
+.activity-name {
     text-align: center;
+    word-wrap: break-word;
 }
 
-.flight-card {
-    background-color: darkorange;
+.activity-item {
+    /* box-sizing: border-box; */
+    background-color: rgb(214, 1, 90);
     margin: 20px;
     border-radius: 20px;
-    height: 450px;
+    height: 490px;
     width: 370px;
-    display: inline-block;
     transition: all 0.5s ease;
     padding-top: 10px;
     padding-bottom: 10px;
+    display: inline-block;
 }
 
-.flight-container {
+.activity-container {
     justify-content: center;
     display: inline-flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.flight-card:hover {
+.activity-item:hover {
     transition: all 0.5s ease;
-    box-shadow: 0px 0px 40px rgb(255, 104, 33);
-    background-color: #ffc1a0;
+    box-shadow: 0px 0px 40px rgb(215, 63, 127);
+    background-color: #ff81a1;
 }
 
-.ticket-price {
-    font-weight: bold;
-    background-color: beige;
-    color: black;
-    font-size: large;
-}
-
-.airline-logo {
-    height: 150px;
-    width: 150px;
+.activity-img {
+    height: 125px;
+    width: 125px;
     border-radius: 100%;
 }
 
-
-input[type='radio'] { 
+input[type='checkbox'] { 
     transform: scale(2); 
     transition: all 0.5s ease;
+    margin: 4%;
 }
-input[type='radio']:hover { 
+
+input[type='checkbox']:hover { 
     cursor: pointer;
     box-shadow: 0px 0px 20px rgb(253, 255, 252);
     transition: all 0.5s ease;

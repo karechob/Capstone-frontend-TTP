@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import "../css/trip.css";
-import defaultpic1 from "../assets/avatars/dogGlasses.png";
-import defaultpic2 from "../assets/avatars/appleDog.png";
-import PlaceholderActivity from "../assets/images/little-island.jpg";
 
 import { fetchImageThunk, fetchTripThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +13,36 @@ function Trip() {
   const trip = useSelector((state) => state.trips.singleTrip);
   const dispatch = useDispatch();
   const image = useSelector((state) => state.trips.image.data?.mobile);
+
+  function priceLevelBlock(num) {
+    if (num === 0) {
+      return <h2>Price: FREE</h2>;
+    } else {
+      if (num === 1) {
+        return <h2>Price Estimate: $10 - $20</h2>;
+      }
+      if (num === 2) {
+        return <h2>Price Estimate: $20 - $30</h2>;
+      }
+      if (num >= 3) {
+        return <h2>Price Estimate: +$30</h2>;
+      }
+    }
+  }
+
+  function popularityBlock(num) {
+    if (num > 0) {
+      if (num > 1) {
+        return <p className="activity-popularity">{num} people went here!</p>;
+      } else {
+        return <p className="activity-popularity">{num} person went here!</p>;
+      }
+    } else {
+      return;
+    }
+  }
+
+  console.log(trip.activities);
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
@@ -32,7 +59,7 @@ function Trip() {
         <div className="owner-image">
           <img
             className="owner-indiv-img"
-            src={defaultpic1}
+            src={owner.image}
             alt="default-pic"
           />
         </div>
@@ -43,7 +70,7 @@ function Trip() {
               <div className="collaborator-image">
                 <img
                   className="collaborator-indiv-img"
-                  src={defaultpic2}
+                  src={collaborator.image}
                   alt="default-pic"
                 />
                 <h2>{collaborator.name}</h2>
@@ -67,20 +94,29 @@ function Trip() {
       </div>
       <h1>Activities</h1>
       <div className="activities-list-container">
-        {trip.activities?.map((activity) => {
+        {trip.activities?.map((activity, index) => {
           return (
-            <div className="act-list-item">
-              <div className="activity-img-container">
+            <div key={index} className="activity-container">
+              <div className="activity-item">
+                <h2 className="activity-name">{activity.name}</h2>
                 <img
                   className="activity-img"
-                  src={PlaceholderActivity}
+                  src={activity.place_images}
                   alt="Activity"
                 />
-              </div>
-              <div className="activity-info">
-                <h1>ActivityName: {activity.name}</h1>
-                <h2>Budget: ${activity.cost}</h2>
-                <h2>Link to place googlemaps</h2>
+                <p className="activity-type">{activity.type}</p>
+                <div className="activity-price-level">
+                  {priceLevelBlock(activity.price_level)}
+                </div>
+                {activity.rating >= 1 ? (
+                  <p className="activity-rating">Rating: {activity.rating}</p>
+                ) : (
+                  <p>No rating available</p>
+                )}
+                <div className="activity-popularity">
+                  {popularityBlock(activity.popularity)}
+                </div>
+                <a href={activity.map_url}>Look on Google Maps</a>
               </div>
             </div>
           );
@@ -93,3 +129,19 @@ function Trip() {
 }
 
 export default Trip;
+
+/*            <div className="act-list-item">
+              <div className="activity-img-container">
+                <img
+                  className="activity-img"
+                  src={activity.place_images}
+                  alt="Activity"
+                />
+              </div>
+              <div className="activity-info">
+                <h1>ActivityName: {activity.name}</h1>
+                {priceLevelBlock(activity.price_level)}
+                <a href={activity.map_url}>Look on Google Maps</a>
+              </div>
+            </div>
+*/
