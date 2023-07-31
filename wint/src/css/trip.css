@@ -167,3 +167,15 @@ body {
   display: flex;
   justify-content: center;
 }
+
+.trip-budget-title {
+  margin: 50px; 
+}
+
+.trip-budget-container{
+  margin-bottom: 50px;
+}
+
+.travel-stay-title {
+  margin-top: 200px;
+}

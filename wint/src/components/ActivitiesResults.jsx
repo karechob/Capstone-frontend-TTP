@@ -27,7 +27,7 @@ function ActivitiesResults({
 
   function priceLevelBlock(num) {
     if (num === 0) {
-      return <p>FREE</p>;
+      return;
     } else {
       if (num === 1) {
         return <p>$</p>;
@@ -47,7 +47,7 @@ function ActivitiesResults({
         ...activities,
         {
           name: activity.name,
-          cost: activity.price_level * 10,
+          cost: activity.price_level * 10 + 5,
           type: activity.type,
           price_level: activity.price_level,
           rating: activity.rating,
@@ -61,7 +61,7 @@ function ActivitiesResults({
         ...activities,
         {
           name: activity.name,
-          cost: activity.price_level * 10,
+          cost: activity.price_level * 10 + 5,
           type: activity.type,
           price_level: activity.price_level,
           rating: activity.rating,
@@ -72,7 +72,7 @@ function ActivitiesResults({
       ]);
     }
 
-    total = total + activity.price_level * 10;
+    total = total + activity.price_level * 10 + 5;
     setActivitiesCostSum(total);
   };
 

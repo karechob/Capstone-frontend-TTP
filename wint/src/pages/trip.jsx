@@ -18,13 +18,13 @@ function Trip() {
 
   function priceLevelBlock(num) {
     if (num === 0) {
-      return <h2>Price: FREE</h2>;
+      return;
     } else {
       if (num === 1) {
-        return <h2>Price Estimate: $10 - $20</h2>;
+        return <h2>Price Estimate: ~$15</h2>;
       }
       if (num === 2) {
-        return <h2>Price Estimate: $20 - $30</h2>;
+        return <h2>Price Estimate: ~$25</h2>;
       }
       if (num >= 3) {
         return <h2>Price Estimate: +$30</h2>;
@@ -52,7 +52,6 @@ function Trip() {
 
   useEffect(() => {
     dispatch(fetchUserThunk(trip.ownerId));
-
     dispatch(fetchTripThunk(tripId));
     dispatch(fetchImageThunk(trip.destination));
   }, [dispatch, tripId, trip.destination, trip.ownerId]);
@@ -97,24 +96,29 @@ function Trip() {
       <h1>Budget Breakdown</h1>
       <div className="budget-graph-container">
         <BudgetBreakdownGraph className="graph-budget" />
+        <div className="trip-budget-container">
+          <h1 className="trip-budget-title">${trip.budget}</h1>
+        </div>
       </div>
-      <h1>Travel & Stay</h1>
+      <div className="travel-stay-title">
+        <h1>Travel & Stay</h1>
+      </div>
       <div className="travel-stay-container">
-      <div className="flight-container">
-        <label className="flights-card">
-          <h2 className="airline-name">{trip.flight.airline}</h2>
-          <Plane className="flight-img" />
-          <h2 className="flight-price">Price: ${trip.flight.cost}</h2>
-          <p className="airline-link">Airline Website: {trip.flight.link}</p>
-        </label>
-      </div>
-      <div className="hotels-container">
-        <label className="hotels-card">
-          <h2 className="hotels-name">{trip.hotel.name}</h2>
-          <img className="hotels-img" src={trip.hotel.link} alt="Hotel" />
-          <h2 className="hotel-price">Price: ${trip.hotel.cost}</h2>
-        </label>
-      </div>
+        <div className="flight-container">
+          <label className="flights-card">
+            <h2 className="airline-name">{trip.flight.airline}</h2>
+            <Plane className="flight-img" />
+            <h2 className="flight-price">Total Price: ${trip.flight.cost}</h2>
+            <p className="airline-link">Airline Website: {trip.flight.link}</p>
+          </label>
+        </div>
+        <div className="hotels-container">
+          <label className="hotels-card">
+            <h2 className="hotels-name">{trip.hotel.name}</h2>
+            <img className="hotels-img" src={trip.hotel.link} alt="Hotel" />
+            <h2 className="hotel-price">Total Price: ${trip.hotel.cost}</h2>
+          </label>
+        </div>
       </div>
       <h1>Activities</h1>
       <div className="activities-list-container">
@@ -146,25 +150,8 @@ function Trip() {
           );
         })}
       </div>
-      <h1>Things to Note</h1>
     </div>
   );
 }
 
 export default Trip;
-
-/*            <div className="act-list-item">
-              <div className="activity-img-container">
-                <img
-                  className="activity-img"
-                  src={activity.place_images}
-                  alt="Activity"
-                />
-              </div>
-              <div className="activity-info">
-                <h1>ActivityName: {activity.name}</h1>
-                {priceLevelBlock(activity.price_level)}
-                <a href={activity.map_url}>Look on Google Maps</a>
-              </div>
-            </div>
-*/

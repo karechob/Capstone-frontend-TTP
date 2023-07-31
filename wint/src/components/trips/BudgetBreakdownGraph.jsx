@@ -1,19 +1,34 @@
 import React from "react";
-import { Chart, ArcElement } from "chart.js";
-import { Tooltip, Legend } from "chart.js";
+import { Chart, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
+import { useSelector } from "react-redux";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
 const BudgetBreakdownGraph = () => {
+  const flightCost = useSelector((state) => state.trips.singleTrip.flight.cost);
+  const hotelCost = useSelector((state) => state.trips.singleTrip.hotel.cost);
+  const activityInfo = useSelector(
+    (state) => state.trips.singleTrip.activities
+  );
+
+  let activityTotal = 0;
+
+  function activityCostSum() {
+    activityInfo.map((activity, index) => {
+      return (activityTotal += activity.cost);
+    });
+  }
+  activityCostSum();
+
   const data = {
-    labels: ["Activities", "Travel & Stay"],
+    labels: ["Activities", "Hotel", "Flight"],
     datasets: [
       {
         label: "Assigned Budget",
-        data: [70, 50],
-        backgroundColor: ["#FF6384", "#5ed8eb"],
-        hoverBackgroundColor: ["#ff0037", "#00a1eb"],
+        data: [activityTotal, hotelCost, flightCost],
+        backgroundColor: ["#FF6384", "#5ed8eb", "#bb9eff"],
+        hoverBackgroundColor: ["#ff0037", "#00a1eb", "#b752ff"],
         hoverOffset: 30,
         borderWidth: 3,
         hoverBorderColor: "#DCEDC8",
@@ -23,15 +38,19 @@ const BudgetBreakdownGraph = () => {
 
   const options = {
     layout: {
-      padding: 10,
+      padding: 30,
     },
     plugins: {
       Tooltip: {
         enabled: true,
       },
-      Legend: {
+      legend: {
         display: true,
-        position: "bottom",
+        fontColor: "white",
+        position: "top",
+        labels: {
+          color: "white",
+        },
       },
     },
   };
