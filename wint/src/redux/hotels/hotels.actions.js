@@ -11,7 +11,7 @@ export const fetchHotels = (payload) => {
 export const fetchHotelsThunk = (newTripData) => async (dispatch) => {
   try {
     const response = await axios.post(
-      `http://localhost:8080/api/hotels/information`,
+      `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/hotels/information`,
       newTripData,
       { withCredentials: true }
     );

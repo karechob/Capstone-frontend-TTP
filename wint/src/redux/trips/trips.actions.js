@@ -10,7 +10,7 @@ export const fetchImageThunk = (src) => {
   return async (dispatch) => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/api/teleport/images/${src.toLowerCase()}`
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/teleport/images/${src.toLowerCase()}`
       );
       dispatch(fetchImage(response));
     } catch (error) {
@@ -29,7 +29,7 @@ export const fetchWeatherThunk = (destination, x, y) => {
       console.log("fetchWeatherThunk is firing up");
       console.log("x,y destination: ", x, y);
       const response = await axios.get(
-        `http://localhost:8080/api/weather/getWeather/${destination}/${x}/${y}`
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/weather/getWeather/${destination}/${x}/${y}`
       );
       dispatch(fetchWeather(response));
     } catch (error) {
@@ -48,7 +48,7 @@ export const fetchTripThunk = (tripId) => {
     try {
       console.log("FETCHINGTRIPTHUNK FIRING UP");
       const response = await axios.get(
-        `http://localhost:8080/api/me/trip/${tripId}`,
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/trip/${tripId}`,
         {
           withCredentials: true,
         }
@@ -71,7 +71,7 @@ export const fetchAllTrips = (tripData) => ({
 export const fetchAllTripsThunk = () => {
   return async (dispatch) => {
     try {
-      const response = await axios.get(`http://localhost:8080/api/me/trips`, {
+      const response = await axios.get(`https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/trips`, {
         withCredentials: true,
       });
       // console.log("before dispatch: ", response.data);
@@ -95,7 +95,7 @@ export const addTripThunk = (tripData) => {
       console.log("ADDTRIPTHUNK IS FIRING UP");
       console.log(tripData);
       const response = await axios.post(
-        "http://localhost:8080/api/me",
+        "https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me",
         tripData,
         {
           withCredentials: true,
@@ -120,7 +120,7 @@ export const updateTripThunk = (updateData) => {
     try {
       console.log("updateTripThunk is firing up");
       const response = await axios.put(
-        `http://localhost:8080/api/me/trip`,
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/me/trip`,
         updateData,
         {
           withCredentials: true,

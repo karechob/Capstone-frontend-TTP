@@ -8,6 +8,7 @@ import { fetchHotelsThunk } from "../redux/hotels/hotels.actions";
 import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
+import ActivitiesResults from "./ActivitiesResults";
 import { fetchCollaboratorThunk } from "../redux/user/user.actions";
 
 function NewTripForm() {
@@ -210,7 +211,7 @@ function NewTripForm() {
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
-      //await dispatch(fetchActivitiesThunk(newTripData));
+      await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
       setSearching(false);
     } catch (error) {
@@ -430,6 +431,7 @@ function NewTripForm() {
             setHotel={setHotel}
             setOriginalHotelCost={setOriginalHotelCost}
           />
+          <ActivitiesResults />
           <button onClick={handleSubmission}>Submit Search</button>
         </>
       )}

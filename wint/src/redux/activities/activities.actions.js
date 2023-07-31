@@ -10,7 +10,7 @@ export const fetchActivitiesThunk = (tripData) => {
   return async (dispatch) => {
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/activities/allactivities`, tripData,
+        `https://capstone-backend-5zeo9e8f0-karechob.vercel.app/api/activities/allactivities`, tripData,
         {
           withCredentials: true,
         }
