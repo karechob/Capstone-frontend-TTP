@@ -8,6 +8,7 @@ import { fetchImageThunk, fetchTripThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchUserThunk } from "../redux/user/user.actions";
+import defaultAvatar from "../assets/avatars/STARBOY.png";
 
 function Trip() {
   let { tripId } = useParams();
@@ -75,7 +76,7 @@ function Trip() {
               <div className="collaborator-image">
                 <img
                   className="collaborator-indiv-img"
-                  src={collaborator.image}
+                  src={defaultAvatar}
                   alt="default-pic"
                 />
                 <h2>{collaborator.name}</h2>

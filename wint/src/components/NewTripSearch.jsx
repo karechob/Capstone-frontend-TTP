@@ -9,7 +9,6 @@ import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
 import ActivitiesResults from "./ActivitiesResults";
-import ActivitiesResults from "./ActivitiesResults";
 import { fetchCollaboratorThunk } from "../redux/user/user.actions";
 import { addTripThunk, fetchAllTripsThunk } from "../redux/trips/trips.actions";
 import { useNavigate } from "react-router-dom";
@@ -57,6 +56,8 @@ function NewTripForm() {
   const [hotelBudgetRange, setHotelBudgetRange] = useState("");
   const [activitiesBudgetRange, setActivitiesBudgetRange] = useState("");
 
+  console.log(hotelBudgetRange);
+
   useEffect(() => {
     if (
       collaborator &&
@@ -85,6 +86,8 @@ function NewTripForm() {
   const handleBudgetRangeChange = (e) => {
     setHotelBudgetRange(e.target.value);
   };
+
+  console.log(handleBudgetRangeChange);
 
   const handleActivitiesBudgetRangeChange = (e) => {
     setActivitiesBudgetRange(e.target.value);
@@ -275,7 +278,6 @@ function NewTripForm() {
     totalCost += activitiesCostSum;
 
     setBudget(totalCost);
-    console.log("This is the hotel cost: ", hotel.cost);
 
     e.preventDefault();
     const tripData = {
@@ -292,7 +294,7 @@ function NewTripForm() {
       collaborators: collaborators,
     };
 
-    //console.log(budget);
+    console.log(budget);
 
     try {
       dispatch(addTripThunk(tripData));
