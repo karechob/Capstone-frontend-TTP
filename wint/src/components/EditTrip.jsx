@@ -52,7 +52,7 @@ function EditTrip() {
     await dispatch(updateTripThunk(updatedTrip));
     const delayDuration = 1000;
     setTimeout(() => {
-      navigate(`/trip/${tripId}`);
+      navigate(`/trips`);
     }, delayDuration);
   };
 
