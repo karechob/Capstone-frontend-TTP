@@ -9,6 +9,7 @@ import { fetchItinerariesThunk } from "../redux/flights/flights.actions";
 import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
 import ActivitiesResults from "./ActivitiesResults";
+import ActivitiesResults from "./ActivitiesResults";
 import { fetchCollaboratorThunk } from "../redux/user/user.actions";
 import { addTripThunk, fetchAllTripsThunk } from "../redux/trips/trips.actions";
 import { useNavigate } from "react-router-dom";
@@ -201,7 +202,7 @@ function NewTripForm() {
       startDate: startDate,
       checkoutDate: checkoutDate,
       endDate: endDate,
-      hotelBudgetRange: hotelBudgetRange,
+      hotelBudgetRange: "price::USD-0-10000",
       activitiesBudgetRange: activitiesBudgetRange,
       collaborators: collaborators,
       duration: duration,
@@ -210,6 +211,7 @@ function NewTripForm() {
     try {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
+      await dispatch(fetchActivitiesThunk(newTripData));
       await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
       setSearching(false);
@@ -357,7 +359,7 @@ function NewTripForm() {
             className="new-trip-form-input"
           />
         </div>
-        <div className="new-trip-form-group">
+        {/* <div className="new-trip-form-group">
           <label htmlFor="budgetRange" className="new-trip-form-label">
             Hotel Budget:
           </label>
@@ -375,7 +377,7 @@ function NewTripForm() {
             <option value="price::USD-600-800">$600 - $800</option>
             <option value="price::USD-800-10000">&gt; $800</option>
           </select>
-        </div>
+        </div> */}
         <div className="new-trip-form-group">
           <label
             htmlFor="activitiesBudgetRange"

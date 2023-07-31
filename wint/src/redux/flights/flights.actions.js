@@ -12,7 +12,7 @@ export const fetchItinerariesThunk = (newTripData) => async (dispatch) => {
   try {
     console.log("FETCH ITINERARIES THUNK IS FIRING UP");
     const response = await axios.post(
-      `http://localhost:8080/api/flights/allflights`,
+      `https://capstone-backend-ttp.vercel.app/api/flights/allflights`,
       newTripData,
       { withCredentials: true }
     );
