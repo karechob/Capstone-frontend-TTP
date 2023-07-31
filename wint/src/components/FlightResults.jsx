@@ -24,7 +24,8 @@ function FlightResults({ setFlight, setOriginalFlightCost }) {
     <div className="flights-container">
       <h1 className="flight-results-title">Flights Available</h1>
       {flightData ? (
-        Object.values(flightData).map((itinerary) => (
+        Object.values(flightData).map((itinerary, index) => (
+          <div key={index} className="flight-container">
           <label key={itinerary.itinerary} className="flight-card">
             <h2 className="airline-name">{itinerary.airline.name}</h2>
             <img
@@ -48,6 +49,7 @@ function FlightResults({ setFlight, setOriginalFlightCost }) {
               onChange={() => handleSelectFlight(itinerary)}
             />
           </label>
+          </div>
         ))
       ) : (
         <p>No flights available.</p>

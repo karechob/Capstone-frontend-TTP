@@ -10,14 +10,17 @@ import FlightResults from "./FlightResults";
 import HotelsResults from "./HotelsResults";
 import ActivitiesResults from "./ActivitiesResults";
 import { fetchCollaboratorThunk } from "../redux/user/user.actions";
+import { addTripThunk, fetchAllTripsThunk } from "../redux/trips/trips.actions";
+import { useNavigate } from "react-router-dom";
 
 function NewTripForm() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const collaborator = useSelector(
     (state) => state.user.collaborator.collaborator
   );
-  const [budget, setBudget] = useState("");
+  const [budget, setBudget] = useState(0);
   const [name, setName] = useState("");
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
@@ -47,15 +50,13 @@ function NewTripForm() {
     link: "",
   });
 
-  const [activity, setActivity] = useState({
-    name: "",
-    cost: "",
-    imageURL: "",
-  });
+  const [activities, setActivities] = useState([]);
+  const [activitiesCostSum, setActivitiesCostSum] = useState(0);
 
-  useState(false);
   const [hotelBudgetRange, setHotelBudgetRange] = useState("");
   const [activitiesBudgetRange, setActivitiesBudgetRange] = useState("");
+
+  console.log(hotelBudgetRange);
 
   useEffect(() => {
     if (
@@ -85,6 +86,8 @@ function NewTripForm() {
   const handleBudgetRangeChange = (e) => {
     setHotelBudgetRange(e.target.value);
   };
+
+  console.log(handleBudgetRangeChange);
 
   const handleActivitiesBudgetRangeChange = (e) => {
     setActivitiesBudgetRange(e.target.value);
@@ -212,6 +215,7 @@ function NewTripForm() {
       await dispatch(fetchItinerariesThunk(newTripData));
       await dispatch(fetchHotelsThunk(newTripData));
       await dispatch(fetchActivitiesThunk(newTripData));
+      await dispatch(fetchActivitiesThunk(newTripData));
       setLoading(false);
       setSearching(false);
     } catch (error) {
@@ -234,7 +238,8 @@ function NewTripForm() {
     }));
 
     const adjustedHotelCost =
-      originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+      originalHotelCost * ((collaborators.length + 1) / 2) * duration;
+
     setHotel((prevHotel) => ({
       ...prevHotel,
       cost: roundToTwoDecimalPlaces(adjustedHotelCost),
@@ -259,17 +264,21 @@ function NewTripForm() {
         cost: adjustedFlightCost,
       }));
 
-      const adjustedHotelCost =
-        originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+      const adjustedHotelCost = originalHotelCost * ((collaborators.length + 1) / 2) * duration;
+      // originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
       setHotel((prevHotel) => ({
         ...prevHotel,
-        cost: adjustedHotelCost,
+         cost: adjustedHotelCost,
       }));
       totalCost = originalFlightCost * (collaborators.length + 1);
       totalCost +=
         originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
     }
+
+    totalCost += activitiesCostSum;
+
     setBudget(totalCost);
+
     e.preventDefault();
     const tripData = {
       name: name,
@@ -281,13 +290,22 @@ function NewTripForm() {
       duration: duration,
       hotel: hotel,
       flight: flight,
-      // activities: activities,
+      activities: activities,
       collaborators: collaborators,
     };
-    // setActivityError("");
 
-    // dispatch(addTripThunk(newTripData));
-    console.log("this is trip data", tripData);
+    console.log(budget);
+
+    try {
+      dispatch(addTripThunk(tripData));
+      dispatch(fetchAllTripsThunk());
+      const delayDuration = 1000;
+      setTimeout(() => {
+        navigate("/trips");
+      }, delayDuration);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -431,7 +449,11 @@ function NewTripForm() {
             setHotel={setHotel}
             setOriginalHotelCost={setOriginalHotelCost}
           />
-          <ActivitiesResults />
+          <ActivitiesResults
+            setActivities={setActivities}
+            activitiesCostSum={activitiesCostSum}
+            setActivitiesCostSum={setActivitiesCostSum}
+          />
           <button onClick={handleSubmission}>Submit Search</button>
         </>
       )}

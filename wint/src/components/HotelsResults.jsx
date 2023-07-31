@@ -32,7 +32,8 @@ function HotelsResults({ setHotel, setOriginalHotelCost }) {
     <div className="hotels-container">
       <h1 className="hotels-results-title">Hotels Available</h1>
       {hotelData ? (
-        Object.values(hotelData).map((hotel) => (
+        Object.values(hotelData).map((hotel, index) => (
+          <div key={index} className="hotel-container"> 
           <label key={hotel.id} className="hotels-card">
             <h2 className="hotels-name">{hotel.name}</h2>
             <img
@@ -51,6 +52,7 @@ function HotelsResults({ setHotel, setOriginalHotelCost }) {
               onChange={() => handleSelectHotel(hotel)}
             />
           </label>
+          </div>
         ))
       ) : (
         <p>No hotels available.</p>
