@@ -45,3 +45,9 @@
     font-size: large;
     word-wrap: break-word;
 }
+
+.hotels-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}

@@ -233,7 +233,8 @@ function NewTripForm() {
     }));
 
     const adjustedHotelCost =
-      originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+      originalHotelCost * ((collaborators.length + 1) / 2) * duration;
+
     setHotel((prevHotel) => ({
       ...prevHotel,
       cost: roundToTwoDecimalPlaces(adjustedHotelCost),
@@ -258,11 +259,11 @@ function NewTripForm() {
         cost: adjustedFlightCost,
       }));
 
-      const adjustedHotelCost =
-        originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
+      const adjustedHotelCost = originalHotelCost * ((collaborators.length + 1) / 2) * duration;
+      // originalHotelCost * Math.ceil(collaborators.length / 2) * duration;
       setHotel((prevHotel) => ({
         ...prevHotel,
-        cost: adjustedHotelCost,
+         cost: adjustedHotelCost,
       }));
       totalCost = originalFlightCost * (collaborators.length + 1);
       totalCost +=
@@ -272,6 +273,8 @@ function NewTripForm() {
     totalCost += activitiesCostSum;
 
     setBudget(totalCost);
+    console.log("This is the hotel cost: ", hotel.cost);
+
     e.preventDefault();
     const tripData = {
       name: name,
@@ -287,11 +290,15 @@ function NewTripForm() {
       collaborators: collaborators,
     };
 
-    console.log(budget);
+    //console.log(budget);
+
     try {
       dispatch(addTripThunk(tripData));
       dispatch(fetchAllTripsThunk());
-      navigate("/trips");
+      const delayDuration = 1000;
+      setTimeout(() => {
+        navigate("/trips");
+      }, delayDuration);
     } catch (error) {
       console.error(error);
     }

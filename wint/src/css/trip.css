@@ -162,3 +162,8 @@ body {
   width: 125px;
   border-radius: 100%;
 }
+
+.travel-stay-container {
+  display: flex;
+  justify-content: center;
+}

@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
 import BudgetBreakdownGraph from "../components/trips/BudgetBreakdownGraph";
 import "../css/trip.css";
-
+import "../css/flightresults.css";
+import "../css/hotelsresults.css";
+import Plane from "../assets/icons/Plane";
 import { fetchImageThunk, fetchTripThunk } from "../redux/trips/trips.actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -33,9 +35,13 @@ function Trip() {
   function popularityBlock(num) {
     if (num > 0) {
       if (num > 1) {
-        return <p className="activity-popularity">{num} people went here!</p>;
+        return (
+          <p className="activity-popularity">{num} people visited here!</p>
+        );
       } else {
-        return <p className="activity-popularity">{num} person went here!</p>;
+        return (
+          <p className="activity-popularity">{num} person visited here!</p>
+        );
       }
     } else {
       return;
@@ -92,6 +98,24 @@ function Trip() {
       <div className="budget-graph-container">
         <BudgetBreakdownGraph className="graph-budget" />
       </div>
+      <h1>Travel & Stay</h1>
+      <div className="travel-stay-container">
+      <div className="flight-container">
+        <label className="flights-card">
+          <h2 className="airline-name">{trip.flight.airline}</h2>
+          <Plane className="flight-img" />
+          <h2 className="flight-price">Price: ${trip.flight.cost}</h2>
+          <p className="airline-link">Airline Website: {trip.flight.link}</p>
+        </label>
+      </div>
+      <div className="hotels-container">
+        <label className="hotels-card">
+          <h2 className="hotels-name">{trip.hotel.name}</h2>
+          <img className="hotels-img" src={trip.hotel.link} alt="Hotel" />
+          <h2 className="hotel-price">Price: ${trip.hotel.cost}</h2>
+        </label>
+      </div>
+      </div>
       <h1>Activities</h1>
       <div className="activities-list-container">
         {trip.activities?.map((activity, index) => {
@@ -122,7 +146,6 @@ function Trip() {
           );
         })}
       </div>
-      <h1>Travel & Stay</h1>
       <h1>Things to Note</h1>
     </div>
   );

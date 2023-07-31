@@ -50,3 +50,21 @@ input[type='radio']:hover {
     box-shadow: 0px 0px 20px rgb(253, 255, 252);
     transition: all 0.5s ease;
 }
+
+.flight-img {
+    height: 150px;
+    width: 150px;
+    border-radius: 100%;
+}
+
+.flights-card {
+    background-color: darkorange;
+    margin: 20px;
+    border-radius: 20px;
+    height: 400px;
+    width: 370px;
+    display: inline-block;
+    transition: all 0.5s ease;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
